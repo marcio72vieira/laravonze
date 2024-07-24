@@ -37,6 +37,17 @@
 OBS01 - Os arquivos CSS e JS quando colocados dentro das pasta "resources/css e resources/js" não são visualizados pelo
         usuário final, mas se colocados na pasta public/css ou public/js os mesmos serão.
 
+Ir para o GitHub
+Criar um novo projeto: laravonze
+Realizar a sequencia de comandos abaixo na pasta do projeto
+marcio@vaio:~/projetosdocker/laravonze$ git init
+marcio@vaio:~/projetosdocker/laravonze$ git remote add origin https://github.com/marcio72vieira/laravonze.git
+marcio@vaio:~/projetosdocker/laravonze$ git status
+marcio@vaio:~/projetosdocker/laravonze$ git add .
+marcio@vaio:~/projetosdocker/laravonze$ git commit -m "Inicio do projeto com Laravel 11"
+marcio@vaio:~/projetosdocker/laravonze$ git push origin master
+    user:
+    password:
 
 
 
