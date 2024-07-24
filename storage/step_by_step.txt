@@ -1,0 +1,49 @@
+001 -   Para criar o projeto:
+        a) Dentro da pasta de projetosdocker digitar:
+            curl -s https://laravel.build/laravonze | bash
+        b) No arquivo docker-compose.yml alterar conforme código abaixo:
+            b.1) - '${APP_PORT:-8080}:80'
+            b.2) - '${FORWARD_DB_PORT:-3307}:3306'
+            b.3) - '${FORWARD_REDIS_PORT:-6380}:6379'
+        c) Acrescentar no arquivo .env as variáveis, conforme abaixo:
+            c.1) APP_TIMEZONE=America/Sao_Paulo
+            c.2) APP_LOCALE=pt-BR
+            c.3) APP_PORT=8080
+            c.4) FORWARD_DB_PORT=3307
+            c.5) DB_DATABASE=laravonze
+        d) Na pasta do projeto digitar:
+            d.1) ./vendor/bin/sail up -d
+            d.2) ./vendor/bin/sail artisan migrate
+
+
+002 -   Para executar o projeto:
+        Com os "containers" levantados (./vendor/bin/sail up -d), na barra de navegação, digitar:
+        http://localhost:8080
+
+003 -   Para gerar uma chave para aplicação quando necessário. Com os "containers" levantados, dentro da pasta do projeto:
+        marcio@vaio:~/projetosdocker/laravonze$  ./vendor/bin/sail artisan key:generate
+
+004 -   Para instalar ou atualizar as dependências da aplicação:
+        marcio@vaio:~/projetosdocker/laravonze$  ./vendor/bin/sail composer install OU composer update
+
+005 -   Para ver as versões do PHP, MySQL, Composer, NPM e Node instaladas, digitar:
+        marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail php -v
+        marcio@vaio:~/projetosdocker/laravonze$ mysql --version
+        marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail composer
+        marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail npm -v
+        marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail node -v
+
+
+OBS01 - Os arquivos CSS e JS quando colocados dentro das pasta "resources/css e resources/js" não são visualizados pelo
+        usuário final, mas se colocados na pasta public/css ou public/js os mesmos serão.
+
+
+
+
+
+
+
+
+
+
+
