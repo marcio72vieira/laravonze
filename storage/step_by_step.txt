@@ -34,6 +34,12 @@
         marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail node -v
 
 
+
+CMD01 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan migrate
+CMD02 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:controller CourseController
+CMD03 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:view courses/index
+
+
 OBS01 - Os arquivos CSS e JS quando colocados dentro das pasta "resources/css e resources/js" não são visualizados pelo
         usuário final, mas se colocados na pasta public/css ou public/js os mesmos serão.
 
@@ -48,6 +54,16 @@ marcio@vaio:~/projetosdocker/laravonze$ git commit -m "Inicio do projeto com Lar
 marcio@vaio:~/projetosdocker/laravonze$ git push origin master
     user:
     password:
+
+OBS03 - COnfigurações para acessar banco com MySQL WorkBranch
+        1 - Connection Name: CelkeLaravel11
+        2 - Hostname: 127.0.0.1
+        3 - Port: 3307
+        4 - User Name: sail
+        5 - Store in Keichain...: password
+        6 - Default Schema: laravonze
+        7 - Clicar no botão: Test Connection
+
 
 
 
