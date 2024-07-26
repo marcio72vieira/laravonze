@@ -1,16 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Celke</title>
-</head>
-<body>
+@extends('layouts.admin')
+
+@section('content')
+
     <h2>Listar os Cursos</h2>
 
-    <a href="{{ route('courses.show') }}">Visualizar</a><br>
     <a href="{{ route('courses.create') }}">Cadastrar</a><br>
 
-</body>
-</html>
+    {{-- Imprimir os registros --}}
+    @forelse ($courses as $course )
+        {{ $course->id }}<br>
+        {{ $course->name }}<br>
+        {{ \Carbon\Carbon::parse($course->created_at)->format('d/m/Y H:i:s') }}<br>
+        {{ \Carbon\Carbon::parse($course->updated_at)->format('d/m/Y H:i:s') }}<br>
+        <a href="{{ route('courses.show', ['course' => $course->id]) }}">Visualizar</a>
+        <hr>
+    @empty
+        <p style="background: yellow; color: black">Nenhum curso encontrado!</p>
+    @endforelse
+
+    {{-- Imprimir a paginação --}}
+    {{-- $courses->links() --}}
+    
+@endsection
+
+

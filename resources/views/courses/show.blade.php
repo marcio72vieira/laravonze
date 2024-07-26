@@ -1,15 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Celke</title>
-</head>
-<body>
+@extends('layouts.admin')
+    
+@section('content')
     <h2>Detalhes do Curso</h2>
 
     <a href="{{ route('courses.index') }}">Listar</a><br>
-    <a href="{{ route('courses.edit') }}">Editar</a>
-</body>
-</html>
+    <a href="{{ route('courses.edit') }}">Editar</a><br><br>
+
+    {{-- dd($course) --}}
+    ID: {{ $course->id }}<br>
+    Nome: {{ $course->name }}<br>
+    Criado: {{ \Carbon\Carbon::parse($course->created_at)->format('d/m/Y H:i:s') }}<br>
+    Editado: {{ \Carbon\Carbon::parse($course->updated_at)->format('d/m/Y H:i:s') }}<br>
+@endsection

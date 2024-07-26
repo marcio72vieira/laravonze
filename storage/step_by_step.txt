@@ -38,6 +38,8 @@
 CMD01 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan migrate
 CMD02 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:controller CourseController
 CMD03 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:view courses/index
+CMD04 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:model Course
+
 
 
 OBS01 - Os arquivos CSS e JS quando colocados dentro das pasta "resources/css e resources/js" não são visualizados pelo
@@ -64,7 +66,8 @@ OBS03 - COnfigurações para acessar banco com MySQL WorkBranch
         6 - Default Schema: laravonze
         7 - Clicar no botão: Test Connection
 
-
+token
+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
 
 
 
