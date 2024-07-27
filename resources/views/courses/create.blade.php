@@ -20,7 +20,10 @@
 
         <label>Nome:</label>
         <input type="text" name="name" id="name" placeholder="Nome do curso" value="{{ old('name') }}" required><br><br>
-        
+
+        <label>Preço:</label>
+        <input type="text" name="price" id="price" placeholder="Preço do curso 0.00" value="{{ old('price') }}" required><br><br>
+
         <button type="submit">Cadastrar</button>
     </form>
 

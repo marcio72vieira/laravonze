@@ -58,7 +58,44 @@
         d) Execute a seed com o comando abaixo:
                 ./vendor/bin/sail artisan db:seed
         
-        
+007 -   Adicionando uma coluna a uma tabela existente
+        a) Digitar o comando relacinado à cricção da coluna(s) na tabela desejada
+           marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:migration alter_courses_add_price_table
+        b) Digitar no corpo do método criado pelo comando acima o trecho de código a seguir:
+                public function up(): void
+                {
+                        Schema::table('courses', function(Blueprint $table){
+                                $table->float('price')->after('name')->default(0);
+                        });
+                }
+
+                /**
+                * Reverse the migrations.
+                */
+                public function down(): void
+                {
+                        Schema::table('courses', function(Blueprint $table){
+                                $table->dropColumn('price');
+                        });
+                }
+        c) Executar o comando migrate
+           marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan migrate
+        d) Alterar a seed referente á coluna com o novo campo Adicionando
+                // Só cria um curso, se não existir um curso com o nome já cadastrado
+                if(!Course::where('name','Curso de Laravel - T1')->first()){
+                        Course::create([
+                                'name' => 'Curso de Laravel - T1',
+                                'price' => 197.43
+                        ]);
+                }
+                
+                if(!Course::where('name','Curso de Laravel - T2')->first()){
+                        Course::create([
+                                'name' => 'Curso de Laravel - T2',
+                                'price' => 247.43
+                        ]);
+                }
+
 
 
 
@@ -67,6 +104,8 @@ CMD01 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan migrat
 CMD02 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:controller CourseController
 CMD03 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:view courses/index
 CMD04 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:model Course
+CMD05 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:migration alter_courses_add_price_table
+CMD06 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan migrate:rollback
 
 
 
