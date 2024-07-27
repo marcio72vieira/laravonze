@@ -33,6 +33,34 @@
         marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail npm -v
         marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail node -v
 
+006- -  Criando seed
+        a) ./vendor/bin/sail artisan make:seeder CourseSeeder
+        b) Modificar o método run, da seeder criada na linha acima:
+                public function run(): void
+                {
+                        // Só cria um curso, se não existir um curso com o nome já cadastrado
+                        if(!Course::where('name','Curso de Laravel - T1')->first()){
+                        Course::create([
+                                'name' => 'Curso de Laravel - T1'
+                        ]);
+                        }
+                        
+                        if(!Course::where('name','Curso de Laravel - T2')->first()){
+                        Course::create([
+                                'name' => 'Curso de Laravel - T2'
+                        ]);
+                        }
+                }
+        c) Acrescentar no arquivo: database/seeders/DatabaseSeeder.php, o trecho de código conforme abaixo:
+                $this->call([
+                        CourseSeeder::class,
+                ]);
+        d) Execute a seed com o comando abaixo:
+                ./vendor/bin/sail artisan db:seed
+        
+        
+
+
 
 
 CMD01 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan migrate
@@ -67,7 +95,7 @@ OBS03 - COnfigurações para acessar banco com MySQL WorkBranch
         7 - Clicar no botão: Test Connection
 
 token
-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
+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
 
 
 
