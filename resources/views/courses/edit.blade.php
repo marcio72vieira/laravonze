@@ -3,6 +3,18 @@
 @section('content')
     <h2>Editar o Curso: {{ $course->name }}</h2>
 
+    {{-- Mensagem sem uso de componente
+    @if ($errors->any())
+        <span style="background-color: red; color: white">
+            @foreach ($errors->all() as $error)
+                {{ $error }}<br>
+            @endforeach
+        </span>
+    @endif
+    --}}
+
+    <x-alert />
+
     <a href="{{ route('courses.index') }}">
         <button type="button">Listar</button>
     </a><br><br>
@@ -17,10 +29,10 @@
         @method('PUT')
 
         <label>Nome:</label>
-        <input type="text" name="name" id="name" placeholder="Nome do curso" value="{{ old('name', $course->name) }}" required><br><br>
+        <input type="text" name="name" id="name" placeholder="Nome do curso" value="{{ old('name', $course->name) }}" ><br><br>
 
         <label>Preço:</label>
-        <input type="text" name="price" id="price" placeholder="Preço do curso 0.00" value="{{ old('price', $course->price) }}" required><br><br>
+        <input type="text" name="price" id="price" placeholder="Preço do curso 0.00" value="{{ old('price', $course->price) }}" ><br><br>
         
         <button type="submit">Salvar</button>
     </form>

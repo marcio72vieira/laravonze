@@ -96,8 +96,36 @@
                         ]);
                 }
 
+008 -   Criando componente ANÔNIMO, ou seja, apenas com blade(view) sem uma class(controller) .
+        a) Criar o componente confome comando abaixo: Será criado o arquivo: resources/views/components/alert.blade.php
+                ./vendor/bin/sail artisan make:component alerts --view
+
+        b) Copiar para o conteúdo do arquivo alert.blade.php os trechos de código abaixo, referente ás mensagem de alerts desejadas, conforme abaixo:
+                {{-- Mensagens de sucesso --}}
+                @if (session('success'))
+                        <p style="background-color: green; color: white">
+                                {{ session('success') }}
+                        </p>
+                @endif
+
+                {{-- Mensagens de error --}}
+                @if (session('error'))
+                        <p style="background-color: red; color: white">
+                                {{ session('error') }}
+                        </p>
+                @endif
 
 
+                {{-- Mensagens de errors de validação --}}
+                @if ($errors->any())
+                        <span style="background-color: red; color: white">
+                                @foreach ($errors->all() as $error)
+                                {{ $error }}<br>
+                                @endforeach
+                        </span>
+                @endif
+        c) Acrescentar nas view index.blade; create.blade e edit.blade a tag abaixo:
+                <x-alert>
 
 
 CMD01 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan migrate
@@ -106,6 +134,8 @@ CMD03 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:v
 CMD04 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:model Course
 CMD05 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:migration alter_courses_add_price_table
 CMD06 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan migrate:rollback
+CMD07 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:request CourseRequest
+
 
 
 
@@ -133,8 +163,14 @@ OBS03 - COnfigurações para acessar banco com MySQL WorkBranch
         6 - Default Schema: laravonze
         7 - Clicar no botão: Test Connection
 
+OBS04 - Quando utilizar FormsRequest Para VALIDAR, acrescentar no corpo dos métodos Store e Update o trecho de código a
+        a seguir, senão por algum motivo dá erro:
+        // Validar o formulário
+        // $request->validate(); -> Só esta linha dá ERRO
+        $validated = $request->validated(); -> Com esta o ERRO é eliminado.
+
 token
-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
+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
 
 
 

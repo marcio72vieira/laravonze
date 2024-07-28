@@ -8,11 +8,16 @@
         <button type="button">Cadastrar</button>
     </a><br><br>
 
+    {{-- Mensagem sem uso de componente
     @if (session('success'))
         <p style="background-color: green; color: white">
             {{ session('success') }}
         </p>
     @endif
+    --}}
+
+    <x-alert />
+
 
     {{-- Imprimir os registros --}}
     @forelse ($courses as $course )
