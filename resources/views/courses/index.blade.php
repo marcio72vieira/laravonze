@@ -4,7 +4,7 @@
 
     <h2>Listar os Cursos</h2>
 
-    <a href="{{ route('courses.create') }}">
+    <a href="{{ route('course.create') }}">
         <button type="button">Cadastrar</button>
     </a><br><br>
 
@@ -26,15 +26,20 @@
         Preço: {{ 'R$ '.number_format($course->price, 2, ',','.') }}<br>
         Cadastrado: {{ \Carbon\Carbon::parse($course->created_at)->format('d/m/Y H:i:s') }}<br>
         Editado: {{ \Carbon\Carbon::parse($course->updated_at)->format('d/m/Y H:i:s') }}<br>
-        <a href="{{ route('courses.show', ['course' => $course->id]) }}">
+        
+        <a href="{{ route('classe.index', ['course' => $course->id]) }}">
+            <button type="button">Aulas</button>
+        </a><br><br>
+
+        <a href="{{ route('course.show', ['course' => $course->id]) }}">
             <button type="button">Visualizar</button>
         </a><br><br>
         
-        <a href="{{ route('courses.edit', ['course' => $course->id]) }}">
+        <a href="{{ route('course.edit', ['course' => $course->id]) }}">
             <button type="button">Editar</button>
         </a><br><br>
             
-        <form action="{{ route('courses.destroy', ['course' => $course->id]) }}" method="POST">
+        <form action="{{ route('course.destroy', ['course' => $course->id]) }}" method="POST">
             @csrf
             @method('DELETE')
             <button type="submit" onclick="return confirm('Tem certeza que deseja apagar este registro?')">Apagar</button>

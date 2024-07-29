@@ -50,7 +50,7 @@ class CourseController extends Controller
             'price' => $request->price,
         ]);
 
-        return  redirect()->route('courses.show', ['course' => $course->id])->with('success', 'Curso cadastrado com sucesso!');
+        return  redirect()->route('course.show', ['course' => $course->id])->with('success', 'Curso cadastrado com sucesso!');
     }
 
     // Carregar o formulário editar curso
@@ -73,7 +73,7 @@ class CourseController extends Controller
             'price' => $request->price,
         ]);
 
-        return  redirect()->route('courses.show', ['course' => $course->id])->with('success', 'Curso editado com sucesso!');
+        return  redirect()->route('course.show', ['course' => $course->id])->with('success', 'Curso editado com sucesso!');
     }
 
 
@@ -82,6 +82,6 @@ class CourseController extends Controller
     {
         $course->delete();
 
-        return  redirect()->route('courses.index')->with('success', 'Curso excluído com sucesso!');
+        return  redirect()->route('course.index')->with('success', 'Curso excluído com sucesso!');
     }
 }

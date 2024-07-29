@@ -15,16 +15,16 @@
 
     <x-alert />
 
-    <a href="{{ route('courses.index') }}">
+    <a href="{{ route('course.index') }}">
         <button type="button">Listar</button>
     </a><br><br>
     
-    <a href="{{ route('courses.show', ['course' => $course->id]) }}">
+    <a href="{{ route('course.show', ['course' => $course->id]) }}">
         <button type="button">Visualizar</button>
     </a><br><br>
 
 
-    <form action="{{ route('courses.update', ['course' => $course->id]) }}" method="POST">
+    <form action="{{ route('course.update', ['course' => $course->id]) }}" method="POST">
         @csrf
         @method('PUT')
 

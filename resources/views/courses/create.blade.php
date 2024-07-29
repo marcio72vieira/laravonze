@@ -4,7 +4,7 @@
 
     <h2>Cadastar o Curso</h2>
     
-    <a href="{{ route('courses.index') }}">
+    <a href="{{ route('course.index') }}">
         <button type="button">Listar</button>
     </a><br><br>
     
@@ -26,7 +26,7 @@
 
     <x-alert />
 
-    <form action="{{ route('courses.store') }}" method="POST">
+    <form action="{{ route('course.store') }}" method="POST">
         @csrf
         @method('POST')
 

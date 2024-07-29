@@ -170,7 +170,7 @@ OBS04 - Quando utilizar FormsRequest Para VALIDAR, acrescentar no corpo dos mét
         $validated = $request->validated(); -> Com esta o ERRO é eliminado.
 
 token
-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
+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
 
 
 
