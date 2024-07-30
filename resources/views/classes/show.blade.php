@@ -3,7 +3,7 @@
 @section('content')
     <h2>Detalhes da Aula</h2>
 
-    <a href="{{ route('classe.index') }}">
+    <a href="{{ route('classe.index', ['course' => $classe->course_id]) }}">
         <button type="button">Listar Aulas</button>
     </a><br><br>
 
@@ -22,7 +22,8 @@
     {{-- dd($classe) --}}
     ID: {{ $classe->id }}<br>
     Nome: {{ $classe->name }}<br>
-    Preço: {{ 'R$ '.number_format($classe->price, 2, ',','.') }}<br>
+    Descriçao: {{ $classe->description }}<br>
+    Curso: {{ $classe->course->name }}<br>
     Criado: {{ \Carbon\Carbon::parse($classe->created_at)->format('d/m/Y H:i:s') }}<br>
     Editado: {{ \Carbon\Carbon::parse($classe->updated_at)->format('d/m/Y H:i:s') }}<br>
 @endsection

@@ -5,6 +5,13 @@
     </p>
 @endif
 
+{{-- Mensagens de aviso --}}
+@if (session('warning'))
+    <p style="background-color: yellow; color: black">
+        {{ session('warning') }}
+    </p>
+@endif
+
 {{-- Mensagens de error --}}
 @if (session('error'))
     <p style="background-color: red; color: white">

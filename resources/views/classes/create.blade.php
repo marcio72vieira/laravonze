@@ -14,18 +14,18 @@
         @csrf
         @method('POST')
 
+        <input type="hidden" name="course_id" id="course_id" value="{{ $course->id }}" ><br><br>
+
         <label>Curso:</label>
-        <input type="text" name="course_id" id="course_id" placeholder="Nome do curso" value="{{ $course->id }}" ><br><br>
+        <input type="text" name="name_course" id="name_course" value="{{ $course->name }}" disabled><br><br>
         
         <label>Nome:</label>
-        <input type="text" name="name" id="name" placeholder="Nome do curso" value="{{ old('name') }}" ><br><br>
+        <input type="text" name="name" id="name" placeholder="Nome da aula" value="{{ old('name') }}" required><br><br>
 
         <label>Descrição:</label>
-        <textarea name="description" id="description" placeholder="Descrição da aula" value="{{ old('description') }}" rows=2 cols=40></textarea><br><br>
-
-        <label>Ordem:</label>
-        <input type="text" name="order_classe" id="order_classe" placeholder="Ordem da aula" value="{{ old('order_classe') }}" ><br><br>
-
+        <textarea name="description" id="description" placeholder="Descrição da aula" rows="4" cols="30"  required>
+            {{ old('description') }}
+        </textarea><br><br>
 
         <button type="submit">Cadastrar</button>
     </form>

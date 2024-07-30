@@ -22,20 +22,18 @@ class ClasseRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'course_id' => 'required_if:course_id,!=,null', // Só valida o campo course_id, se o mesmo existir. Neste caso só será validado no create, no edit não.
             'name' => 'required',
             'description' => 'required',
-            'order_classe' => 'required',
-            'course_id' => 'required',
         ];
     }
 
     public function messages(): array
     {
         return [
+            'course_id.required' => 'Necessário enviar o Id do  curso!',
             'name.required' => 'Campo nome  da aula é obrigatório!',
             'description.required' => 'Campo descrição da aula é obrigatório!',
-            'order_class.required' => 'Campo ordem da aula é obrigatório!',
-            'order_classe.required' => 'Campo curso é obrigatório!!',
         ];
     }
 }

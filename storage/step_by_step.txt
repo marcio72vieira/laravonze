@@ -170,7 +170,10 @@ OBS04 - Quando utilizar FormsRequest Para VALIDAR, acrescentar no corpo dos mét
         $validated = $request->validated(); -> Com esta o ERRO é eliminado.
 
 token
-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
+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
+
+Site para cálculo do Imposto de relacinado
+https://sicalc.receita.economia.gov.br/sicalc/principal
 
 
 

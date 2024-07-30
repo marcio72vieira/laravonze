@@ -7,6 +7,10 @@
         <button type="button">Listar</button>
     </a><br><br>
 
+    <a href="{{ route('classe.index', ['course' => $course->id]) }}">
+        <button type="button">Aulas</button>
+    </a><br><br>
+
     <a href="{{ route('course.edit', ['course' => $course->id]) }}">
         <button type="button">Editar</button>
     </a><br><br>
