@@ -1,3 +1,32 @@
+000 -   Para baixar o projeto via GIT:
+        a) Clonar o projeto: / OU baixar o arquivo .zip
+            marcio@marcio72:~/projetosdocker/laravonze$ git clone https://github.com/marcio72vieira/laravonze.git
+        b) Criar o arquivo ".env" a partir do arquivo ".env.example" conforme os passos abaixo:
+            1 - Entrar a pasta do projeto
+                cd projetosdocker/laravonze
+                cp ./.env.example .env
+            2 - Fazer as alterações necessárias conforme descrito abaixo:
+                1) APP_TIMEZONE=America/Sao_Paulo
+                2) APP_LOCALE=pt-BR
+                3) APP_PORT=8080
+                4) FORWARD_DB_PORT=3307
+                5) DB_DATABASE=laravonze
+        c) Atualizar o projeto com as dependências necessárias
+            marcio@marcio72:~/projetosdocker/laravonze$ composer update
+        d) Levantar os containeres
+            ./vendor/bin/sail up -d
+        e) Gerar a chave da aplicação
+            marcio@vaio:~/projetosdocker/laravonze$  ./vendor/bin/sail artisan key:generate
+        f) Depois de ter criado e modificado o arquivo .env aplicar o comando abaixo:
+            marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail composer dump-autoload
+        g) Executar as migrations:
+            marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan migrate
+        h) Executar a aplicação
+            http://localhost:8080
+
+
+
+
 001 -   Para criar o projeto:
         a) Dentro da pasta de projetosdocker digitar:
             curl -s https://laravel.build/laravonze | bash
@@ -44,7 +73,7 @@
                                 'name' => 'Curso de Laravel - T1'
                         ]);
                         }
-                        
+
                         if(!Course::where('name','Curso de Laravel - T2')->first()){
                         Course::create([
                                 'name' => 'Curso de Laravel - T2'
@@ -57,7 +86,7 @@
                 ]);
         d) Execute a seed com o comando abaixo:
                 ./vendor/bin/sail artisan db:seed
-        
+
 007 -   Adicionando uma coluna a uma tabela existente
         a) Digitar o comando relacinado à cricção da coluna(s) na tabela desejada
            marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:migration alter_courses_add_price_table
@@ -88,7 +117,7 @@
                                 'price' => 197.43
                         ]);
                 }
-                
+
                 if(!Course::where('name','Curso de Laravel - T2')->first()){
                         Course::create([
                                 'name' => 'Curso de Laravel - T2',
