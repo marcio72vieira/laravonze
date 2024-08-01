@@ -156,6 +156,46 @@
         c) Acrescentar nas view index.blade; create.blade e edit.blade a tag abaixo:
                 <x-alert>
 
+009 -   Bengin, Commit e RollBack Transaction
+        1 - Importar a classe correspondente
+            use Illuminate\Support\Facades\DB;
+        
+        2 - Estrutura básica:
+            
+            Validar dados
+            // Iniciar transação antes do try/catch
+            DB::beginTransaction()
+            try{
+                    // Tentar SALVAR / ATUALIZAR / DELETAR os dados
+                    // Em caso de sucesso
+                    DB::commit()
+                    ... mais alguma coisa (redirect etc...)
+            } catch(Exception $e) {
+                    // Em caso de falha na tentativa de SALVAR / ATUALIZAR / DELETAR os dados
+                    DB::rollBacl()
+                    ... mais alguma coisa (redirect etc...)
+            }
+
+010 -   Trabalhando com Logs
+        Arquivo de configuração: /home/marcio/projetosdocker/laravonze/config/logging.php
+        Especificação: 
+                single (único arquivo); 
+                daily (um arquivo para cada dia. Mais recomendado)
+                info(fluxo normal do sistema)
+        Alterar preferencialmente no arquivo .env 
+                LOG_CHANNEL=stack
+                LOG_STACK=daily
+                LOG_DAILY_DAYS=15
+                LOG_DEPRECATIONS_CHANNEL=null
+                LOG_LEVEL=debug
+
+
+
+        
+
+
+
+
 
 CMD01 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan migrate
 CMD02 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:controller CourseController
@@ -199,7 +239,7 @@ OBS04 - Quando utilizar FormsRequest Para VALIDAR, acrescentar no corpo dos mét
         $validated = $request->validated(); -> Com esta o ERRO é eliminado.
 
 token
-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
+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
 
 Site para cálculo do Imposto de relacinado
 https://sicalc.receita.economia.gov.br/sicalc/principal
