@@ -26,7 +26,7 @@
         Preço: {{ 'R$ '.number_format($course->price, 2, ',','.') }}<br>
         Cadastrado: {{ \Carbon\Carbon::parse($course->created_at)->format('d/m/Y H:i:s') }}<br>
         Editado: {{ \Carbon\Carbon::parse($course->updated_at)->format('d/m/Y H:i:s') }}<br>
-        
+
         <a href="{{ route('classe.index', ['course' => $course->id]) }}">
             <button type="button">Aulas</button>
         </a><br><br>
@@ -34,11 +34,11 @@
         <a href="{{ route('course.show', ['course' => $course->id]) }}">
             <button type="button">Visualizar</button>
         </a><br><br>
-        
+
         <a href="{{ route('course.edit', ['course' => $course->id]) }}">
             <button type="button">Editar</button>
         </a><br><br>
-            
+
         <form action="{{ route('course.destroy', ['course' => $course->id]) }}" method="POST">
             @csrf
             @method('DELETE')
@@ -51,7 +51,7 @@
 
     {{-- Imprimir a paginação --}}
     {{-- $courses->links() --}}
-    
+
 @endsection
 
 
