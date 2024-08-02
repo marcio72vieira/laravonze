@@ -59,12 +59,12 @@ class CourseController extends Controller
             $course = Course::create([
                 'name' => $request->name,
                 'price' => $request->price,
-                
+
             ]);
-            
+
             // Operação concluída com êxito
             DB::commit();
-            
+
             Log::info('Curso cadastrado.', ['course_id' => $course->id]);
 
             return  redirect()->route('course.show', ['course' => $course->id])->with('success', 'Curso cadastrado com sucesso!');
@@ -96,7 +96,7 @@ class CourseController extends Controller
     {
         // Validar o formulário
         // $request->validate();
-        $validated = $request->validated(); 
+        $validated = $request->validated();
 
         // Marcar o ponto inicial de uma transação
         DB::beginTransaction();
@@ -113,7 +113,7 @@ class CourseController extends Controller
 
             Log::info('Curso editado.', ['course_id' => $course->id]);
             return  redirect()->route('course.show', ['course' => $course->id])->with('success', 'Curso editado com sucesso!');
-        
+
         } catch(Exception $e) {
 
             // Operação não é concluiída com êxito
@@ -136,7 +136,7 @@ class CourseController extends Controller
             $course->delete();
 
             Log::info('Curso apagado.', ['course_id' => $course->id]);
-    
+
             return  redirect()->route('course.index')->with('success', 'Curso excluído com sucesso!');
 
         } catch (Exception $e) {

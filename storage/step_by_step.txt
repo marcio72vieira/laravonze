@@ -219,7 +219,7 @@
             3) marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan config:clear
 
 
-            
+
 
 
 012 -   Integrando o Bootstrap no projeto
@@ -273,14 +273,15 @@
                 </body>
                 </html>
 
-
-
-
-
-
-
-
-
+013 -   Integrando SB admin e Font Awesome na aplicação
+        a) Baixar o SBAdmin do site: https://startbootstrap.com/template/sb-admin
+        b) Baixar o FontAwesome do site: https://fontawesome.com/download (versão 6 - free for web)
+        c) Copiar para a pasta public/css/ os arquivos e renomeá-los se achar necessário styles_sbadmin.css
+           styles.css (do sbadmin) e all.min.css (do fontawesome)
+        d) Copiar para a pasta public/js os arquivos e renomeá-los se achar necessário scripts_sbadmin.js
+           scripts.js(do sbadmin) e all.min.js (do fontawesome)
+        e) Inlcuílos seus caminhos no arquivo: resources/views/layouts/admin.blade.php
+        f) Para evitar o erro de carregamento do favicon no console, Copiar a pasta webfonts para a pasta /home/marcio/projetosdocker/laravonze/public.
 
 
 
@@ -340,10 +341,13 @@ OBS05 - Para levantar os mesmos containers, ao invés de digitar docker up -d (q
 
 
 token
-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
+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
+
 
 Site para cálculo do Imposto de relacinado
 https://sicalc.receita.economia.gov.br/sicalc/principal
+
+
 
 
 
