@@ -213,6 +213,14 @@
             ...
         g) Limpar o cache de informações caso seja necessário
             marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan config:clear
+        h) Depois de baixar o projeto via git para atualização Casa/Trabalho Trabalho/Casa, digitar:
+            1) marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail composer update
+            2) marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan migrate
+            3) marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan config:clear
+
+
+            
+
 
 012 -   Integrando o Bootstrap no projeto
         1 - Abrir o site em: https://getbootstrap.com/
@@ -332,7 +340,7 @@ OBS05 - Para levantar os mesmos containers, ao invés de digitar docker up -d (q
 
 
 token
-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
+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
 
 Site para cálculo do Imposto de relacinado
 https://sicalc.receita.economia.gov.br/sicalc/principal
