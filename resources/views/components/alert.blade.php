@@ -1,32 +1,32 @@
 {{-- Mensagens de sucesso --}}
 @if (session('success'))
-    <p style="background-color: green; color: white">
+    <div class="alert alert-success" role="alert">
         {{ session('success') }}
-    </p>
+    </div>
 @endif
 
 {{-- Mensagens de aviso --}}
 @if (session('warning'))
-    <p style="background-color: yellow; color: black">
+    <div class="alert alert-warning" role="alert">
         {{ session('warning') }}
-    </p>
+    </div>
 @endif
 
 {{-- Mensagens de error --}}
 @if (session('error'))
-    <p style="background-color: red; color: white">
+    <div class="alert alert-danger" role="alert">
         {{ session('error') }}
-    </p>
+    </div>
 @endif
 
 
 {{-- Mensagens de errors de validação --}}
 @if ($errors->any())
-    <span style="background-color: red; color: white">
+    <div class="alert alert-danger" role="alert">
         @foreach ($errors->all() as $error)
             {{ $error }}<br>
         @endforeach
-    </span>
+    </div>
 @endif
 
 

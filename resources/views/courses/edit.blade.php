@@ -1,41 +1,66 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h2>Editar o Curso: {{ $course->name }}</h2>
+    <div class="container-fluid px-4">
+        <div class="mb-1 hstack gap-2">
+            <h2 class="mt-3">Curso</h2>
 
-    {{-- Mensagem sem uso de componente
-    @if ($errors->any())
-        <span style="background-color: red; color: white">
-            @foreach ($errors->all() as $error)
-                {{ $error }}<br>
-            @endforeach
-        </span>
-    @endif
-    --}}
+            <ol class="breadcrumb mb-3 mt-3 ms-auto">
+                <li class="breadcrumb-item">
+                    <a href="#" class="text-decoration-none">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ route('course.index')}}" class="text-decoration-none">Cursos</a>
+                </li>
+                <li class="breadcrumb-item active">Curso</li>
+            </ol>
+        </div>
 
-    <x-alert />
+        <div class="card mb-4">
+            <div class="card-header mb-1 hstack gap-2">
+                <span>Editar</span>
 
-    <a href="{{ route('course.index') }}">
-        <button type="button">Listar</button>
-    </a><br><br>
-    
-    <a href="{{ route('course.show', ['course' => $course->id]) }}">
-        <button type="button">Visualizar</button>
-    </a><br><br>
+                <span class="ms-auto d-sm-flex flex-row">
+                    <a href="{{ route('course.index') }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0">
+                        Listar
+                    </a>
+
+                    <a href="{{ route('course.show', ['course' => $course->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-sm-0">
+                        Visualizar
+                    </a>
+                </span>
+            </div>
+
+            <div class="card-body">
+                {{-- Mensagem sem uso de componente  @if (session('success')) <p style="background-color: green; color: white"> {{ session('success') }} </p> @endif --}}
+
+                <x-alert />
+                
+                <form class="row g-3" action="{{ route('course.update', ['course' => $course->id]) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="col-12">
+                        <label for="name" class="form-label">Nome</label>
+                        <input type="text"  name="name" id="name" class="form-control" placeholder="nome do curso"  value="{{ old('name', $course->name) }}" required>
+                    </div>
+                    
+                    <div class="col-12">
+                        <label for="price" class="form-label">Preço</label>
+                        <input type="text"  name="price" id="price" class="form-control" placeholder="preço do curso 99.9, usar '.' para separar real do centavo" value="{{ old('price', $course->price) }}" required>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-warning btn-sm">Editar</button>
+                    </div>
+                </form>
 
 
-    <form action="{{ route('course.update', ['course' => $course->id]) }}" method="POST">
-        @csrf
-        @method('PUT')
 
-        <label>Nome:</label>
-        <input type="text" name="name" id="name" placeholder="Nome do curso" value="{{ old('name', $course->name) }}" ><br><br>
+            </div>
 
-        <label>Preço:</label>
-        <input type="text" name="price" id="price" placeholder="Preço do curso 0.00" value="{{ old('price', $course->price) }}" ><br><br>
-        
-        <button type="submit">Salvar</button>
-    </form>
+        </div>
+    </div>
 
 @endsection
 
