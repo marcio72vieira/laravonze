@@ -17,7 +17,8 @@ class CourseController extends Controller
         // Recuperar os registros do banco de dados
         // $courses = Course::where('id', '>=', 1)->get();
         // $courses = Course::paginate(10);
-        $courses = Course::orderBy('name', 'ASC')->get();
+        //$courses = Course::orderBy('name', 'ASC')->get();
+        $courses = Course::orderBy('name', 'ASC')->paginate(10);
 
         Log::info('Listando cursos.');
 

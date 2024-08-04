@@ -283,6 +283,26 @@
         e) Inlcuílos seus caminhos no arquivo: resources/views/layouts/admin.blade.php
         f) Para evitar o erro de carregamento do favicon no console, Copiar a pasta webfonts para a pasta /home/marcio/projetosdocker/laravonze/public.
 
+014 -   Implementando a paginação
+        a) Alterar o método boot na classe AppServiceProvider(/app/Providers/AppServiceProvider.php) como abaixo:
+
+           use Illuminate\Pagination\Paginator;
+           
+           public function boot(): void
+           {
+                Paginator::useBootstrapFive();
+           }
+
+        b) Alterar o método index, dos controlleres, conforme abaixo:
+           public function index()
+           {
+                $courses = Course::orderBy('name', 'ASC')->paginate(10);
+
+                return view('courses.index', ['courses' => $courses]);
+           }
+        c) Inserir ma view correspondene(index.blade.php) o trecho de código abaixo:
+
+           {{ $courses->links() }}
 
 
 
@@ -341,7 +361,7 @@ OBS05 - Para levantar os mesmos containers, ao invés de digitar docker up -d (q
 
 
 token
-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
+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
 
 
 Site para cálculo do Imposto de relacinado
