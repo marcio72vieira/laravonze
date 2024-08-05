@@ -22,7 +22,7 @@
 
                 <span class="ms-auto d-sm-flex flex-row">
                     <a href="{{ route('classe.index', ['course' => $classe->course->id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0">
-                        Listar Aulas
+                        <i class="fa-solid fa-list"></i> Listar Aulas
                     </a>
                 </span>
             </div>
@@ -31,7 +31,7 @@
                 {{-- Mensagem sem uso de componente  @if (session('success')) <p style="background-color: green; color: white"> {{ session('success') }} </p> @endif --}}
 
                 <x-alert />
-                
+
                 <form class="row g-3" action="{{ route('classe.update', ['classe' => $classe->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
@@ -45,7 +45,7 @@
                         <label for="name" class="form-label">Nome</label>
                         <input type="text"  name="name" id="name" class="form-control" placeholder="nome da aula"  value="{{ old('name', $classe->name) }}" required>
                     </div>
-                    
+
                     <div class="col-12">
                         <label for="description" class="form-label">Preço</label>
                         <textarea type="text"  name="description" id="description" class="form-control" placeholder="descrição da aula" required>{{ old('description', $classe->description) }}</textarea>

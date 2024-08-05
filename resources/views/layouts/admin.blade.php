@@ -8,6 +8,8 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     {{-- sbadmin--}}
     <link href="{{ asset('css/styles_sbadmin.css') }}" rel="stylesheet">
+    {{-- style prsonalizado mrc--}}
+    <link href="{{ asset('css/stylesmrc_admin.css') }}" rel="stylesheet">
     {{-- fontawesome --}}
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
 
@@ -16,7 +18,7 @@
 <body class="sb-nav-fixed">
 
     {{-- sbadmin--}}
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-nav-mrc">
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
         <!-- Sidebar Toggle-->
@@ -40,16 +42,16 @@
 
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <nav class="sb-sidenav accordion sb-sidenav-five" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
 
-                        <a class="nav-link" href="#">
+                        <a @class(['nav-link', 'active' => isset($menu) && $menu == 'dashboard']) href="{{ route('dashboard.index')}}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
 
-                        <a class="nav-link" href="{{ route('course.index') }}">
+                        <a @class(['nav-link', 'active' => isset($menu) && $menu == 'courses']) href="{{ route('course.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-teacher"></i></div>
                             Cursos
                         </a>

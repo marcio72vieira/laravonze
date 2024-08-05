@@ -16,17 +16,17 @@
             </ol>
         </div>
 
-        <div class="card mb-4">
+        <div class="card mb-4 border-light shadow">
             <div class="card-header mb-1 hstack gap-2">
                 <span>Editar</span>
 
                 <span class="ms-auto d-sm-flex flex-row">
                     <a href="{{ route('course.index') }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0">
-                        Listar
+                        <i class="fa-solid fa-list"></i> Listar
                     </a>
 
                     <a href="{{ route('course.show', ['course' => $course->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-sm-0">
-                        Visualizar
+                        <i class="fa-regular fa-eye"></i> Visualizar
                     </a>
                 </span>
             </div>
@@ -35,7 +35,7 @@
                 {{-- Mensagem sem uso de componente  @if (session('success')) <p style="background-color: green; color: white"> {{ session('success') }} </p> @endif --}}
 
                 <x-alert />
-                
+
                 <form class="row g-3" action="{{ route('course.update', ['course' => $course->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
@@ -44,7 +44,7 @@
                         <label for="name" class="form-label">Nome</label>
                         <input type="text"  name="name" id="name" class="form-control" placeholder="nome do curso"  value="{{ old('name', $course->name) }}" required>
                     </div>
-                    
+
                     <div class="col-12">
                         <label for="price" class="form-label">Preço</label>
                         <input type="text"  name="price" id="price" class="form-control" placeholder="preço do curso 99.9, usar '.' para separar real do centavo" value="{{ old('price', $course->price) }}" required>

@@ -287,7 +287,7 @@
         a) Alterar o método boot na classe AppServiceProvider(/app/Providers/AppServiceProvider.php) como abaixo:
 
            use Illuminate\Pagination\Paginator;
-           
+
            public function boot(): void
            {
                 Paginator::useBootstrapFive();
@@ -318,7 +318,19 @@
            5 - Efetuar os comandos abaixo:
                marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan config:clear
                marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail composer dump-autoload
-               
+
+016 -   Instalando uma versão específica do Node.js a partir do NVM direto do UBUNTU
+        a) nvm install <number_version>. Exemplo: marcio@marcio72:~/projetosdocker/laravonze$ nvm install 20.16.0
+        b) ver as versões do node, npm e nvm direto do UBUNTU. Exemplo: node -v; npm -v; nvm -v
+        C) ver as versões do node e npm a partir da aplicação
+           marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail node -v
+           marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail npm -v
+
+
+
+
+
+
 
 
 
@@ -380,7 +392,7 @@ OBS05 - Para levantar os mesmos containers, ao invés de digitar docker up -d (q
 
 
 token
-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
+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
 
 
 Site para cálculo do Imposto de relacinado
