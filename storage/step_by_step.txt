@@ -304,6 +304,25 @@
 
            {{ $courses->links() }}
 
+015 -   Como traduzir para o PORTUGUÊS
+        a) Acessar site de tradução de linguagem em:
+           https://github.com/lucascudo/laravel-pt-BR-localization
+        b) Efeturar a sequência de comandos abaixo como descrito abaixo (sequẽncia encontrada na parte de baixo da página acessada):
+           1 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan lang:publish
+           2 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail composer require lucascudo/laravel-pt-br-localization --dev
+           3 - marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan vendor:publish --tag=laravel-pt-br-localization
+           4 - // Altere Linha 85 do arquivo config/app.php para:
+               'locale' => 'pt_BR'
+               // Para versões 11.x altere a linha 8 do arquivo .env
+               APP_LOCALE=pt_BR
+           5 - Efetuar os comandos abaixo:
+               marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan config:clear
+               marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail composer dump-autoload
+               
+
+
+
+
 
 
 
@@ -361,7 +380,7 @@ OBS05 - Para levantar os mesmos containers, ao invés de digitar docker up -d (q
 
 
 token
-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
+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
 
 
 Site para cálculo do Imposto de relacinado
