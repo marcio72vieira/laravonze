@@ -23,7 +23,9 @@ class CourseRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'price' => 'required|numeric|decimal:0,2', // decimal:0,2 o número decimal deve ter no mínimo nenhuma casa decimal e no máximo 2
+            //'price' => 'required|numeric|decimal:0,2', // decimal:0,2 o número decimal deve ter no mínimo nenhuma casa decimal e no máximo 2
+            'price' => 'required|max:10', // máximo 10 caracteres, incluindo o 'ponto e a vírgula' do valor formatado // decimal:0,2 o número decimal deve ter no mínimo nenhuma casa decimal e no máximo 2
+
         ];
     }
 
@@ -32,7 +34,8 @@ class CourseRequest extends FormRequest
         return [
             'name.required' => 'Campo nome  do curso é obrigatório!',
             'price.required' => 'Campo preço do curso é obrigatório!',
-            'price.numeric' => 'O preço só pode ter números!',
+            //'price.numeric' => 'O preço só pode ter números!',
+            'price.max' => 'O preço só pode ter no máximo 8 números!',
         ];
     }
 }

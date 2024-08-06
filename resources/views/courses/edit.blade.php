@@ -47,7 +47,7 @@
 
                     <div class="col-12">
                         <label for="price" class="form-label">Preço</label>
-                        <input type="text"  name="price" id="price" class="form-control" placeholder="preço do curso 99.9, usar '.' para separar real do centavo" value="{{ old('price', $course->price) }}" required>
+                        <input type="text"  name="price" id="price" class="form-control" placeholder="preço do curso 99.9, usar '.' para separar real do centavo" value="{{ old('price', isset($course->price) ? number_format($course->price, '2',',','.') : '') }}" required>
                     </div>
 
                     <div class="col-12">

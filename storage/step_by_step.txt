@@ -335,7 +335,7 @@
         4) - Acessar a página do Bootstrap Getting Started/Vite (menu lateral): https://getbootstrap.com/docs/5.3/getting-started/vite/
              a) comando para instalar o Framework Bootstrap (seção: Install Bootstrap)
                 a.1) marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail npm i --save bootstrap @popperjs/core
-             b) Será instalado o Framework Bootstrap na pasta node_modules, ou seja, será instalado a partir do NPM e não 
+             b) Será instalado o Framework Bootstrap na pasta node_modules, ou seja, será instalado a partir do NPM e não
                 copiando os códigos fontes (css e js) diretamente nas pastas public/css e public/js
         5) - Apagar os trechos de cóigos do arquivo: resources/views/layouts/admin.blade.php, REFERENTE AO BOOTSTRAP
              a) <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -358,13 +358,13 @@
              d) Importar os arquivos movidos no arquivo:resources/css/css.app, conforme trecho de cógido abaixo:
                 /* Importar o css do Layout SB ADMIN*/
                 @import 'styles_sbadmin.css';
-                
+
                 /* Importar o css personalizado do Layout*/
                 @import 'stylesmrc_admin.css';
              e) no arquivo resources/views/layouts/admin.blade.php incluir o trecho de código como abaixo:
                 @vite(['resources/css/app.css', 'resources/js/app.js'])
         8) - Mover o arquivo scripts_sbadmin.js da pasta public/js para a pasta resources/js e importá-lo no arquivo resource/js/app.js conforme abaixo:
-             
+
 
         9) - No arquivo vite.config, certifica-se que os arquivos app.js e app.css estão incluidos conforme o trecho de código a seguir:
              export default defineConfig({
@@ -375,7 +375,7 @@
                         }),
                 ],
              });
-        
+
         10) -   A partir de agora, para executar a aplicação, é necessário executar o comando:
                 a) Para desenvolvimento: marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail npm run dev
                 b) Para produção: marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail npm run build
@@ -395,8 +395,20 @@
                    <script src="{{ asset('js/all.min.js') }}"></script>
                 g) Apagar/renomear a pasta public/webfonts
 
+        12) -   Ao baixar a aplicação do git, digitar os comandos abaixo:
+                marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail npm install
+                marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail npm run dev
 
-                
+018) -  Incluir SCRIPTS de terceiros e personalizados na aplicação
+        1) Criar o arquivo resources/js/scriptsmrc_admin.js
+        2) Importar o mesmo no arquivo resources/js/app.js conforme abaixo:
+           import './scriptsmrc_admin';
+
+
+
+
+
+
 
 
 
@@ -446,11 +458,26 @@ OBS05 - Para levantar os mesmos containers, ao invés de digitar docker up -d (q
 
 
 token
-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
+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
 
 
 Site para cálculo do Imposto de relacinado
 https://sicalc.receita.economia.gov.br/sicalc/principal
+
+
+Desabilitando protreção por push de usuário:
+https://docs.github.com/pt/code-security/secret-scanning/push-protection-for-users?utm_source=pocket_shared#disabling-push-protection-for-users
+Desabilitar a proteção por push para usuários
+
+É possível desabilitar a própria proteção por push para usuários nas configurações da sua conta pessoal.
+
+    No canto superior direito de qualquer página do GitHub, clique sua foto de perfil e clique em Configurações.
+
+    Na seção "Segurança" da barra lateral, clique em
+
+Segurança de código e análise.
+
+Em "Usuário", clique em Desabilitar à direita de "Proteção por push para si mesmo".
 
 
 

@@ -18,7 +18,7 @@ class CourseController extends Controller
         // $courses = Course::where('id', '>=', 1)->get();
         // $courses = Course::paginate(10);
         //$courses = Course::orderBy('name', 'ASC')->get();
-        $courses = Course::orderBy('name', 'ASC')->paginate(1);
+        $courses = Course::orderBy('name', 'ASC')->paginate(2);
 
         Log::info('Listando cursos.');
 
@@ -59,7 +59,8 @@ class CourseController extends Controller
             // Cadastrar no banco de dados na tabela cursos os valores de todos os campos
             $course = Course::create([
                 'name' => $request->name,
-                'price' => $request->price,
+                //'price' => $request->price,
+                'price' => str_replace(',', '.', str_replace('.', '', $request->price)),
 
             ]);
 
@@ -106,7 +107,8 @@ class CourseController extends Controller
 
             $course->update([
                 'name' => $request->name,
-                'price' => $request->price,
+                //'price' => $request->price,
+                'price' => str_replace(',', '.', str_replace('.', '', $request->price)),
             ]);
 
             // Operação concluída com êxito
