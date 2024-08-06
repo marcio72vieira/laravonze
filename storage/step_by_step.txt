@@ -326,23 +326,77 @@
            marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail node -v
            marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail npm -v
 
+017 -   Incluir Bootstrap, CSS e JavaScript com Vite
+        1) - Documentação do Vite: https://laravel.com/docs/11.x/vite#main-content
+        2) - Seção: # Installing Node
+        3) - Instalando as dependências Node(do frontEnd da aplicação atavés do NPM) com o comando abaixo:
+             a) ./vendor/bin/sail npm install
+             b) Obs: Será adicionado a pasta: node_modules
+        4) - Acessar a página do Bootstrap Getting Started/Vite (menu lateral): https://getbootstrap.com/docs/5.3/getting-started/vite/
+             a) comando para instalar o Framework Bootstrap (seção: Install Bootstrap)
+                a.1) marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail npm i --save bootstrap @popperjs/core
+             b) Será instalado o Framework Bootstrap na pasta node_modules, ou seja, será instalado a partir do NPM e não 
+                copiando os códigos fontes (css e js) diretamente nas pastas public/css e public/js
+        5) - Apagar os trechos de cóigos do arquivo: resources/views/layouts/admin.blade.php, REFERENTE AO BOOTSTRAP
+             a) <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+                <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+        6) - Para instalar o Bootstrap, dentro da pasta: resources/js
+             a) no arquivo resources/js/bootstrap.js, acrescentar o trecho de código importando o FrameWok Bootstrap como abaixo:
+                import 'bootstrap';
+                import axios from 'axios';
+                window.axios = axios;
+                window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+             b) no arquivo resources/views/layouts/admin.blade.php incluir o trecho de código como abaixo:
+                @vite(['resources/js/app.js'])
+        7) - Para instar os demais arquivos css (styles_sbadmin.css, stylesmrc_admin.css e all.min.css) via Vite, faça o seguinte:
+             a) Apagar/renomear caso deseje, os arquivos da pasta public/css
+                bootstrap.min.css; bootstrap.mins.css.map
+             b) Apagar/renomear caso deseje, os arquivos da pasta public/js
+                bootstrap.bundle.min.js; bootstrap.bundle.min.js.map
+             c) Mover para o diretório: resources/css, os arquivos:
+                styles_sbadmin.css, stylesmrc_admin.css
+             d) Importar os arquivos movidos no arquivo:resources/css/css.app, conforme trecho de cógido abaixo:
+                /* Importar o css do Layout SB ADMIN*/
+                @import 'styles_sbadmin.css';
+                
+                /* Importar o css personalizado do Layout*/
+                @import 'stylesmrc_admin.css';
+             e) no arquivo resources/views/layouts/admin.blade.php incluir o trecho de código como abaixo:
+                @vite(['resources/css/app.css', 'resources/js/app.js'])
+        8) - Mover o arquivo scripts_sbadmin.js da pasta public/js para a pasta resources/js e importá-lo no arquivo resource/js/app.js conforme abaixo:
+             
+
+        9) - No arquivo vite.config, certifica-se que os arquivos app.js e app.css estão incluidos conforme o trecho de código a seguir:
+             export default defineConfig({
+                plugins: [
+                        laravel({
+                        input: ['resources/css/app.css', 'resources/js/app.js'],
+                        refresh: true,
+                        }),
+                ],
+             });
+        
+        10) -   A partir de agora, para executar a aplicação, é necessário executar o comando:
+                a) Para desenvolvimento: marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail npm run dev
+                b) Para produção: marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail npm run build
+
+        11) -   Incluindo os ÍCONES FONTAWESOME
+                a) Apagar/renomear os arquivos css e js referente aos ícones fontawesome das pastas public/css e public/js
+                b) Ir para a página Fontawesome: https://fontawesome.com/start
+                c) Escolher "react" na seção: Use Font Awesome with Your Preferred Syntax or Stack…
+                d) Execute o comando sugerido no passo da página apresentada para a instalação das forntes, como abaixo:
+                   marcio@vaio:~/projetosdocker/laravonze$ ./vendor/bin/sail npm i --save @fortawesome/fontawesome-free
+                e) Acrescentar no arquivo resource/css/app.css o trecho de código a seguir:
+                   /* Importar as fontes de ícones do FontAwesome*/
+                   @import '@fortawesome/fontawesome-free/css/all.css';
+                f) Apagar do arquivo resources/views/layouts/admin.blade.php o trecho que importa os arquivos referente ao css e js dos ícones
+                   apagar o trecho abaixo:
+                   <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
+                   <script src="{{ asset('js/all.min.js') }}"></script>
+                g) Apagar/renomear a pasta public/webfonts
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                
 
 
 
@@ -392,7 +446,7 @@ OBS05 - Para levantar os mesmos containers, ao invés de digitar docker up -d (q
 
 
 token
-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
+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
 
 
 Site para cálculo do Imposto de relacinado

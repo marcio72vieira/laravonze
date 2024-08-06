@@ -4,14 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+
     {{-- VIA CDN <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> --}}
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    {{-- VIA INCLUSÃO DIRETA DOS ARQUIVOS NA PASTA PUBLIC <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"> --}}
     {{-- sbadmin--}}
-    <link href="{{ asset('css/styles_sbadmin.css') }}" rel="stylesheet">
+    {{-- VIA INCLUSÃO DIRETA DOS ARQUIVOS NA PASTA PUBLIC <link href="{{ asset('css/styles_sbadmin.css') }}" rel="stylesheet"> --}}
     {{-- style prsonalizado mrc--}}
-    <link href="{{ asset('css/stylesmrc_admin.css') }}" rel="stylesheet">
+    {{-- VIA INCLUSÃO DIRETA DOS ARQUIVOS NA PASTA PUBLIC <link href="{{ asset('css/stylesmrc_admin.css') }}" rel="stylesheet"> --}}
     {{-- fontawesome --}}
-    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
+    {{-- VIA INCLUSÃO DIRETA DOS ARQUIVOS NA PASTA PUBLIC <link href="{{ asset('css/all.min.css') }}" rel="stylesheet"> --}}
+    
+    {{-- Inclusão do Bootstrap via Vite--}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <title>Celke</title>
 </head>
@@ -92,13 +97,12 @@
 
 
     {{-- VIA CDN <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> --}}
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    {{-- VIA INCLUSÃO DIRETA DOS ARQUIVOS NA PASTA PUBLIC <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script> --}}
     {{-- sbadmin--}}
-    <script src="{{ asset('js/scripts_sbadmin.js') }}"></script>
+    {{-- VIA INCLUSÃO DIRETA DOS ARQUIVOS NA PASTA PUBLIC <script src="{{ asset('js/scripts_sbadmin.js') }}"></script> --}}
     {{-- fontawesome --}}
     {{-- via cdn <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script> --}}
-    <script src="{{ asset('js/all.min.js') }}"></script>
-
+    {{-- VIA INCLUSÃO DIRETA DOS ARQUIVOS NA PASTA PUBLIC <script src="{{ asset('js/all.min.js') }}"></script> --}}
 
 </body>
 </html>

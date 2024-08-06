@@ -1,0 +1,8 @@
+/* Importar o css do Layout SB ADMIN*/
+@import 'styles_sbadmin.css';
+
+/* Importar o css personalizado do Layout*/
+@import 'stylesmrc_admin.css';
+
+/* Importar as fontes de ícones do FontAwesome*/
+@import '@fortawesome/fontawesome-free/css/all.css';
