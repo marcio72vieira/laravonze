@@ -1,3 +1,4 @@
+
 000 -   Para baixar o projeto via GIT:
         a) Clonar o projeto: / OU baixar o arquivo .zip
             marcio@marcio72:~/projetosdocker/laravonze$ git clone https://github.com/marcio72vieira/laravonze.git
@@ -86,6 +87,9 @@
                 ]);
         d) Execute a seed com o comando abaixo:
                 ./vendor/bin/sail artisan db:seed
+        e) Executando uma seed específica:
+                ./vendor/bin/sail artisan db:seed --class=UserSeeder
+
 
 007 -   Adicionando uma coluna a uma tabela existente
         a) Digitar o comando relacinado à cricção da coluna(s) na tabela desejada
@@ -456,9 +460,6 @@ OBS04 - Quando utilizar FormsRequest Para VALIDAR, acrescentar no corpo dos mét
 
 OBS05 - Para levantar os mesmos containers, ao invés de digitar docker up -d (que irá criar novos containers) digite: docker start $(docker ps -a -q)
 
-
-token
-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
 
 
 Site para cálculo do Imposto de relacinado

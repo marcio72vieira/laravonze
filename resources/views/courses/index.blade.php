@@ -7,7 +7,7 @@
 
             <ol class="breadcrumb mb-3 mt-3 ms-auto">
                 <li class="breadcrumb-item">
-                    <a href="#" class="text-decoration-none">Dashboard</a>
+                    <a href="{{ route('dashboard.index') }}" class="text-decoration-none">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item active">Cursos</li>
             </ol>
