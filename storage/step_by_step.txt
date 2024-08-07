@@ -408,6 +408,67 @@
         2) Importar o mesmo no arquivo resources/js/app.js conforme abaixo:
            import './scriptsmrc_admin';
 
+019) -  Implementando o login
+        1) Criar controller LoginController:
+           ./vendor/bin/sail artisan make:controller LoginController
+        2) Criar as rotas necessárias
+           Route::get('/', [LoginController::class, 'index'])->name('login.index');
+        3) Criar o layout para o login em layouts/login.blade.php (Criar a partir do layouts/admin.blade.php e fazer as modificações necessárias)
+        4) Criar o formulário de login na view login/index.blade.php
+        5) Criar a rota necessária para receber os dados do formulário
+           Route::get('/login', [LoginController::class, 'loginProcess'])->name('login.process');
+        6) Criar a request necessária:
+           ./vendor/bin/sail artisan make:request LoginRequest
+        7) Criar o método loginProcess no LoginController com o conteúdo abaixo:
+
+           public function loginProcess(LoginRequest $request)
+           {
+                $request->validated();
+                $authenticated = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+
+                if(!$authenticated){
+                    return back()->withInput()->with('error', 'E-mail ou senha inválido!');
+                }
+
+                return redirect()->route('dashboard.index')->with('success', 'Seja bem vindo!');
+           }
+        8) Criar a rota para deslogar o usuário logado
+           Route::get('/logout', [LoginController::class, 'destroy'])->name('login.destroy');
+        9) Criar o método destroy para deslogar o usuário que está logado
+
+           public function destroy()
+           {
+                Auth::logout();
+
+                return redirect()->route('login.index')->with('success', 'Deslogado com sucesso!');
+           }
+        10) Criar o middleware para criar rotas públicas e restritas
+            Route::group(['middleware' => 'auth'], function(){
+                ...
+                // aqui, rotas que deva pertencer a este middleware
+                ...
+            });
+        11) Redirecione o usuário para a página de login ('/') quando o mesmo não estiver autenticado e desejar acionar uma página restrita.
+            modifique o método no arquivo: bootstrap/app.php, conforme abaixo:
+            ...
+            ->withMiddleware(function (Middleware $middleware) {
+                $middleware->redirectGuestsTo('/');
+            })
+            ...
+            Obs: Ness caso específico, a rota '/login' está representada apenas pela barra ('/') conforme podemos observar no arquivo de rota routes/web.php
+                 ...
+                 Route::get('/', [LoginController::class, 'index'])->name('login.index');
+                 ...
+                 Se a mesma possuisse o nome login, deveriamos colocar o nome dela no método acima (->withMiddleware(function (Middleware $middleware) {$middleware->redirectGuestsTo('/login');)
+
+
+
+
+
+
+
+
+
 
 
 

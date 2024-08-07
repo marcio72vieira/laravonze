@@ -14,7 +14,7 @@
     {{-- VIA INCLUSÃO DIRETA DOS ARQUIVOS NA PASTA PUBLIC <link href="{{ asset('css/stylesmrc_admin.css') }}" rel="stylesheet"> --}}
     {{-- fontawesome --}}
     {{-- VIA INCLUSÃO DIRETA DOS ARQUIVOS NA PASTA PUBLIC <link href="{{ asset('css/all.min.css') }}" rel="stylesheet"> --}}
-    
+
     {{-- Inclusão do Bootstrap via Vite--}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -39,7 +39,7 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#">Perfil</a></li>
                     <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="#">Sair</a></li>
+                    <li><a class="dropdown-item" href="{{ route('login.destroy') }}">Sair</a></li>
                 </ul>
             </li>
         </ul>
@@ -66,7 +66,7 @@
                             Cursos
                         </a>
 
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('login.destroy') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
                             Sair
                         </a>
@@ -74,7 +74,12 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged: Marcio</div>
+                    <div class="small">Logged:
+                        {{-- Se houver um usuário logado, imprimir o nome do usuário --}}
+                        @if (auth()->check())
+                            {{ auth()->user()->name;}}
+                        @endif
+                    </div>
                 </div>
             </nav>
         </div>
