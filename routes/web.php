@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /* Route::get('/', function () { return view('welcome'); }); */
@@ -15,7 +16,7 @@ Route::post('/login', [LoginController::class, 'loginProcess'])->name('login.pro
 Route::get('/logout', [LoginController::class, 'destroy'])->name('login.destroy');
 Route::get('/create-user-login', [LoginController::class, 'create'])->name('login.create-user');
 Route::post('/store-user-login', [LoginController::class, 'store'])->name('login.store-user');
-    
+
 
 
 // Rotas restritas (deve-se está autenticado)
@@ -23,6 +24,13 @@ Route::group(['middleware' => 'auth'], function(){
 
     // Dashboard
     Route::get('/index-dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+    // Perfil
+    Route::get('/show-profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/edit-profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/update-profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/edit-profile-password', [ProfileController::class, 'editPassword'])->name('profile.edit-password');
+    Route::put('/update-profile-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
 
     // Usuários
     Route::get('/index-user', [UserController::class, 'index'])->name('user.index');

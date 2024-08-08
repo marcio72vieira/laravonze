@@ -29,15 +29,14 @@
                     </div>
 
                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                        <a href="#" class="small text-decoration-none">Esqueceu a senha?</a>
-                        <button type="submit" class="btn btn-primary">Acessar</button>
+                        {{-- <a href="#" class="small text-decoration-none">Cancelar!</a> --}}
+                        <button type="submit" class="btn btn-primary">Cadastra</button>
                     </div>
                 </form>
             </div>
             <div class="card-footer text-center py-3">
                 <div class="small">
-                    Precisa de uma conta?
-                    <a href="#" class="text-decoration-none">Inscrever-se!</a>
+                    <a href="{{ route('login.index') }}" class="text-decoration-none">Clique aqui</a> para acessar
                 </div>
             </div>
         </div>

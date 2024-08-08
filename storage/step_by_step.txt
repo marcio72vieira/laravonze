@@ -460,7 +460,7 @@
                  Route::get('/', [LoginController::class, 'index'])->name('login.index');
                  ...
                  Se a mesma possuisse o nome login, deveriamos colocar o nome dela no método acima (->withMiddleware(function (Middleware $middleware) {$middleware->redirectGuestsTo('/login');)
- 
+
  020 -  Criar página para inscrever usuário no sitema
         1) Cria as rotas publiclas, ou seja, não restrita
            Route::get('/create-user-login', [UserController::class, 'create'])->name('login.create-user');
@@ -468,7 +468,7 @@
         2) Implementar os respectivo métodos (create e store) no LonginController:
         3) Criar a respectiva view para apresentar o formulário de cadastrar novo usuário:
            ./vendor/bin/sail artisan make:view login/create
-           
+
 
 
 

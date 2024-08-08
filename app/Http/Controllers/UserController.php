@@ -58,7 +58,7 @@ class UserController extends Controller
             ]);
 
             // Salvar log
-            Log::info('Usuário cadastrado.', ['id' => $user->id, $user]);
+            Log::info('Usuário cadastrado.', ['id' => $user->id, $user->name]);
 
             // Operação é concluída com êxito
             DB::commit();
