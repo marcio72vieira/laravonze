@@ -37,6 +37,14 @@ class LoginController extends Controller
 
     }
 
+    // Carregar o formulário cadastrar novo usuário
+    public function create()
+    {
+        // Carregr a view
+        return view('login.create');
+
+    }
+
     // Deslogar o usuário
     public function destroy()
     {
