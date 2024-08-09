@@ -33,6 +33,9 @@ class LoginController extends Controller
         // Se o usuário não foi autenticado (!), significa que os dados estão incorretos
         if(!$authenticated){
 
+            // Salvar log
+            Log::warning('E-mail ou senha inválido', ['error' => $request->email]);
+
             // Redirecionar o usuário para página anterior "login(área restrita)", mantendo os dados digitados e enviar a mensagem de erro
             return back()->withInput()->with('error', 'E-mail ou senha inválido!');
         }
@@ -78,7 +81,7 @@ class LoginController extends Controller
         } catch (Exception $e) {
 
             // Salvar log
-            Log::info('Usuário não cadastrado.', ['error' => $e->getMessage()]);
+            Log::warning('Usuário não cadastrado.', ['error' => $e->getMessage()]);
 
             // Operação não é concluída com êxito
             DB::rollBack();

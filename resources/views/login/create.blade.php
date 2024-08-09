@@ -30,7 +30,7 @@
 
                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
                         {{-- <a href="#" class="small text-decoration-none">Cancelar!</a> --}}
-                        <button type="submit" class="btn btn-primary">Cadastra</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Cadastra</button>
                     </div>
                 </form>
             </div>
