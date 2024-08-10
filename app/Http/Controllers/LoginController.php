@@ -34,7 +34,7 @@ class LoginController extends Controller
         if(!$authenticated){
 
             // Salvar log
-            Log::warning('E-mail ou senha inválido', ['error' => $request->email]);
+            Log::warning('E-mail ou senha inválido', ['email' => $request->email]);
 
             // Redirecionar o usuário para página anterior "login(área restrita)", mantendo os dados digitados e enviar a mensagem de erro
             return back()->withInput()->with('error', 'E-mail ou senha inválido!');

@@ -474,17 +474,16 @@
         1) Crie os arquivos e pastas relacionado a personalização da recuperação de senhas via email com o comando abaixo.
            OBS: Será criada a pasta /resources/views/vendor com demais pastas e arquivos para personalização.
            ./vendor/bin/sail artisan vendor:publish --tag=laravel-mail
-
-
-
-        MAIL_MAILER=smtp
-        MAIL_HOST=sandbox.smtp.mailtrap.io
-        MAIL_PORT=2525
-        MAIL_USERNAME=c9b77ce14d9056
-        MAIL_PASSWORD=e86b493c461e8d
-        MAIL_ENCRYPTION=null
-        MAIL_FROM_ADDRESS="atendimento@celkelaravel11.com.br"
-        MAIL_FROM_NAME="${APP_NAME}"
+           Credenciais para envio de email no MailTrap
+           MAIL_MAILER=smtp
+           MAIL_HOST=sandbox.smtp.mailtrap.io
+           MAIL_PORT=2525
+           MAIL_USERNAME=c9b77ce14d9056
+           MAIL_PASSWORD=e86b493c461e8d
+           MAIL_ENCRYPTION=null
+           MAIL_FROM_ADDRESS="atendimento@celkelaravel11.com.br"
+           MAIL_FROM_NAME="${APP_NAME}"
+        
 
 
 
