@@ -483,7 +483,132 @@
            MAIL_ENCRYPTION=null
            MAIL_FROM_ADDRESS="atendimento@celkelaravel11.com.br"
            MAIL_FROM_NAME="${APP_NAME}"
-        
+
+021 -   SPATIE ROLE AND PERMISSIONS
+        1) Site de referência:
+           https://spatie.be/docs/laravel-permission/v6/introduction
+        2) Comando para instalar:
+           ./vendor/bin/sail composer require spatie/laravel-permission
+        3) Criar/Publicar as migration com o comando abaixo:
+           ./vendor/bin/sail artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+        4) Limpar o "cache da configuração"
+           ./vendor/bin/sail artisan config:clea
+        5) Executar as migrations
+           ./vendor/bin/sail artisan migrate
+        6) Adicionara TRAIT(HasRoles) no model User conforme abaixo:
+           ...
+           use Spatie\Permission\Traits\HasRoles;
+
+           class User extends Authenticatable  implements Auditable
+            {
+                use \OwenIt\Auditing\Auditable;
+                use HasFactory, Notifiable, HasRoles;
+        7) Cadastrar PERMISSIONS (permissões)
+           a) Criar a seeder PermissionSeeder
+              ./vendor/bin/sail artisan make:seeder PermissionSeeder
+           b) Arquio PermissionSeeder simplificado:
+
+                namespace Database\Seeders;
+
+                use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+                use Illuminate\Database\Seeder;
+                use Spatie\Permission\Models\Permission;
+
+                class PermissionSeeder extends Seeder
+                {
+                    public function run(): void
+                    {
+                        $permissions = [
+                            // Permissões referente a Cursos
+                            'index-course',
+                            'show-course,',
+                            'create-course',
+                            'edit-course',
+                            'destroy-course'
+                        ];
+
+                        // Percorre o array de permissões criado acima e verifica se no Model Permission ja existe a permissão cadastrada
+                        foreach($permissions as $permission){
+                            $existingPermission = Permission::where('name', $permission)->first();
+
+                            // Se a permissão não existir, cadastra a permissão na tabela(permissions), fornecendo o nome e o tipo da aplicação (web ou api)
+                            if(!$existingPermission){
+                                Permission::create([
+                                    'name' => $permission,
+                                    'guard_name' => 'web',
+                                ]);
+
+                            }
+                        }
+                    }
+                }
+            c) Acrescentar a seeder PermissionSeeder ao arquivo DatabaseSeeder, conforme abaixo:
+               ...
+               $this->call([
+                    CourseSeeder::class,
+                    ClasseSeeder::class,
+                    PermissionSeeder::class,
+                    //UserSeeder::class,
+                ]);
+            d) Limpar a tabela com users (apagar todos os registros)
+
+            e) Excutar a seeder
+               ./vendor/bin/sail artisan db:seed
+        8) Cadastrar as ROLES (papeis)
+           a) Criar a seeder RoleSeeder
+              ./vendor/bin/sail artisan make:seeder RoleSeeder
+           b) Arquivo RoleSeeder simplificado
+                namespace Database\Seeders;
+
+                use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+                use Illuminate\Database\Seeder;
+                use Spatie\Permission\Models\Role;
+
+                class RoleSeeder extends Seeder
+                {
+                    public function run(): void
+                    {
+                        // Verifica se o papel está criado no banco, se não estiver, cadastra-o
+                        if(!Role::where('name', 'Super Admin')->first()){
+                            Role::create([
+                                'name' => 'Super Admin'
+                            ]);
+                        }
+
+                        // Verifica se o papel está criado no banco, se não estiver, cadastra-o
+                        if(!Role::where('name', 'Admin')->first()){
+                            Role::create([
+                                'name' => 'Admin'
+                            ]);
+                        }
+                    }
+                }
+           c) Acrescentar a seeder PermissionSeeder ao arquivo DatabaseSeeder, conforme abaixo:
+               ...
+               $this->call([
+                    CourseSeeder::class,
+                    ClasseSeeder::class,
+                    PermissionSeeder::class,
+                    RoleSeeder::class,
+                    //UserSeeder::class,
+                ]);
+           e) Excutar a seeder
+               ./vendor/bin/sail artisan db:seed
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
