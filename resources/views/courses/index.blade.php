@@ -18,9 +18,11 @@
                 <span>Listar</span>
 
                 <span class="ms-auto">
-                    <a href="{{ route('course.create') }}" class="btn btn-success btn-sm">
-                        <i class="fa-regular fa-square-plus"></i> Cadastrar
-                    </a>
+                    @can('create-course')
+                        <a href="{{ route('course.create') }}" class="btn btn-success btn-sm">
+                            <i class="fa-regular fa-square-plus"></i> Cadastrar
+                        </a>
+                    @endcan
                 </span>
             </div>
 
@@ -50,25 +52,34 @@
                                 <td class="d-none d-md-table-cell">{{ \Carbon\Carbon::parse($course->created_at)->format('d/m/Y H:i:s') }}</td>
                                 <td class="d-none d-md-table-cell">{{ \Carbon\Carbon::parse($course->updated_at)->format('d/m/Y H:i:s') }}</td>
                                 <td class="d-md-flex flex-row justify-content-center">
-                                    <a href="{{ route('classe.index', ['course' => $course->id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-md-0">
-                                        <i class="fa-solid fa-list"></i> Aulas
-                                    </a>
+                                    @can('index-classe')
+                                        <a href="{{ route('classe.index', ['course' => $course->id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-md-0">
+                                            <i class="fa-solid fa-list"></i> Aulas
+                                        </a>
+                                    @endcan
 
-                                    <a href="{{ route('course.show', ['course' => $course->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-md-0">
-                                        <i class="fa-regular fa-eye"></i> Visualizar
-                                    </a>
+                                    @can('show-course')
+                                        <a href="{{ route('course.show', ['course' => $course->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-md-0">
+                                            <i class="fa-regular fa-eye"></i> Visualizar
+                                        </a>
+                                    @endcan
 
-                                    <a href="{{ route('course.edit', ['course' => $course->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-md-0">
-                                        <i class="fa-regular fa-pen-to-square"></i> Editar
-                                    </a>
+                                    @can('edit-course')
+                                        <a href="{{ route('course.edit', ['course' => $course->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-md-0">
+                                            <i class="fa-regular fa-pen-to-square"></i> Editar
+                                        </a>
+                                    @endcan
 
-                                    <form action="{{ route('course.destroy', ['course' => $course->id]) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"  class="btn btn-danger btn-sm me-1" onclick="return confirm('Tem certeza que deseja apagar este registro?')">
-                                            <i class="fa-regular fa-trash-can"></i> Apagar
-                                        </button>
-                                    </form>
+                                    @can('destroy-course')
+                                        <form action="{{ route('course.destroy', ['course' => $course->id]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"  class="btn btn-danger btn-sm me-1" onclick="return confirm('Tem certeza que deseja apagar este registro?')">
+                                                <i class="fa-regular fa-trash-can"></i> Apagar
+                                            </button>
+                                        </form>
+
+                                    @endcan
                                 </td>
                             </tr>
                         @empty

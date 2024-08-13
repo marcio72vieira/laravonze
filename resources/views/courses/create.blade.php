@@ -21,9 +21,11 @@
                 <span>Cadastrar</span>
 
                 <span class="ms-auto d-sm-flex flex-row">
-                    <a href="{{ route('course.index') }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0">
-                        <i class="fa-solid fa-list-ul"></i> Listar
-                    </a>
+                    @can('index-course')
+                        <a href="{{ route('course.index') }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0">
+                            <i class="fa-solid fa-list-ul"></i> Listar
+                        </a>
+                    @endcan
                 </span>
             </div>
 

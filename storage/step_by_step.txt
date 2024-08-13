@@ -599,9 +599,9 @@
             b) ./vendor/bin/sail artisan migrate:fresh
             c) ./vendor/bin/sail artisan cache:clear
             d) ./vendor/bin/sail artisan db:seed
-        10) Associando os usuários as suas devidas permissões 
+        10) Associando os usuários as suas devidas permissões
             a) No login(LoginController), deve-se recuperar as permissões que o usuário possui, conforme abaixo:
-            
+
                 ...
                 // Depois de autenticado, deve-se obter o usuário autenticado
                 $user = Auth::user();
@@ -633,7 +633,26 @@
                Obs: ...->middleware('permission: create-course'); create-course é o nome que foi cadastrado no banco de dados na tabela permissions
                     ->middleware('permission: create-course'), não tem nada a ver com a rota criada(Route::get('/create-course',) é apenas uma coincidência
                Route::get('/create-course', [CourseController::class, 'create'])->name('course.create')->middleware('permission:create-course');
-               
+
+            d) Definindo as permissões do Super Administrador
+               d.1) Acrescentar no arquivo: app/Providers/AppServiceProvider.php, no método boot o trecho de código abaixo:
+
+                    public function boot(): void
+                    {
+                        // Incluir a paginação do Bootstrap 5
+                        Paginator::useBootstrapFive();
+
+                        // Super Admin tem acesso a todas as páginas
+                        Gate::before(function ($user, $ability) {
+                            return $user->hasRole('Super Admin') ? true : null;
+                        });
+                    }
+
+            e) Ocultar elementos na view sem permissão de acesso
+               @can()
+                <elemento></elemento>
+               @endcan
+
 
 
 

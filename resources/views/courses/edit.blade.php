@@ -21,13 +21,17 @@
                 <span>Editar</span>
 
                 <span class="ms-auto d-sm-flex flex-row">
-                    <a href="{{ route('course.index') }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0">
-                        <i class="fa-solid fa-list"></i> Listar
-                    </a>
+                    @can('index-course')
+                        <a href="{{ route('course.index') }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0">
+                            <i class="fa-solid fa-list"></i> Listar
+                        </a>
+                    @endcan
 
-                    <a href="{{ route('course.show', ['course' => $course->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-sm-0">
-                        <i class="fa-regular fa-eye"></i> Visualizar
-                    </a>
+                    @can('show-course')
+                        <a href="{{ route('course.show', ['course' => $course->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-sm-0">
+                            <i class="fa-regular fa-eye"></i> Visualizar
+                        </a>
+                    @endcan
                 </span>
             </div>
 
@@ -54,8 +58,6 @@
                         <button type="submit" class="btn btn-warning btn-sm">Editar</button>
                     </div>
                 </form>
-
-
 
             </div>
 

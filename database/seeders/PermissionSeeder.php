@@ -20,6 +20,20 @@ class PermissionSeeder extends Seeder
             'create-course',
             'edit-course',
             'destroy-course',
+
+            // Permissões referente a Aulas
+            'index-classe',
+            'show-classe',
+            'create-classe',
+            'edit-classe',
+            'destroy-classe',
+
+            // Permissões referente a Usuários
+            'index-user',
+            'show-user',
+            'create-user',
+            'edit-user',
+            'destroy-user',
         ];
 
         // Percorre o array de permissões criado acima e verifica se no Model Permission ja existe a permissão cadastrada

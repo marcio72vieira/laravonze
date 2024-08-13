@@ -18,25 +18,31 @@
 
                 <span class="ms-auto d-sm-flex flex-row">
 
-                    <a href="{{ route('user.index') }}" class="btn btn-info btn-sm me-1"><i class="fa-solid fa-list"></i>
-                        Listar
-                    </a>
+                    @can('index-user')
+                        <a href="{{ route('user.index') }}" class="btn btn-info btn-sm me-1"><i class="fa-solid fa-list"></i>
+                            Listar
+                        </a>
+                    @endcan
 
-                    <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn btn-warning btn-sm me-1"><i
-                            class="fa-solid fa-pen-to-square"></i> Editar
-                    </a>
+                    @can('edit-user')
+                        <a href="{{ route('user.edit', ['user' => $user->id]) }}" class="btn btn-warning btn-sm me-1"><i
+                                class="fa-solid fa-pen-to-square"></i> Editar
+                        </a>
+                    @endcan
 
                     <a href="{{ route('user.edit-password', ['user' => $user->id]) }}" class="btn btn-warning btn-sm me-1"><i
                             class="fa-solid fa-pen-to-square"></i> Editar Senha
                     </a>
 
-                    <form method="POST" action="{{ route('user.destroy', ['user' => $user->id]) }}">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-danger btn-sm me-1"
-                            onclick="return confirm('Tem certeza que deseja apagar este registro?')"><i
-                                class="fa-regular fa-trash-can"></i> Apagar</button>
-                    </form>
+                    @can('destroy-user')
+                        <form method="POST" action="{{ route('user.destroy', ['user' => $user->id]) }}">
+                            @csrf
+                            @method('delete')
+                            <button type="submit" class="btn btn-danger btn-sm me-1"
+                                onclick="return confirm('Tem certeza que deseja apagar este registro?')"><i
+                                    class="fa-regular fa-trash-can"></i> Apagar</button>
+                        </form>
+                    @endcan
                 </span>
             </div>
             <div class="card-body">
