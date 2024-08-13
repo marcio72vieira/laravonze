@@ -26,7 +26,7 @@ class RoleSeeder extends Seeder
             $admin->givePermissionTo([
                 // Permissões referente a Cursos
                 'index-course',
-                'show-course,',
+                'show-course',
                 'create-course',
                 'edit-course',
                 'destroy-course',
@@ -41,7 +41,7 @@ class RoleSeeder extends Seeder
             $teacher->givePermissionTo([
                 // Permissões referente a Cursos
                 'index-course',
-                'show-course,',
+                'show-course',
                 'create-course',
                 'edit-course',
                 'destroy-course',
@@ -56,7 +56,7 @@ class RoleSeeder extends Seeder
             $tutor->givePermissionTo([
                 // Permissões referente a Cursos
                 'index-course',
-                'show-course,',
+                'show-course',
                 'edit-course',
             ]);
         }

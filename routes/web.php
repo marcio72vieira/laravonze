@@ -51,13 +51,13 @@ Route::group(['middleware' => 'auth'], function(){
     Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 
     // Courses
-    Route::get('/index-course', [CourseController::class, 'index'])->name('course.index');
-    Route::get('/show-course/{course}', [CourseController::class, 'show'])->name('course.show');
-    Route::get('/create-course', [CourseController::class, 'create'])->name('course.create');
-    Route::post('/store-course', [CourseController::class, 'store'])->name('course.store');
-    Route::get('/edit-course/{course}', [CourseController::class, 'edit'])->name('course.edit');
-    Route::put('/update-course/{course}', [CourseController::class, 'update'])->name('course.update');
-    Route::delete('/destroy-course/{course}', [CourseController::class, 'destroy'])->name('course.destroy');
+    Route::get('/index-course', [CourseController::class, 'index'])->name('course.index')->middleware('permission:index-course');
+    Route::get('/show-course/{course}', [CourseController::class, 'show'])->name('course.show')->middleware('permission:show-course');
+    Route::get('/create-course', [CourseController::class, 'create'])->name('course.create')->middleware('permission:create-course');
+    Route::post('/store-course', [CourseController::class, 'store'])->name('course.store')->middleware('permission:create-course');
+    Route::get('/edit-course/{course}', [CourseController::class, 'edit'])->name('course.edit')->middleware('permission:edit-course');
+    Route::put('/update-course/{course}', [CourseController::class, 'update'])->name('course.update')->middleware('permission:edit-course');
+    Route::delete('/destroy-course/{course}', [CourseController::class, 'destroy'])->name('course.destroy')->middleware('permission:destroy-course');
 
 
     // Classes

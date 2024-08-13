@@ -594,6 +594,47 @@
                 ]);
            e) Excutar a seeder
                ./vendor/bin/sail artisan db:seed
+        9)  Sequência de comandos ao baixar do gitHub para uma máquina local
+            a) ./vendor/bin/sail composer update
+            b) ./vendor/bin/sail artisan migrate:fresh
+            c) ./vendor/bin/sail artisan cache:clear
+            d) ./vendor/bin/sail artisan db:seed
+        10) Associando os usuários as suas devidas permissões 
+            a) No login(LoginController), deve-se recuperar as permissões que o usuário possui, conforme abaixo:
+            
+                ...
+                // Depois de autenticado, deve-se obter o usuário autenticado
+                $user = Auth::user();
+                $user = User::find($user->id);
+
+                // Verifica se o usuário possui o papel "Super Admin"
+                if($user->hasRole('Super Admin')){
+                    // Recupera no banco TODAS as permissões, apenas o nome(pluck) em forma de array(toArray)
+                    $permissions = Permission::pluck('name')->toArray();
+                }else{
+                    // Recupera no banco SÓ SÓ as permissõoes que o papel do usuário possui. Apenas o nome em forma de array
+                    // Obs: o usuário possui um papel, o papel possui permissões, portando obtém as permissões do usuári via papel
+                    $permissions = $user->getPermissionsViaRoles()->pluck('name')->toArray();
+                }
+
+                // Ao usuário é atribuída só as permissões que o mesmo possui.
+                // Obs: o método "syscPermissions", recebe um array. "$permissions" é um array(... toArray())
+                $user->syncPermissions($permissions);
+                ...
+            b) No arquivo bootstrap/app.php, na método ->withMiddleware() acrescentar o trecho de código conforme abaixo:
+                ...
+                $middleware->alias([
+                    'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+                    'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+                    'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+                ]);
+                ...
+            c) Acrescentar nas rotas os middleware, conforme exemplo abaixo:
+               Obs: ...->middleware('permission: create-course'); create-course é o nome que foi cadastrado no banco de dados na tabela permissions
+                    ->middleware('permission: create-course'), não tem nada a ver com a rota criada(Route::get('/create-course',) é apenas uma coincidência
+               Route::get('/create-course', [CourseController::class, 'create'])->name('course.create')->middleware('permission:create-course');
+               
+
 
 
 

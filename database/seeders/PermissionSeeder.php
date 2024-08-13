@@ -16,7 +16,7 @@ class PermissionSeeder extends Seeder
         $permissions = [
             // Permissões referente a Cursos
             'index-course',
-            'show-course,',
+            'show-course',
             'create-course',
             'edit-course',
             'destroy-course',

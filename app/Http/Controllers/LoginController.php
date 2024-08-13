@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use Exception;
+use Spatie\Permission\Models\Permission;
 
 class LoginController extends Controller
 {
@@ -39,6 +40,25 @@ class LoginController extends Controller
             // Redirecionar o usuário para página anterior "login(área restrita)", mantendo os dados digitados e enviar a mensagem de erro
             return back()->withInput()->with('error', 'E-mail ou senha inválido!');
         }
+
+        // Depois de autenticado, deve-se obter o usuário autenticado
+        $user = Auth::user();
+        $user = User::find($user->id);
+
+        // Verifica se o usuário possui o papel "Super Admin"
+        if($user->hasRole('Super Admin')){
+            // Recupera no banco TODAS as permissões, apenas o nome(pluck) em forma de array(toArray)
+            $permissions = Permission::pluck('name')->toArray();
+        }else{
+            // Recupera no banco SÓ SÓ as permissõoes que o papel do usuário possui. Apenas o nome em forma de array
+            // Obs: o usuário possui um papel, o papel possui permissões, portando obtém as permissões do usuári via papel
+            $permissions = $user->getPermissionsViaRoles()->pluck('name')->toArray();
+        }
+
+        // Ao usuário é atribuída só as permissões que o mesmo possui.
+        // Obs: o método "syscPermissions", recebe um array. "$permissions" é um array(... toArray())
+        $user->syncPermissions($permissions);
+
 
         // Redirecionar o usuário para o Dashboard, caso o mesmo seja autenticado
         return redirect()->route('dashboard.index')->with('success', 'Seja bem vindo!');
