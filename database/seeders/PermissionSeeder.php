@@ -34,6 +34,13 @@ class PermissionSeeder extends Seeder
             'create-user',
             'edit-user',
             'destroy-user',
+
+            // Permissões referente a Papéis
+            'index-role',
+            'show-role',
+            'create-role',
+            'edit-role',
+            'destroy-role',
         ];
 
         // Percorre o array de permissões criado acima e verifica se no Model Permission ja existe a permissão cadastrada

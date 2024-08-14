@@ -6,6 +6,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
@@ -63,8 +64,8 @@ class UserController extends Controller
             // Depois de cadastrar o usuário atribui-se o PAPEL conforme escolhido no formulário de cadastro.
             $user->assignRole($request->roles);
 
-            // Salvar log
-            Log::info('Usuário cadastrado.', ['id' => $user->id, $user->name]);
+            // Salvar log:  Usuário cadastrado e o usuário que cadastrou
+            Log::info('Usuário cadastrado.', ['id' => $user->id, $user->name, 'action_user_id' => Auth::id()]);
 
             // Operação é concluída com êxito
             DB::commit();
@@ -118,8 +119,8 @@ class UserController extends Controller
             // Depois de editar o usuário atribui-se o novo PAPEL conforme escolhido no formulário de edição.
             $user->syncRoles($request->roles);
 
-            // Salvar log
-            Log::info('Usuário editado.', ['id' => $user->id]);
+            // Salvar log: Usuário atualizado e o usuário que atualizou
+            Log::info('Usuário editado.', ['id' => $user->id, 'action_user_id' => Auth::id()]);
 
             // Operação é concluída com êxito
             DB::commit();
@@ -197,8 +198,11 @@ class UserController extends Controller
             // Excluir o registro do banco de dados
             $user->delete();
 
-            // Salvar log
-            Log::info('Usuário excluído.', ['id' => $user->id]);
+            // Remover todos os papeis atribuidos ao usuário, Atribuindo um array vazio
+            $user->syncRoles([]);
+
+            // Salva no log: Usuário excluido e o usuário que excluiu
+            Log::info('Usuário excluído.', ['id' => $user->id, 'action_user_id' => Auth::id()]);
 
             // Redirecionar o usuário, enviar a mensagem de sucesso
             return redirect()->route('user.index')->with('success', 'Usuário excluído com sucesso!');

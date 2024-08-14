@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 /* Route::get('/', function () { return view('welcome'); }); */
@@ -39,19 +40,6 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/edit-profile-password', [ProfileController::class, 'editPassword'])->name('profile.edit-password');
     Route::put('/update-profile-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
 
-    /*
-    // Usuários
-    Route::get('/index-user', [UserController::class, 'index'])->name('user.index');
-    Route::get('/show-user/{user}', [UserController::class, 'show'])->name('user.show');
-    Route::get('/create-user', [UserController::class, 'create'])->name('user.create');
-    Route::post('/store-user', [UserController::class, 'store'])->name('user.store');
-    Route::get('/edit-user/{user}', [UserController::class, 'edit'])->name('user.edit');
-    Route::put('/update-user/{user}', [UserController::class, 'update'])->name('user.update');
-    Route::get('/edit-user-password/{user}', [UserController::class, 'editPassword'])->name('user.edit-password');
-    Route::put('/update-user-password/{user}', [UserController::class, 'updatePassword'])->name('user.update-password');
-    Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
-    */
-
 
     // Usuários
     Route::get('/index-user', [UserController::class, 'index'])->name('user.index')->middleware('permission:index-user');
@@ -83,6 +71,13 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/edit-classe/{classe}', [ClasseController::class, 'edit'])->name('classe.edit')->middleware('permission:edit-classe');
     Route::put('/update-classe/{classe}', [ClasseController::class, 'update'])->name('classe.update')->middleware('permission:edit-classe');
     Route::delete('/destroy-classe/{classe}', [ClasseController::class, 'destroy'])->name('classe.destroy')->middleware('permission:destroy-classe');
+
+    // Papeis
+    Route::get('/index-role', [RoleController::class, 'index'])->name('role.index')->middleware('permission:index-role');
+    Route::get('/show-role/{role}', [RoleController::class, 'show'])->name('role.show')->middleware('permission:show-role');
+    Route::get('/create-role', [RoleController::class, 'create'])->name('role.create')->middleware('permission:create-role');
+    Route::post('/store-role', [RoleController::class, 'store'])->name('role.store')->middleware('permission:create-role');
+
 
 });
 

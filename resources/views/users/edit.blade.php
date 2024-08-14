@@ -67,15 +67,15 @@
                             @foreach ($roles as $role)
                                 {{-- Se for Super Admin, "exibe" o papel "Super Admin"[Papeis: [Super Admin, Admin, Professor, Tutor, Aluno] --}}
                                 @if ($role != "Super Admin")
-                                    <option value="{{ $role }}" {{ old('roles', $userRoles) == $role || $userRoles == $role ? 'selected' : '' }}>{{ $role }}</option>
+                                    <option value="{{ $role }}" {{ old('roles', $userRoles) == $role ? 'selected' : '' }}>{{ $role }}</option>
                                 @else
                                     {{-- Se o usuário autenticado for Super Admin "exibe" o papel de "Super Admin" --}}
                                     @if (Auth::user()->hasRole("Super Admin"))
-                                        <option value="{{ $role }}"  {{ old('roles', $userRoles) == $role || $userRoles == $role ? 'selected' : '' }}>{{ $role }}</option>
+                                        <option value="{{ $role }}" {{ old('roles', $userRoles) == $role || $userRoles == $role ? 'selected' : '' }}>{{ $role }}</option>
                                     @endif
                                 @endif
-                            @endforeach    
-                        </select>    
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="col-12">

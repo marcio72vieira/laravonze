@@ -70,6 +70,13 @@
                             </a>
                         @endcan
 
+                        @can('index-role')
+                            <a @class(['nav-link', 'active' => isset($menu) && $menu == 'roles']) href="{{ route('role.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-network-wired"></i></div>
+                                Papéis
+                            </a>
+                        @endcan
+
                         <a class="nav-link" href="{{ route('login.destroy') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
                             Sair
