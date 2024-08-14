@@ -60,6 +60,16 @@
                     <dt class="col-sm-3">E-mail: </dt>
                     <dd class="col-sm-9">{{ $user->email }}</dd>
 
+                    <dt class="col-sm-3">Papel: </dt>
+                    <dd class="col-sm-9">
+                        {{-- O usuário pode ter mais de um papel, por isso a utilização do forelse ou foreach --}}
+                        @forelse ($user->getRoleNames() as $role)
+                            {{ $role }}
+                        @empty
+                            {{ " - " }}
+                        @endforelse
+                    </dd>
+
                     <dt class="col-sm-3">Cadastrado: </dt>
                     <dd class="col-sm-9">
                         {{ \Carbon\Carbon::parse($user->created_at)->tz('America/Sao_Paulo')->format('d/m/Y H:i:s') }}

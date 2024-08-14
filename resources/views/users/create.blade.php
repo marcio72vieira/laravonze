@@ -42,11 +42,29 @@
                         <input type="email" name="email" id="email" class="form-control"
                             placeholder="Melhor e-mail do usuário" value="{{ old('email') }}">
                     </div>
-
+            
                     <div class="col-12">
                         <label for="password" class="form-label">Senha: </label>
                         <input type="password" name="password" id="password" class="form-control"
                             placeholder="Senha com no mínimo 6 caracteres" value="{{ old('password') }}">
+                    </div>
+
+                    <div class="col-12">
+                        <label for="roles" class="form-label">Papel: </label>
+                        <select name="roles" id="roles" class="form-select">
+                            <option value="">Selecione</option>
+                            @foreach ($roles as $role)
+                                {{-- Se for Super Admin, "exibe" o papel "Super Admin"[Papeis: [Super Admin, Admin, Professor, Tutor, Aluno] --}}
+                                @if ($role != "Super Admin")
+                                    <option value="{{ $role }}" {{ old('roles') == $role ? 'selected' : '' }}>{{ $role }}</option>
+                                @else
+                                    {{-- Se o usuário autenticado for Super Admin "exibe" o papel de "Super Admin" --}}
+                                    @if (Auth::user()->hasRole("Super Admin"))
+                                        <option value="{{ $role }}"  {{ old('roles') == $role ? 'selected' : '' }}>{{ $role }}</option>
+                                    @endif
+                                @endif
+                            @endforeach    
+                        </select>    
                     </div>
 
                     <div class="col-12">

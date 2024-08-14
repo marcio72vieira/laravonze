@@ -89,6 +89,9 @@ class LoginController extends Controller
                 'password' => $request->password,
             ]);
 
+            // Depois de o usuário se cadastrar via página de Login, atribui-se o PAPEL Aluno para o mesmo como padrão.
+            $user->assignRole('Aluno');
+
             // Salvar log
             Log::info('Usuário cadastrado.', ['id' => $user->id, $user->name]);
 

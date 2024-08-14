@@ -29,6 +29,7 @@ class UserRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . ($userId ? $userId->id : null),
             'password' => 'required_if:password,!=,null|min:6',
+            'roles' => 'required',
         ];
     }
 
@@ -41,6 +42,7 @@ class UserRequest extends FormRequest
             'email.unique' => 'O e-mail já está cadastrado!',
             'password.required_if' => 'Campo senha é obrigatório!',
             'password.min' => 'Senha com no mínimo :min caracteres!',
+            'roles.required' => 'Campo papel é obrigatório!',
         ];
     }
 }

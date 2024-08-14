@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -33,9 +34,11 @@ class UserController extends Controller
     // Carregar o formulário cadastrar novo usuário
     public function create()
     {
+        // Recuperar só o nome de todos os Papeis cadastrados
+        $roles = Role::pluck('name')->all();
 
         // Carregar a VIEW
-        return view('users.create', ['menu' => 'users']);
+        return view('users.create', ['menu' => 'users', 'roles' => $roles]);
     }
 
     // Cadastrar no banco de dados o novo usuário
@@ -56,6 +59,9 @@ class UserController extends Controller
                 'email' => $request->email,
                 'password' => $request->password,
             ]);
+
+            // Depois de cadastrar o usuário atribui-se o PAPEL conforme escolhido no formulário de cadastro.
+            $user->assignRole($request->roles);
 
             // Salvar log
             Log::info('Usuário cadastrado.', ['id' => $user->id, $user->name]);
@@ -81,9 +87,14 @@ class UserController extends Controller
     // Carregar o formulário editar usuário
     public function edit(User $user)
     {
+        // Recuperar só o nome de todos os Papeis cadastrados
+        $roles = Role::pluck('name')->all();
+
+        // Recupera o papel do Usuário (Isto porque a busca é na tabela model_has_hole)
+        $userRoles = $user->roles->pluck('name')->first();
 
         // Carregar a VIEW
-        return view('users.edit', ['menu' => 'users', 'user' => $user]);
+        return view('users.edit', ['menu' => 'users', 'user' => $user, 'roles' => $roles, 'userRoles' => $userRoles]);
     }
 
     // Editar no banco de dados o usuário
@@ -103,6 +114,9 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
             ]);
+
+            // Depois de editar o usuário atribui-se o novo PAPEL conforme escolhido no formulário de edição.
+            $user->syncRoles($request->roles);
 
             // Salvar log
             Log::info('Usuário editado.', ['id' => $user->id]);
