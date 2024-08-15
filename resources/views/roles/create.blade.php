@@ -10,13 +10,14 @@
                     <a href="{{ route('dashboard.index') }}" class="text-decoration-none">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{{ route('role.index')}}" class="text-decoration-none">Papel</a>
+                    <a href="{{ route('role.index')}}" class="text-decoration-none">Papéis</a>
                 </li>
                 <li class="breadcrumb-item active">Papel</li>
             </ol>
         </div>
 
         <div class="card mb-4 border-light shadow">
+
             <div class="card-header mb-1 hstack gap-2">
                 <span>Cadastrar</span>
 

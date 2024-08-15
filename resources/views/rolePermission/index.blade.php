@@ -3,13 +3,18 @@
 @section('content')
     <div class="container-fluid px-4">
         <div class="mb-1 hstack gap-2">
-            <h2 class="mt-3">Papel</h2>
+            <h2 class="mt-3">Permissõe do Papel - {{ $role->name }}</h2>
 
             <ol class="breadcrumb mb-3 mt-3 ms-auto">
                 <li class="breadcrumb-item">
                     <a href="{{ route('dashboard.index') }}" class="text-decoration-none">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">Papéis</li>
+
+                <li class="breadcrumb-item">
+                    <a href="{{ route('role.index') }}" class="text-decoration-none">Papéis</a>
+                </li>
+
+                <li class="breadcrumb-item active">Permissões</li>
             </ol>
         </div>
 
@@ -19,11 +24,17 @@
                 <span>Listar</span>
 
                 <span class="ms-auto">
-                    @can('create-role')
+                    @can('index-role')
+                        <a href="{{ route('role.index') }}" class="btn btn-info btn-sm me-1 mb-1 mb-sm-0">
+                            <i class="fa-solid fa-list-ul"></i> Listar
+                        </a>
+                    @endcan
+
+                    {{-- @can('create-role')
                         <a href="{{ route('role.create') }}" class="btn btn-success btn-sm">
                             <i class="fa-regular fa-square-plus"></i> Cadastrar
                         </a>
-                    @endcan
+                    @endcan --}}
                 </span>
             </div>
 
@@ -31,6 +42,7 @@
                 {{-- Mensagem sem uso de componente  @if (session('success')) <p style="background-color: green; color: white"> {{ session('success') }} </p> @endif --}}
 
                 <x-alert />
+
 
                 <table class="table table-striped table-hover">
                     <thead>
@@ -41,14 +53,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- Imprimir os registros --}}
-                        @forelse ($roles as $role )
-                            <tr>
-                                <th class="d-none d-sm-table-cell">{{ $role->id }}</th>
-                                <td>{{ $role->name }}</td>
-                                <td class="d-md-flex flex-row justify-content-center">
 
-                                    @can('index-role-permission')
+
+                        @forelse ($permissions as $permission)
+                            <tr>
+                                <td class="d-none d-sm-table-cell">{{ $permission->id }}</td>
+                                <td>{{ $permission->name }}</td>
+                                <td>
+
+                                    {{-- Explicando $rolePermissions ?? []: Se o array $rolePermissions for diferente de vazio utilize ele mesmo senão, coloca um array vazio[] --}}
+                                    {{-- A expressão ternária $rolePermissions ?? [], significa que se o papel tiver permissão, utiliza ele mesmo, senão utiliza um array vazio --}}
+                                    @if (in_array($permission->id, $rolePermissions ?? []))
+                                        <span class="badge text-bg-success">Liberado</span>
+                                    @else
+                                        <span class="badge text-bg-danger">Bloqueado</span>
+                                    @endif
+
+                                    {{-- @can('index-role-permission')
                                         <a href="{{ route('role-permission.index', ['role' => $role->id]) }}" class="btn btn-info btn-sm me-1 mb-1 mb-md-0">
                                             <i class="fa-solid fa-list"></i> Permissões
                                         </a>
@@ -74,20 +95,19 @@
                                                 <i class="fa-regular fa-trash-can"></i> Apagar
                                             </button>
                                         </form>
-                                    @endcan
+                                    @endcan --}}
 
                                 </td>
                             </tr>
                         @empty
                             <div class="alert alert-danger" role="alert">
-                                Nenhum papel encontrado!
+                                Nenhuma permissão para o papel encontrada!
                             </div>
                         @endforelse
+
+
                     </tbody>
                 </table>
-
-                {{-- Imprimir a paginação --}}
-                {{ $roles->links() }}
 
             </div>
 
@@ -97,6 +117,7 @@
 
 
 @endsection
+
 
 
 

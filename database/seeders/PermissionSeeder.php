@@ -41,6 +41,9 @@ class PermissionSeeder extends Seeder
             'create-role',
             'edit-role',
             'destroy-role',
+
+            // Permissões referente a Permissões
+            'index-role-permission'
         ];
 
         // Percorre o array de permissões criado acima e verifica se no Model Permission ja existe a permissão cadastrada

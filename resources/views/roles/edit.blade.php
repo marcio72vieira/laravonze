@@ -17,6 +17,7 @@
         </div>
 
         <div class="card mb-4 border-light shadow">
+
             <div class="card-header mb-1 hstack gap-2">
                 <span>Editar</span>
 

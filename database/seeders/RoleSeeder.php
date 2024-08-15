@@ -57,6 +57,9 @@ class RoleSeeder extends Seeder
             // 'create-role',
             // 'edit-role',
             // 'destroy-role',
+
+            // Permissões referente a Permissões
+            'index-role-permission',
         ]);
 
 

@@ -37,6 +37,9 @@ class RoleController extends Controller
     // Carregar o formulário cadastrar novo papel
     public function create()
     {
+        // Salvar log
+        Log::info('Carregar formulário cadastrar papel.', ['action_user_id' => Auth::id()]);
+
         // carregar a view
         return view('roles.create', ['menu' => 'roles']);
     }
@@ -57,12 +60,13 @@ class RoleController extends Controller
                 'guard_name' => $request->guard_name,
             ]);
 
+            // Salvar log
+            Log::info('Papel cadastrado.', ['id' => $role->id, 'action_user_id' => Auth::id()]);
+
             // Operação concluída com êxito
             DB::commit();
 
-            Log::info('Papel cadastrado.', ['role_id' => $role->id]);
-
-            return  redirect()->route('role.show', ['role' => $role->id])->with('success', 'Papel cadastrado com sucesso!');
+            return  redirect()->route('role.index')->with('success', 'Papel cadastrado com sucesso!');
 
         } catch(Exception $e) {
 
@@ -80,6 +84,9 @@ class RoleController extends Controller
     // Carregar o formulário editar papel
     public function edit(Role $role)
     {
+        // Salvar log
+        Log::info('Carregar formulário editar papel.', ['id' => $role->id, 'action_user_id' => Auth::id()]);
+
         // carregar a view
         // Obs: O registro referente a $role já é injetado na variável $role através da "captura" de seu "id" no momento da seleção na view "index" quando o mesmo e passado
         return view('roles.edit', ['menu' => 'roles', 'role' => $role]);
@@ -96,6 +103,7 @@ class RoleController extends Controller
 
         try{
 
+            // Editar as informações do registro no banco de dados
             $role->update([
                 'name' => $request->name,
                 'guard_name' => $request->guard_name,
@@ -104,15 +112,19 @@ class RoleController extends Controller
             // Operação concluída com êxito
             DB::commit();
 
-            Log::info('Papel editado.', ['role_id' => $role->id]);
-            return  redirect()->route('role.show', ['role' => $role->id])->with('success', 'Papel editado com sucesso!');
+            // Salvar log
+            Log::info('Papel editado.', ['id' => $role->id, 'action_user_id' => Auth::id()]);
+
+            return  redirect()->route('role.index')->with('success', 'Papel editado com sucesso!');
 
         } catch(Exception $e) {
+
+             // Salvar log
+             Log::warning('Papel não editado.', ['error' => $e->getMessage(), 'action_user_id' => Auth::id()]);
 
             // Operação não é concluiída com êxito
             DB::rollBack();
 
-            Log::notice('Papel não editado.', ['erro' => $e->getMessage()]);
             // Mantém o usuário na mesma página(back), juntamente com os dados digitados(withInput) e enviando a mensagem correspondente.
             return back()->withInput()->with('error', 'Papel não editado. Tente outra vez!');
 
@@ -124,23 +136,45 @@ class RoleController extends Controller
     // Excluir o papel do banco de dados
     public function destroy(Role $role)
     {
-        try {
+        if ($role->name == 'Super Admin') {
 
+            // Salvar log
+            Log::warning('Papel super admin não pode ser excluído.', ['papel_id' => $role->id, 'action_user_id' => Auth::id()]);
+
+            // Redirecionar o usuário, enviar a mensagem de erro
+            return redirect()->route('role.index')->with('error', 'Papel super admin não pode ser excluído!');
+        }
+
+        // Não permitir excluir papel quando tem algum usuário utilizando o papel
+        if ($role->users->isNotEmpty()) {
+
+            // Salvar log
+            Log::warning('Papel não pode ser excluído porque há usuários associados.', ['papel_id' => $role->id, 'action_user_id' => Auth::id()]);
+
+            // Redirecionar o usuário, enviar a mensagem de erro
+            return redirect()->route('role.index')->with('error', 'Não é possível excluir o papel porque há usuários associados a ele.');
+        }
+
+
+        try {
+            // Excluir o registro do banco de dados
             $role->delete();
 
-            Log::info('Papel apagado.', ['role_id' => $role->id]);
+            // Salvar log
+            Log::info('Papel excluído.', ['id' => $role->id, 'action_user_id' => Auth::id()]);
 
+            // Redirecionar o usuário, enviar a mensagem de sucesso
             return  redirect()->route('role.index')->with('success', 'Papel excluído com sucesso!');
 
         } catch (Exception $e) {
 
-            Log::info('Papel não apagado.', ['role_id' => $role->id]);
+            // Salvar log
+            Log::warning('Papel não excluído.', ['error' => $e->getMessage(), 'action_user_id' => Auth::id()]);
 
-            return  redirect()->route('role.index')->with('warning', 'O Papel não pode ser excluído!');
+            // Redirecionar o usuário, enviar a mensagem de erro
+            return  redirect()->route('role.index')->with('error', 'O Papel não pode ser excluído!');
 
         }
     }
-
-
 
 }
