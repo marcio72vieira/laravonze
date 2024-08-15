@@ -40,12 +40,12 @@
 
                     <div class="col-12">
                         <label for="name" class="form-label">Nome</label>
-                        <input type="text"  name="name" id="name" class="form-control" placeholder="nome do papel" value="{{ old('name') }}" required>
+                        <input type="text"  name="name" id="name" class="form-control" placeholder="nome do papel" value="{{ old('name') }}">
                     </div>
 
                     <div class="col-12">
-                        <label for="aplication" class="form-label">Aplicação</label>
-                        <input type="text"  name="aplication" id="aplication" class="form-control" placeholder="aplicação (web ou api)" value="{{ old('aplication') }}" required>
+                        <label for="guard_name" class="form-label">Aplicação</label>
+                        <input type="text"  name="guard_name" id="guard_name" class="form-control" placeholder="aplicação (web ou api)" value="{{ old('guard_name') }}">
                     </div>
 
                     <div class="col-12">

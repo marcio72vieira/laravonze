@@ -53,11 +53,27 @@
                                         </a>
                                     @endcan
 
-                                    {{-- @can('show-role') --}}
+                                    @can('show-role')
                                         <a href="{{ route('role.show', ['role' => $role->id]) }}" class="btn btn-primary btn-sm me-1 mb-1 mb-md-0">
                                             <i class="fa-regular fa-eye"></i> Visualizar
                                         </a>
-                                    {{-- @endcan --}}
+                                    @endcan
+
+                                    @can('edit-role')
+                                        <a href="{{ route('role.edit', ['role' => $role->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-md-0">
+                                            <i class="fa-regular fa-pen-to-square"></i> Editar
+                                        </a>
+                                    @endcan
+
+                                    @can('destroy-role')
+                                        <form action="{{ route('role.destroy', ['role' => $role->id]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"  class="btn btn-danger btn-sm me-1" onclick="return confirm('Tem certeza que deseja apagar este registro?')">
+                                                <i class="fa-regular fa-trash-can"></i> Apagar
+                                            </button>
+                                        </form>
+                                    @endcan
 
                                 </td>
                             </tr>

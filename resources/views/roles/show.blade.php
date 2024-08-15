@@ -32,7 +32,7 @@
                     @endcan
 
                     @can('edit-course')
-                        <a href="#" class="btn btn-warning btn-sm me-1 mb-1 mb-sm-0">
+                        <a href="{{ route('role.edit',['role' => $role->id]) }}" class="btn btn-warning btn-sm me-1 mb-1 mb-sm-0">
                             <i class="fa-regular fa-pen-to-square"></i> Editar
                         </a>
                     @endcan

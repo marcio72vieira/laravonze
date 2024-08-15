@@ -54,9 +54,9 @@ class RoleSeeder extends Seeder
             // Permissões referente a Papéis
             'index-role',
             'show-role',
-            'create-role',
-            'edit-role',
-            'destroy-role',
+            // 'create-role',
+            // 'edit-role',
+            // 'destroy-role',
         ]);
 
 

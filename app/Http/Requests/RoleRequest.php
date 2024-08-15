@@ -21,18 +21,21 @@ class RoleRequest extends FormRequest
      */
     public function rules(): array
     {
+        $roleId = $this->route('role');
+
         return [
-            'name' => 'required',
-            'aplication' => 'required|max:3'
+            'name' => 'required|unique:roles,name,' . ($roleId ? $roleId->id : null),
+            'guard_name' => 'required|max:3'
         ];
     }
 
     public function messages(): array
     {
         return [
-            'name.required' => 'Campo nome  do papel é obrigatório!',
-            'aplication.required' => 'Campo aplicação é obrigatório!',
-            'aplication.max' => 'O campo aplicação só pode ter no máximo 3 caracteres!',
+            'name.required' => 'Campo papel é obrigatório!',
+            'name.unique' => 'O nome deste papel já está sendo utilizado!',
+            'guard_name.required' => 'Campo aplicação é obrigatório!',
+            'guard_name.max' => 'O campo aplicação só pode ter no máximo 3 caracteres!',
         ];
     }
 }
