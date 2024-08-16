@@ -76,9 +76,17 @@
                                     {{-- Explicando $rolePermissions ?? []: Se o array $rolePermissions for diferente de vazio utilize ele mesmo senão, coloca um array vazio[] --}}
                                     {{-- A expressão ternária $rolePermissions ?? [], significa que se o papel tiver permissão, utiliza ele mesmo, senão utiliza um array vazio --}}
                                     @if (in_array($permission->id, $rolePermissions ?? []))
-                                        <span class="badge text-bg-success">Liberado</span>
+                                        @can('update-role-permission')
+                                            <a href="{{ route('role-permission.update', ['role' => $role->id, 'permission' => $permission->id])}}"><span class="badge text-bg-success">Liberado</span></a>
+                                        @else
+                                            <span class="badge text-bg-secondary">Liberado</span>
+                                        @endcan
                                     @else
-                                        <span class="badge text-bg-danger">Bloqueado</span>
+                                        @can('update-role-permission')
+                                            <a href="{{ route('role-permission.update', ['role' => $role->id, 'permission' => $permission->id])}}"><span class="badge text-bg-danger">Bloqueado</span></a>
+                                        @else
+                                            <span class="badge text-bg-secondary">Bloqueado</span>
+                                        @endcan
                                     @endif
 
                                     {{-- @can('index-role-permission')

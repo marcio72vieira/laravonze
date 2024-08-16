@@ -45,6 +45,7 @@ class PermissionSeeder extends Seeder
 
             // Permissões referente a Permissões
             ['title' => 'Listar permissões do papel', 'name' => 'index-role-permission'],
+            ['title' => 'Editar permissão do papel', 'name' => 'update-role-permission'],
         ];
 
         // Percorre o array de permissões criado acima e verifica se no Model Permission já existe a permissão cadastrada

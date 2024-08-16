@@ -60,7 +60,11 @@ class RoleSeeder extends Seeder
 
             // Permissões referente a Permissões
             'index-role-permission',
+            'update-role-permission',
         ]);
+
+        // Exemplo para Revogar um papel atribuído a um papel
+        // $admin->revokePermissionTo('update-role-permission');
 
 
 
