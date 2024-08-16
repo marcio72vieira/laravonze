@@ -48,7 +48,13 @@
                     <thead>
                         <tr>
                             <th class="d-none d-sm-table-cell">ID</th>
-                            <th>Nome</th>
+                            <th>Título</th>
+                            <th>
+                                {{-- Se o usuário autenticado for Super Administrador, exibe esta coluna --}}
+                                @if(Auth::user()->hasRole('Super Admin'))
+                                    Nome
+                                @endif
+                            </th>
                             <th class="text-center">Ações</th>
                         </tr>
                     </thead>
@@ -58,8 +64,14 @@
                         @forelse ($permissions as $permission)
                             <tr>
                                 <td class="d-none d-sm-table-cell">{{ $permission->id }}</td>
-                                <td>{{ $permission->name }}</td>
+                                <td>{{ $permission->title }}</td>
                                 <td>
+                                    {{-- Se o usuário autenticado for Super Administrador, exibe esta coluna --}}
+                                    @if(Auth::user()->hasRole('Super Admin'))
+                                        {{ $permission->name }}
+                                    @endif
+                                </td>
+                                <td class="text-center">
 
                                     {{-- Explicando $rolePermissions ?? []: Se o array $rolePermissions for diferente de vazio utilize ele mesmo senão, coloca um array vazio[] --}}
                                     {{-- A expressão ternária $rolePermissions ?? [], significa que se o papel tiver permissão, utiliza ele mesmo, senão utiliza um array vazio --}}

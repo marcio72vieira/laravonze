@@ -15,52 +15,50 @@ class PermissionSeeder extends Seeder
     {
         $permissions = [
             // Permissões referente a Cursos
-            'index-course',
-            'show-course',
-            'create-course',
-            'edit-course',
-            'destroy-course',
+            ['title' => 'Listar cursos', 'name' => 'index-course'],
+            ['title' => 'Visualizar curso', 'name' => 'show-course'],
+            ['title' => 'Criar curso', 'name' => 'create-course'],
+            ['title' => 'Editar curso', 'name' => 'edit-course'],
+            ['title' => 'Apagar curso', 'name' => 'destroy-course'],
 
             // Permissões referente a Aulas
-            'index-classe',
-            'show-classe',
-            'create-classe',
-            'edit-classe',
-            'destroy-classe',
+            ['title' => 'Listar aulas', 'name' => 'index-classe'],
+            ['title' => 'Visualizar aula', 'name' => 'show-classe'],
+            ['title' => 'Criar aula', 'name' => 'create-classe'],
+            ['title' => 'Editar aula', 'name' => 'edit-classe'],
+            ['title' => 'Apagar aula', 'name' => 'destroy-classe'],
 
             // Permissões referente a Usuários
-            'index-user',
-            'show-user',
-            'create-user',
-            'edit-user',
-            'destroy-user',
+            ['title' => 'Listar usuários', 'name' => 'index-user'],
+            ['title' => 'Visualizar usuário', 'name' => 'show-user'],
+            ['title' => 'Criar usuário', 'name' => 'create-user'],
+            ['title' => 'Editar usuário', 'name' => 'edit-user'],
+            ['title' => 'Editar senha do usuário', 'name' => 'edit-user-password'],
+            ['title' => 'Apagar usuário', 'name' => 'destroy-user'],
 
             // Permissões referente a Papéis
-            'index-role',
-            'show-role',
-            'create-role',
-            'edit-role',
-            'destroy-role',
+            ['title' => 'Listar papéis', 'name' => 'index-role'],
+            ['title' => 'Visualizar papel', 'name' => 'show-role'],
+            ['title' => 'Criar papel', 'name' => 'create-role'],
+            ['title' => 'Editar papel', 'name' => 'edit-role'],
+            ['title' => 'Apagar papel', 'name' => 'destroy-role'],
 
             // Permissões referente a Permissões
-            'index-role-permission'
+            ['title' => 'Listar permissões do papel', 'name' => 'index-role-permission'],
         ];
 
-        // Percorre o array de permissões criado acima e verifica se no Model Permission ja existe a permissão cadastrada
+        // Percorre o array de permissões criado acima e verifica se no Model Permission já existe a permissão cadastrada
         foreach($permissions as $permission){
-            $existingPermission = Permission::where('name', $permission)->first();
+            $existingPermission = Permission::where('name', $permission['name'])->first();
 
             // Se a permissão não existir, cadastra a permissão na tabela(permissions), fornecendo o nome e o tipo da aplicação (web ou api)
             if(!$existingPermission){
                 Permission::create([
-                    'name' => $permission,
+                    'title' => $permission['title'],
+                    'name' => $permission['name'],
                     'guard_name' => 'web',
                 ]);
-
             }
-
         }
-
-
     }
 }

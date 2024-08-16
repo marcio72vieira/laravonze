@@ -653,6 +653,27 @@
                 <elemento></elemento>
                @endcan
 
+022 -   Alterndo a estrutura da tabela "permissions" adicionando a coluna "title" depois do campo "id"
+        1) Criar a migration:
+           ./vendor/bin/sail artisan make:migration alter_permissions_table_add_title_column
+        2) Acrescentar no corpo da migration criada, o código abaixo:
+           ...
+           public function up(): void
+            {
+                Schema::table('permissions', function(Blueprint $table){
+                    $table->string('title')->after('id');
+                });
+            }
+
+            public function down(): void
+            {
+                Schema::table('permissions', function(Blueprint $table){
+                    $table->dropColumn('title');
+                });
+            }
+        3) Executar a migration criada
+           ./vendor/bin/sail artisan migrate
+        4) Alterar a PermissionSeed para refletir a coluna criada, como no exemplo abaixo:
 
 
 
@@ -723,6 +744,17 @@ OBS04 - Quando utilizar FormsRequest Para VALIDAR, acrescentar no corpo dos mét
         $validated = $request->validated(); -> Com esta o ERRO é eliminado.
 
 OBS05 - Para levantar os mesmos containers, ao invés de digitar docker up -d (que irá criar novos containers) digite: docker start $(docker ps -a -q)
+
+OBS06 - O nome do midlleware colocado no final de cada rota, deve ser o mesmo nome(name) cadastrado na tabela "permissions". Como no exemplo abaixo:
+        Nada tem a ver com o nome da rota, muito embora, faça sentido colocar o nome(name) da permissão igual ao valor da rota.
+        Rota:
+        ...
+        Route::get('/index-role-permission/{role}', [RolePermissionController::class, 'index'])->name('role-permission.index')->middleware('permission:index-role-permission');
+        
+        Nome cadastrado na tabela permissions (através da PermissionSeed)
+        ...
+        // Permissões referente a Permissões
+            ['title' => 'Listar permissões', 'name' => 'index-role-permission'],
 
 
 
