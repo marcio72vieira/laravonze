@@ -28,6 +28,23 @@ class UserController extends Controller
     // Detalhes do usuario
     public function show(User $user)
     {
+        
+        // Recuperar os dados do usuário logado
+        $authenticatedUser = auth()->user();
+
+        // Verificar se o usuário autenticado tem uma ordem de papel maior ou igual ao do usuário a ser visualizado
+        if ($authenticatedUser->roles[0]->order_roles > $user->roles[0]->order_roles) {
+            
+            // Salvar log
+            Log::info('Sem permissão de visualizar usuário com papel superior.', ['id' => $user->id, 'action_user_id' => Auth::id()]);
+
+            // Redirecionar o usuário, enviar a mensagem de erro
+            return redirect()->route('user.index', ['user' => $user->id])->with('error', 'Sem permissão de visualizar usuário!');
+        }
+
+        // Salvar log
+        Log::info('Visualizar usuário.', ['id' => $user->id, 'action_user_id' => Auth::id()]);
+
         // Carregar a VIEW
         return view('users.show', ['menu' => 'users', 'user' => $user]);
     }
@@ -88,11 +105,27 @@ class UserController extends Controller
     // Carregar o formulário editar usuário
     public function edit(User $user)
     {
+        // Recuperar os dados do usuário logado
+        $authenticatedUser = auth()->user();
+
+        // Verificar se o usuário autenticado tem uma ordem de papel maior ou igual ao do usuário a ser visualizado
+        if ($authenticatedUser->roles[0]->order_roles > $user->roles[0]->order_roles) {
+
+            // Salvar log
+            Log::info('Sem permissão de editar usuário com papel superior.', ['id' => $user->id, 'action_user_id' => Auth::id()]);
+
+            // Redirecionar o usuário, enviar a mensagem de erro
+            return redirect()->route('user.index', ['user' => $user->id])->with('error', 'Sem permissão de editar usuário!');
+        }
+
         // Recuperar só o nome de todos os Papeis cadastrados
         $roles = Role::pluck('name')->all();
 
         // Recupera o papel do Usuário (Isto porque a busca é na tabela model_has_hole)
         $userRoles = $user->roles->pluck('name')->first();
+
+        // Salvar log
+        Log::info('Carregar formulário editar usuário.', ['id' => $user->id, 'action_user_id' => Auth::id()]);
 
         // Carregar a VIEW
         return view('users.edit', ['menu' => 'users', 'user' => $user, 'roles' => $roles, 'userRoles' => $userRoles]);

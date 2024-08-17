@@ -756,11 +756,73 @@ OBS06 - O nome do midlleware colocado no final de cada rota, deve ser o mesmo no
         // Permissões referente a Permissões
             ['title' => 'Listar permissões', 'name' => 'index-role-permission'],
 
+OBS07 - É FORTEMENTE RECOMENDÁVEL popular a tabela de permissões com SEEDS, ou seja, assim que criar uma nova funcionalidade no sistema,
+        deve-se:
+        a) definir a rota
+        b) definir o método da rota
+        c) definir o nome da rota
+        d) definir o nome do middleware para acessar a rota com base no nome cadastrado na tabela permissão através do seed
+        e) definir o nome da permissão para colocar no middleware da rota (passo anterior)
+        
 
+OBS08 - Comentário Útil referente ao aperfeiçoamento do módulo de permissões (Aula: Alterar a permissão de acesso ao papel)
+        Passar ID direto na URL
 
-Site para cálculo do Imposto de relacinado
-https://sicalc.receita.economia.gov.br/sicalc/principal
+        Essa observação é pertinente, porque Eu testei a usuária Jessica(Professor) com permissão para editar(liberar/bloquear)
+        permissões, pode editar(liberar/bloquer) as permissões de Kelly(Admin), ou seja, um papel com nível inferior (Professor)
+        pode editar as permissões de um papel superior(Admin).
 
+        Publicado 25 de julho de 2024, 09:14 - Nailton
+        Bom dia, César.
+        Professor, como posso evitar que um usuário passe um ID direto na URL e edite as permissões ou perfil de algum usuário que tem um perfil com mais permissões que ele?
+        Minha idéia na verdade é que, um usuário que tem as permisões de edição só possa fazer isso para usuários com permissão inferior a dele.
+
+        Re: Passar ID direto na URL
+        Publicado 25 de julho de 2024, 20:39 - Cesar
+        Boa tarde, Nailton,
+        Segue a implementação da restrição para que o usuário com papel inferior não possa editar um usuário com papel superior:
+        Foi criada a migration "2024_07_25_113033_alter_roles_add_order_role_table" para acrescentar a coluna "order_roles" na tabela "roles". 
+        Na seed "RoleSeeder.php", foi acrescentada a coluna "order_roles" para cadastrar a ordem.
+        Na controller "UserController.php", foi acrescentada a restrição no método visualizar e no método carregar o formulário editar.
+        // Recuperar os dados do usuário logado
+        $authenticatedUser = auth()->user();
+
+        // Verificar se o usuário autenticado tem uma ordem de papel maior ou igual ao do usuário a ser visualizado
+        if ($authenticatedUser->roles[0]->order_roles > $user->roles[0]->order_roles) {
+
+        // Salvar log
+        Log::info('Sem permissão de visualizar usuário com papel superior.', ['id' => $user->id, 'action_user_id' => Auth::id()]);
+
+        // Redirecionar o usuário, enviar a mensagem de erro
+        return redirect()->route('user.index', ['user' => $user->id])->with('error', 'Sem permissão de visualizar usuário!');
+        }
+
+        Além disso, foi acrescentada na view de listar usuários a coluna "papel" para facilitar a identificação do papel de cada usuário. Se fizer o login com um usuário e tentar visualizar ou editar outro usuário com papel superior, será apresentada a mensagem "Sem permissão de visualizar usuário!".
+
+        bloquear-visualizacao-edicao-usuario-papel-superior.rar
+
+        Site para cálculo do Imposto de relacinado
+        https://sicalc.receita.economia.gov.br/sicalc/principal
+
+        Colocar trecho de código no método index do controller RolePermissionController ao invés de nos métodos show e edit de UserController
+        
+        //*** INÍCIO - USUÁRIO COM PAPEL INFERIOR(order_roles maio) NÃO VISUALIZA PERMISSÕES DE USUÁRIO COM PAPEL SUPERIOR(order_roles menor) */
+        // Recuperar os dados do usuário logado
+        $authenticatedUser = auth()->user();
+
+        // Verificar se o usuário autenticado tem uma ordem de papel maior ou igual ao do usuário a ser visualizado
+        // O usuário autenticado, não pode editar(bloquear/liberar) suas próprias permissões
+        if ($authenticatedUser->roles[0]->order_roles >= $role->order_roles) {
+            
+            // Salvar log
+            Log::info('Sem permissão de visualizar usuário com papel superior.', ['id' => $role->id, 'action_user_id' => Auth::id()]);
+
+            // Redirecionar o usuário, enviar a mensagem de erro
+            // return redirect()->route('role-permission.index', ['role' => $role->id])->with('error', 'Sem permissão de visualizar usuário com Papel Superior!');
+            return redirect()->route('role.index')->with('error', 'Sem permissão de visualizar usuário com permissão superior!');
+        }
+        //*** FIM - USUÁRIO COM PAPEL INFERIOR NÃO VISUALIZA PERMISSÕES DE USUÁRIO COM PAPEL SUPERIOR */
+        
 
 Desabilitando protreção por push de usuário:
 https://docs.github.com/pt/code-security/secret-scanning/push-protection-for-users?utm_source=pocket_shared#disabling-push-protection-for-users

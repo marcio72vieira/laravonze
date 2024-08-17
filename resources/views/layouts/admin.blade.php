@@ -27,9 +27,9 @@
         <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
         <!-- Sidebar Toggle-->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        <button class="order-1 btn btn-link btn-sm order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+        <form class="my-2 d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-md-0">
 
         </form>
         <!-- Navbar-->
@@ -90,6 +90,11 @@
                         @if (auth()->check())
                             {{ auth()->user()->name;}}
                         @endif
+                        @forelse (Auth::user()->getRoleNames() as $role)
+                            ({{ $role }})
+                            @empty
+                                {{ " - " }}
+                            @endforelse
                     </div>
                 </div>
             </nav>
@@ -100,8 +105,8 @@
                 @yield('content')
             </main>
 
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid px-4">
+            <footer class="py-4 mt-auto bg-light">
+                <div class="px-4 container-fluid">
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; MarcioVieira {{ date('Y') }}</div>
                         <div>

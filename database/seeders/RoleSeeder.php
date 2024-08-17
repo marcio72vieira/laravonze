@@ -16,14 +16,20 @@ class RoleSeeder extends Seeder
         // Verifica se o papel está criado no banco, se não estiver, cadastra-o
         // Super Admin pode fazer tudo em relação ao administrativo
         if(!Role::where('name', 'Super Admin')->first()){
-            Role::create(['name' => 'Super Admin']);
+            Role::create([
+                'name' => 'Super Admin',
+                'order_roles' => 1,
+            ]);
         }
 
 
 
         // Verifica se o papel está criado no banco, se não estiver, cadastra-o
         if(!Role::where('name', 'Admin')->first()){
-            $admin = Role::create(['name' => 'Admin']);
+            $admin = Role::create([
+                'name' => 'Admin',
+                'order_roles' => 2,
+            ]);
         } else {
             // Se estiver cadastrado, recupera os dados do papel
             $admin =  Role::where('name', 'Admin')->first();
@@ -70,7 +76,10 @@ class RoleSeeder extends Seeder
 
         // Verifica se o papel está criado no banco, se não estiver, cadastra-o
         if(!Role::where('name', 'Professor')->first()){
-            $teacher = Role::create(['name' => 'Professor']);
+            $teacher = Role::create([
+                'name' => 'Professor',
+                'order_roles' => 3,
+            ]);
         } else {
             // Se estiver cadastrado, recupera os dados do papel e atribui ao papel 'Professor' as suas permissões
             $teacher =  Role::where('name', 'Professor')->first();
@@ -101,7 +110,10 @@ class RoleSeeder extends Seeder
 
         // Verifica se o papel está criado no banco, se não estiver, cadastra-o
         if(!Role::where('name', 'Tutor')->first()){
-            $tutor = Role::create(['name' => 'Tutor']);
+            $tutor = Role::create([
+                'name' => 'Tutor',
+                'order_roles' => 4,
+            ]);
         } else {
             // Se estiver cadastrado, recupera os dados do papel e atribui ao papel 'Professor' as suas permissões
             $tutor =  Role::where('name', 'Tutor')->first();
@@ -124,7 +136,10 @@ class RoleSeeder extends Seeder
         // Verifica se o papel está criado no banco, se não estiver, cadastra-o
         // Aluno não pode fazer nada em relação ao administrativo
         if(!Role::where('name', 'Aluno')->first()){
-            Role::create(['name' => 'Aluno']);
+            Role::create([
+                'name' => 'Aluno',
+                'order_roles' => 5,
+            ]);
         }
     }
 }
