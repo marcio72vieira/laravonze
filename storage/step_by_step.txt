@@ -676,6 +676,87 @@
         4) Alterar a PermissionSeed para refletir a coluna criada, como no exemplo abaixo:
 
 
+===================
+API API API API API
+===================
+01 -    Criar as rotas de api, com o comando abaixo:
+        a) marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan install:api
+           Confirmar a criação das migrations pendentes, caso esteja em um projeto antigo (no caso específico, estamos)
+           2024_08_23_144930_create_personal_access_tokens_table
+
+        b) Criar a controller Api/UserController para manipular os usuários atravé da Api, com o comando abaixo:
+           marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan make:controller Api/UserController
+
+        c) Indicar o uso desta controller Api/UserController no arquivo de rotas em: /home/marcio/projetosdocker/laravonze/routes/api.php, conforme descrito abaixo:
+            use App\Http\Controllers\Api\UserController;
+
+            Route::get('/user', [UserController::class, 'index']);
+
+        d) Implementar o corpo do método 'index' na classe UserController, conforme abaixo:
+            namespace App\Http\Controllers\Api;
+
+            use App\Http\Controllers\Controller;
+            use Illuminate\Http\JsonResponse;
+            use Illuminate\Http\Request;
+
+            class UserController extends Controller
+            {
+                public function index(): JsonResponse
+                {
+                    // Obs: o array [status, users] será convertido para um objeto JSON
+                    return response()->json([
+                        'status' => true,
+                        'users' => 'Listar usuários'
+                    ], 200);
+                }
+            }
+
+        e) Acessar a aplicação de API com os passos seguintes:
+           1) ./vendor/bin/sail up -d
+           2) ./vendor/bin/sail npm run dev
+           3) na BARRA URL do navegador, digitar: http://localhost:8080/api/user
+
+        f) Para recuperar todos os usuários com ou sem paginação implemente o código como descrito abaixo no método index() do controller Api/UserController
+            public function index(): JsonResponse
+            {
+                // Recupera os usuários do banco de dados
+                $users = User::get();
+
+                // Recupera os usuários do banco de dados com paginação
+                $users = User::paginate(2);
+
+                // Recupera os usuários do banco de dados com paginação e em ordem de id Decrescente
+                $users = User::orderBy('id', 'DESC')->paginate(40);
+
+
+                // Retornar os dados em formato de objeto e status 200
+                return response()->json([
+                    'status' => true,
+                    'users' => $users,
+                ], 200);
+            }
+
+        g) Ao utilizar a paginação será exibida por default epenas a primeira página com a quantidade de registros definidos no paginate(2). Para exibir o restante das páginas
+           com os respectivos registros por página, digite na URL os seguintes parâmetros como descrito abaixo:
+           http://localhost:8080/api/user?page=2
+
+        h) Url para recuperar os dados de um usuário específico com a rota: Route::get('/user/{user}', [UserController::class, 'show']);
+           http://localhost:8080/api/user/2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -750,7 +831,7 @@ OBS06 - O nome do midlleware colocado no final de cada rota, deve ser o mesmo no
         Rota:
         ...
         Route::get('/index-role-permission/{role}', [RolePermissionController::class, 'index'])->name('role-permission.index')->middleware('permission:index-role-permission');
-        
+
         Nome cadastrado na tabela permissions (através da PermissionSeed)
         ...
         // Permissões referente a Permissões
@@ -763,7 +844,7 @@ OBS07 - É FORTEMENTE RECOMENDÁVEL popular a tabela de permissões com SEEDS, o
         c) definir o nome da rota
         d) definir o nome do middleware para acessar a rota com base no nome cadastrado na tabela permissão através do seed
         e) definir o nome da permissão para colocar no middleware da rota (passo anterior)
-        
+
 
 OBS08 - Comentário Útil referente ao aperfeiçoamento do módulo de permissões (Aula: Alterar a permissão de acesso ao papel)
         Passar ID direto na URL
@@ -781,7 +862,7 @@ OBS08 - Comentário Útil referente ao aperfeiçoamento do módulo de permissõe
         Publicado 25 de julho de 2024, 20:39 - Cesar
         Boa tarde, Nailton,
         Segue a implementação da restrição para que o usuário com papel inferior não possa editar um usuário com papel superior:
-        Foi criada a migration "2024_07_25_113033_alter_roles_add_order_role_table" para acrescentar a coluna "order_roles" na tabela "roles". 
+        Foi criada a migration "2024_07_25_113033_alter_roles_add_order_role_table" para acrescentar a coluna "order_roles" na tabela "roles".
         Na seed "RoleSeeder.php", foi acrescentada a coluna "order_roles" para cadastrar a ordem.
         Na controller "UserController.php", foi acrescentada a restrição no método visualizar e no método carregar o formulário editar.
         // Recuperar os dados do usuário logado
@@ -805,7 +886,7 @@ OBS08 - Comentário Útil referente ao aperfeiçoamento do módulo de permissõe
         https://sicalc.receita.economia.gov.br/sicalc/principal
 
         Colocar trecho de código no método index do controller RolePermissionController ao invés de nos métodos show e edit de UserController
-        
+
         //*** INÍCIO - USUÁRIO COM PAPEL INFERIOR(order_roles maio) NÃO VISUALIZA PERMISSÕES DE USUÁRIO COM PAPEL SUPERIOR(order_roles menor) */
         // Recuperar os dados do usuário logado
         $authenticatedUser = auth()->user();
@@ -813,7 +894,7 @@ OBS08 - Comentário Útil referente ao aperfeiçoamento do módulo de permissõe
         // Verificar se o usuário autenticado tem uma ordem de papel maior ou igual ao do usuário a ser visualizado
         // O usuário autenticado, não pode editar(bloquear/liberar) suas próprias permissões
         if ($authenticatedUser->roles[0]->order_roles >= $role->order_roles) {
-            
+
             // Salvar log
             Log::info('Sem permissão de visualizar usuário com papel superior.', ['id' => $role->id, 'action_user_id' => Auth::id()]);
 
@@ -822,7 +903,7 @@ OBS08 - Comentário Útil referente ao aperfeiçoamento do módulo de permissõe
             return redirect()->route('role.index')->with('error', 'Sem permissão de visualizar usuário com permissão superior!');
         }
         //*** FIM - USUÁRIO COM PAPEL INFERIOR NÃO VISUALIZA PERMISSÕES DE USUÁRIO COM PAPEL SUPERIOR */
-        
+
 
 Desabilitando protreção por push de usuário:
 https://docs.github.com/pt/code-security/secret-scanning/push-protection-for-users?utm_source=pocket_shared#disabling-push-protection-for-users
@@ -837,6 +918,15 @@ Desabilitar a proteção por push para usuários
 Segurança de código e análise.
 
 Em "Usuário", clique em Desabilitar à direita de "Proteção por push para si mesmo".
+
+
+0BS09 - marcio@marcio72:~/ProjetosLaravel/pastaatual$ composer create-project laravel/laravel . (ponto no final), irá criar um projeto laravel dentro da pasta pastaatual e não criar uma nova pasta e colocar as pastas
+        do novo projeto nesta pasta.
+
+OBS10 - Para alterar o host e a porta de execução de uma aplicação Laravel, execute o comando abaixo:
+        php artisan serve --host=localhost --port=3000
+
+
 
 
 
