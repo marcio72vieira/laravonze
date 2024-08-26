@@ -54,10 +54,15 @@ class RoleController extends Controller
         DB::beginTransaction();
 
         try{
+
+            // Recupera a última ordem do papel
+            $lastOrderRole = Role::max('order_roles');
+
             // Cadastrar no banco de dados na tabela roles os valores de todos os campos
             $role = Role::create([
                 'name' => $request->name,
                 'guard_name' => $request->guard_name,
+                'order_roles' => $lastOrderRole ? $lastOrderRole + 1 : 1, // Se ja existir papeis cadastrados, soma 1, caso contrário recebe 1
             ]);
 
             // Salvar log
