@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserApiRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -44,5 +45,22 @@ class UserController extends Controller
             'status' => true,
             'users' => $user,
         ], 200);
+    }
+
+    public function store(UserApiRequest $request)
+    {
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password
+        ]);
+
+        // Retornar os dados em formato de objeto e status 201(conseguiu cadastrar)
+        return response()->json([
+            'status' => true,
+            'user' => $user,
+            'message' => 'Usuário cadastrado com sucesso!'
+        ], 201);
+
     }
 }

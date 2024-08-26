@@ -679,6 +679,20 @@
 ===================
 API API API API API
 ===================
+00 -    Baixar o projeto a partir do github
+        a) cd projetosdocker/laravonze
+        b) pwd > git branch > git status > git log --pretty=oneline > git pull origin master > git log --pretty=oneline
+        c) ./vendor/bin/sail up -d
+        d) ./vendor/bin/sail composer update
+        e) ./vendor/bin/sail artisan config:cache (caso tenha alterado o arquivo .env)
+        f) ./vendor/bin/sail artisan migrate
+        g) ./vendor/bin/sail composer dump-autoload (caso tenha alterado o arquivo .env)
+        h) ./vendor/bin/sail npm run dev
+
+
+
+
+
 01 -    Criar as rotas de api, com o comando abaixo:
         a) marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail artisan install:api
            Confirmar a criação das migrations pendentes, caso esteja em um projeto antigo (no caso específico, estamos)
@@ -742,6 +756,25 @@ API API API API API
 
         h) Url para recuperar os dados de um usuário específico com a rota: Route::get('/user/{user}', [UserController::class, 'show']);
            http://localhost:8080/api/user/2
+        
+        i) Para cadastrar um usuário via API
+           i.1) Considerando que estamos utilizando uma API para cadastrar um usuário, há a necessidade de implementarmos uma
+                request somente para este cadastro via API, do tipo e com as seguintes validações:
+                i.1.1 - ./vendor/bin/sail artisan make:request UserApiRequest
+                i.1.2 - No corpo da UserApiRequest implementar o código abaixo:
+
+
+
+           i.1) URL: http://localhost:8080/api/user (método post)
+           i.2) Na aba Headers, definir: 
+                Content-Type: application/json 
+                User-Agent: insomnia/8.7.22
+           i.3) Na aba Body, escolher: JSON e no corpo digitar:
+                {
+                    "name": "João",
+                    "email": "joao@celke.com.br",
+                    "password": "123456a"
+                }
 
 
 
@@ -926,8 +959,17 @@ Em "Usuário", clique em Desabilitar à direita de "Proteção por push para si 
 OBS10 - Para alterar o host e a porta de execução de uma aplicação Laravel, execute o comando abaixo:
         php artisan serve --host=localhost --port=3000
 
+OBS11 - Error response from daemon: driver failed programming external connectivity on endpoint laravonze-mysql-1 (f2ecda90fe07a813914386d764e9bba53de1ae8b756c814c3d933b9aacfee990): Bind for 0.0.0.0:3307 failed: port is already allocated
+        Isso ocorreu devido ao fato de Eu ter colocado o projeto sedesrestpopular no docker também e ter alocado a porta 3307 para o MySQL.
+        Isso me leva a crêr que se uma porta que já tenha sido alocada para um projeto antigo, e é também alocada para um projeto novo, o Docker
+        sobrepõe a porta alocada para a aplicação mais nova no lugar da aplicação mais antiga.
+        A solução do problema É alterar a porta 3307 nas configurações do MySQL nos arquivos "docker-compose.yml" e ".env" para 3308, bem como nas configurações de conexão do MYSQLWORKBENCH
+        NA VERDADE TODO ESSE PROBLEMA SURGIU PORQUE O OUTRO CONTAINER (sedesrestpopular) ESTAVA LEVANTADO UTILIZANDO A PORTA 3307 PARA O MYSQL, DE FORMA QUE NÃO HÁ A NECESSIDADE DE NENHUMA DESSAS MODIFICAÇÕES ACIMA
 
 
+
+
+Joaão e Pedro acrescentar
 
 
 
