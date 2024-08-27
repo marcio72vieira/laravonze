@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -20,5 +21,16 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+       
+        // Lançar exceção quando houver erro de autenticação (na API), exceção do tipo AuthenticationException
+        $exceptions->render(function(AuthenticationException $e){
+
+            // Retorna uma mensagem de erro e status 401
+            return response()->json([
+                'status' => false,
+                'message' => 'Token de autenticação inválido!'
+            ], 401);
+
+        });
+
     })->create();

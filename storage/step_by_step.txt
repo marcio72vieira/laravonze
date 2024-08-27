@@ -776,6 +776,14 @@ API API API API API
                     "password": "123456a"
                 }
 
+02 -    Corpo das requisições no INSOMNINA
+        Ação                URL                                         Método          Body        Hearder                                                         Corpo do Body
+        Listar              http://localhost:8080/api/user              GET             
+        Visualizar          http://localhost:8080/api/user/iduser       GET             
+        Criar               http://localhost:8080/api/user              POST           json        Content-Type: Application/json; User-Agent: insominia/8.7.22     { "name": "xxxx", "email": "xxxx@xxx.com.br", "password": "xxxxxx"}
+        Editar              http://localhost:8080/api/user/iduser       PUT            json        Content-Type: Application/json; User-Agent: insominia/8.7.22
+        Apagar              http://localhost:8080/api/user/iduser       DELETE         
+
 
 
 
