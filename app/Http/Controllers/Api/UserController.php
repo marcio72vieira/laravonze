@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserApiRequest;
+use App\Http\Requests\UserApiPasswordRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -64,6 +65,7 @@ class UserController extends Controller
             ]);
 
             // Depois de cadastrar o usuário, atribui-se o papel convidado caso o papel não tenha sido definido, caso contrário, atriui-se o papel definido
+            // O papel "Convidado" com id = 6, deve está previamente cadastrado no banco. Não esquecer!
             if(!isset($request->roles)){
                 $user->assignRole(6);
             } else {
@@ -141,6 +143,52 @@ class UserController extends Controller
         }
 
     }
+
+
+    /**
+     * Atualizar as senha de um usuário existente com base nos dados fornecidos na requisição.
+     * 
+     * @param  \App\Http\Requests\UserPasswordRequest  $request O objeto de requisição contendo os dados do usuário a ser atualizado.
+     * @param  \App\Models\User  $user O usuário a ser atualizado.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updatePassword(UserApiPasswordRequest $request, User $user): JsonResponse
+    {
+
+        // Iniciar a transação
+        DB::beginTransaction();
+
+        try {
+
+            $user->update([
+                'password' => $request->password,
+            ]);
+
+            // Operação é concluída com êxito
+            DB::commit();
+
+            // Retornar os dados em formato de objeto e status 200
+            return response()->json([
+                'status' => true,
+                'user' => $user,
+                'message' => 'Senha editada com sucesso!',
+            ], 200);
+
+        } catch (Exception $e) {
+
+            // Operação não é concluída com êxito
+            DB::rollBack();
+
+            // Retornar os dados em formato de objeto e status 400
+            return response()->json([
+                'status' => false,
+                'message' => 'Senha não editada!',
+            ], 400);
+
+        }
+    }
+
+
 
     /**
      * Excluir o usuário no banco de dados.

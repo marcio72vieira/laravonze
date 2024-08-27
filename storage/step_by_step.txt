@@ -966,7 +966,7 @@ OBS11 - Error response from daemon: driver failed programming external connectiv
         A solução do problema É alterar a porta 3307 nas configurações do MySQL nos arquivos "docker-compose.yml" e ".env" para 3308, bem como nas configurações de conexão do MYSQLWORKBENCH
         NA VERDADE TODO ESSE PROBLEMA SURGIU PORQUE O OUTRO CONTAINER (sedesrestpopular) ESTAVA LEVANTADO UTILIZANDO A PORTA 3307 PARA O MYSQL, DE FORMA QUE NÃO HÁ A NECESSIDADE DE NENHUMA DESSAS MODIFICAÇÕES ACIMA
 
-
+OBS12 - Hospedar a aplicação Laravel na DigitalOcean: https://celke.com.br/clms/aula-curso/view/6339
 
 
 Joaão e Pedro acrescentar
