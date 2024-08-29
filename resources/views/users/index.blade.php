@@ -12,6 +12,41 @@
             </ol>
         </div>
 
+
+        <div class="mb-4 shadow card border-light">
+            <div class="gap-2 card-header hstack">
+                <span>Pesquisar</span>
+            </div>
+
+            <div class="card-body">
+                <form action="{{ route('user.index')}}">
+                    <div class="row">
+                        {{-- Colunas, quando for dispositivos médios(md) ocupe 4 grids e quando for dispositivos pequenos(sm) ocupe 12 grids--}}
+                        <div class="col-md-4 col-sm-12">
+                            <label class="form-label" for="name">Nome</label>
+                            <input type="text" name="name" id="name" class="form-control" value="{{ $name }}" placeholder="Nome do usuário">
+                        </div>
+
+                        <div class="col-md-4 col-sm-12">
+                            <label class="form-label" for="email">E-mail</label>
+                            <input type="text" name="email" id="email" class="form-control" value="{{ $email }}" placeholder="E-mail do usuário">
+                        </div>
+
+                        <div class="col-md-4 col-sm-12">
+                            <label class="form-label" for="role">Papel</label>
+                            <input type="text" name="role" id="role" class="form-control" value="{{ $role }}" placeholder="Papel do usuário">
+                        </div>
+
+                        <div class="col-md-4 col-sm-12 mt-3 pt-3">
+                            <button type="submit" class="btn btn-info btn-sm"><i class="fa-solid fa-magnifying-glass"></i> Pesquisar</button>
+                            <a href="{{ route('user.index')}}" class="btn btn-warning btn-sm"><i class="fa-solid fa-trash"></i> Limpar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
         <div class="mb-4 shadow card border-light">
             <div class="gap-2 card-header hstack">
                 <span>Listar</span>
@@ -89,6 +124,7 @@
                 </table>
 
                     {{ $users->onEachSide(0)->links() }}
+                    {{-- OU $users->appends(request()->all())->onEachSide(0)->links() OBS: Comente o método: "->withQueryString();" na controller: UserController--}}
 
             </div>
         </div>

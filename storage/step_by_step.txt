@@ -676,6 +676,9 @@
         4) Alterar a PermissionSeed para refletir a coluna criada, como no exemplo abaixo:
 
 
+
+023 -   Formulário de Pesquisa
+
 ===================
 API API API API API
 ===================
@@ -756,7 +759,7 @@ API API API API API
 
         h) Url para recuperar os dados de um usuário específico com a rota: Route::get('/user/{user}', [UserController::class, 'show']);
            http://localhost:8080/api/user/2
-        
+
         i) Para cadastrar um usuário via API
            i.1) Considerando que estamos utilizando uma API para cadastrar um usuário, há a necessidade de implementarmos uma
                 request somente para este cadastro via API, do tipo e com as seguintes validações:
@@ -766,8 +769,8 @@ API API API API API
 
 
            i.1) URL: http://localhost:8080/api/user (método post)
-           i.2) Na aba Headers, definir: 
-                Content-Type: application/json 
+           i.2) Na aba Headers, definir:
+                Content-Type: application/json
                 User-Agent: insomnia/8.7.22
            i.3) Na aba Body, escolher: JSON e no corpo digitar:
                 {
@@ -778,11 +781,11 @@ API API API API API
 
 02 -    Corpo das requisições no INSOMNINA
         Ação                URL                                         Método          Body        Hearder                                                         Corpo do Body
-        Listar              http://localhost:8080/api/user              GET             
-        Visualizar          http://localhost:8080/api/user/iduser       GET             
+        Listar              http://localhost:8080/api/user              GET
+        Visualizar          http://localhost:8080/api/user/iduser       GET
         Criar               http://localhost:8080/api/user              POST           json        Content-Type: Application/json; User-Agent: insominia/8.7.22     { "name": "xxxx", "email": "xxxx@xxx.com.br", "password": "xxxxxx"}
         Editar              http://localhost:8080/api/user/iduser       PUT            json        Content-Type: Application/json; User-Agent: insominia/8.7.22
-        Apagar              http://localhost:8080/api/user/iduser       DELETE         
+        Apagar              http://localhost:8080/api/user/iduser       DELETE
 
 
 
@@ -977,7 +980,17 @@ OBS11 - Error response from daemon: driver failed programming external connectiv
 OBS12 - Hospedar a aplicação Laravel na DigitalOcean: https://celke.com.br/clms/aula-curso/view/6339
 
 
-Joaão e Pedro acrescentar
+========================
+Pesquisa google
+Get all users with specify role in laravel
+how recover the roles of the user using laravel permission with eloquent in the laravel
+https://laravel.com/docs/11.x/eloquent-relationships#querying-relationship-existence
+https://stackoverflow.com/questions/22487324/get-all-users-with-role-in-laravel
+https://github.com/spatie/laravel-permission/discussions/2347
+https://laracasts.com/discuss/channels/general-discussion/how-do-i-get-all-users-with-roles-where-role-admin-using-eloquent-along-with-entrust
+
+
+
 
 
 

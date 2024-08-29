@@ -15,26 +15,54 @@ class UserController extends Controller
 {
 
     // Listar os usuários
-    public function index()
+    public function index(Request $request)
     {
 
-        // Recuperar os registros do banco dados
-        $users = User::orderByDesc('created_at')->paginate(10);
+        // Recuperar os registros do banco dados sem pesquisa
+        // $users = User::orderByDesc('created_at')->paginate(10);
+
+
+        // Recuperar os registros do banco dados com pesquisa. When, é utilizado para adicionar condições dinâmica na consulta. has(name), verifica se name possui algum valor, se possuir, executa a função($whenQuery)
+        // use($request ) é utilizado porque $resquest é uma variável externa que deseja-se utilizar dentro da função($whenQuery).
+        $users = User::when($request->has('name'), function($whenQuery) use($request){
+            // pegue o que já possui executado de sql e execute mais uma condição (where) na coluna name possua o seguinte valor
+            $whenQuery->where('name', 'like', '%'. $request->name . '%');
+        })
+        ->when($request->has('email'), function($whenQuery) use($request){
+            $whenQuery->where('email', 'like', '%'. $request->email . '%');
+        })
+
+        ->whereHas('roles', function($q) use($request)  {$q->where('name', '=', $request->role);})
+
+
+
+        //->whereHas('roles', function($q)  {$q->where('name', 'Aluno');})
+        //->whereHas('roles', function($q)  use($request) {$q->where('name', $request->role);})
+
+        ->orderByDesc('created_at')
+        ->paginate(10)
+        ->withQueryString();        // Através deste método é possível enviar a string(nome e email) que está sendo utilizada para pesquisar
 
         // Carregar a VIEW
-        return view('users.index', ['menu' => 'users', 'users' => $users]);
+        return view('users.index', [
+            'menu' => 'users',
+            'users' => $users,
+            'name' => $request->name,           // Enviando para a view o nome para pesquisa
+            'email' => $request->email,          // Enviando para a view o email para pesquisa
+            'role' => $request->role
+        ]);
     }
 
     // Detalhes do usuario
     public function show(User $user)
     {
-        
+
         // Recuperar os dados do usuário logado
         $authenticatedUser = auth()->user();
 
         // Verificar se o usuário autenticado tem uma ordem de papel maior ou igual ao do usuário a ser visualizado
         if ($authenticatedUser->roles[0]->order_roles > $user->roles[0]->order_roles) {
-            
+
             // Salvar log
             Log::info('Sem permissão de visualizar usuário com papel superior.', ['id' => $user->id, 'action_user_id' => Auth::id()]);
 
