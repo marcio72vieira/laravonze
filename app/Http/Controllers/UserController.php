@@ -17,46 +17,27 @@ class UserController extends Controller
     // Listar os usuários
     public function index(Request $request)
     {
-
         // Recuperar os registros do banco dados sem pesquisa
         // $users = User::orderByDesc('created_at')->paginate(10);
 
-
-        // Recuperar os registros do banco dados com pesquisa. When, é utilizado para adicionar condições dinâmica na consulta. has(name), verifica se name possui algum valor, se possuir, executa a função($whenQuery)
-        // use($request ) é utilizado porque $resquest é uma variável externa que deseja-se utilizar dentro da função($whenQuery).
-        // $users = User::whereHas('roles', function($q) use($request){ $request->has('role') ? $q->where('name', $request->role ) : $q;})
-        
-
-        // A única tabela que possui a coluna name é roles e por isso ele não considera nem o nome do usuário nem o email do mesmo,
-        // só é comparado o name do papel.
-        $users = User::whereHas('roles', function($q) use($request){ 
-            if($request->role != ''){
-                //dd("O papel foi digitado");
-                $q->where('name', $request->role);
-            }
-            if($request->name != ''){
-                //dd("O nome foi digitado");
-                $q->where('name', $request->name);
-            }
-            if($request->email != ''){
-                //dd("O email foi digitado");
-                $q->where('email', $request->email);
-            }
-
-            //dd($q->toSql());
-        })
-
-        // ->when($request->has('name'), function($whenQuery) use($request) {
-        //     // pegue o que já possui executado de sql e execute mais uma condição (where) na coluna name possua o seguinte valor
-        //     $whenQuery->where('name', 'like', '%'. $request->name . '%');
-        // })
-        // ->when($request->has('email'), function($whenQuery) use($request){
-        //     $whenQuery->where('email', 'like', '%'. $request->email . '%');
-        // })
-
-        ->orderByDesc('created_at')
-        ->paginate(10)
-        ->withQueryString();        // Através deste método é possível enviar a string(nome e email) que está sendo utilizada para pesquisar
+        // Tabelas utilizadas: Users, Roles e Users_tem_Roles(model_has_roles)
+        $users = DB::table('users')
+            ->join('model_has_roles', 'model_id', '=', 'users.id')
+            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->select('users.id', 'users.name AS userName','users.email','users.created_at',
+                    'roles.name AS roleName')
+            ->when($request->has('name'), function($query) use($request) {
+                $query->where('users.name', 'like', '%'. $request->name . '%');
+            })
+            ->when($request->has('email'), function($query) use($request) {
+                $query->where('users.email', 'like', '%'. $request->email . '%');
+            })
+            ->when($request->has('role'), function($query) use($request) {
+                $query->where('roles.name', 'like', '%'. $request->role . '%');
+            })
+            ->orderByDesc('created_at')
+            ->paginate(10);
+            //->withQueryString();        // Através deste método é possível enviar a string(nome e email) que está sendo utilizada para pesquisar. Este método não existe com QueryBuilder
 
         // Carregar a VIEW
         return view('users.index', [
@@ -64,9 +45,12 @@ class UserController extends Controller
             'users' => $users,
             'name' => $request->name,           // Enviando para a view o nome para pesquisa
             'email' => $request->email,         // Enviando para a view o email para pesquisa
-            'role' => $request->role
+            'role' => $request->role            // Enviando para a view o papel para pesquisa
         ]);
+
     }
+
+
 
     // Detalhes do usuario
     public function show(User $user)

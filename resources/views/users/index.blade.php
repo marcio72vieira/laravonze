@@ -77,16 +77,19 @@
                         @forelse ($users as $user)
                             <tr>
                                 <th>{{ $user->id }}</th>
-                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->userName }}</td>
                                 <td class="d-none d-md-table-cell">{{ $user->email }}</td>
-                                <td class="d-none d-md-table-cell">
+                                <td class="d-none d-md-table-cell">{{ $user->roleName }}
                                     {{-- Outra forma de recuperar os papéis do usuário: $user->roles[0]->name --}}
                                     {{-- O forelse foi utilizado pois o usuári poderá ter mais de um papel --}}
+                                    {{--
                                     @forelse ($user->getRoleNames() as $role)
                                         {{ $role }}
                                     @empty
                                         {{ " - " }}
                                     @endforelse
+                                    --}}
+
                                 </td>
                                 <td class="flex-row d-md-flex justify-content-center">
 
@@ -123,8 +126,9 @@
                     </tbody>
                 </table>
 
-                    {{ $users->onEachSide(0)->links() }}
+                    {{-- {{ $users->onEachSide(0)->links() }} --}}
                     {{-- OU $users->appends(request()->all())->onEachSide(0)->links() OBS: Comente o método: "->withQueryString();" na controller: UserController--}}
+                    {{ $users->appends(request()->all())->onEachSide(0)->links() }}
 
             </div>
         </div>
