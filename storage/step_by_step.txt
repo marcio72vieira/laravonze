@@ -991,13 +991,80 @@ https://laracasts.com/discuss/channels/general-discussion/how-do-i-get-all-users
 
 
 
+====================================
+Explicando o trecho de cóidgo abaixo:
+
+$users = User::when($request->has('name'), function($whenQuery) use($request){
+            $whenQuery->where('name', 'like', '%'. $request->name . '%');
+         })
+         ->when($request->has('email'), function($whenQuery) use($request){
+            $whenQuery->where('email', 'like', '%'. $request->email . '%');
+         })
+1) $users recebe o resultado da  "consulta" de todos os Usuários (User) do banco
+2) when(quando), na requisição o  campo "name" e "email" do formulário forem informado(has), execute uma função cujo 
+   argumento é a "consulta já realizada" e adicione a essa consulta a clúsula "where" 
+
+
+===================================================
+POSSÍVEL RESOLUÇÃO PARA RETORNO JSON COM MIDDLEWARE
+
+public function __construct()
+    {
+        // O usuário logado deve está autenticado e possui autorização para executar os métodos deste controle
+        $this->middleware(['auth', 'can:adm']);
+    }
+
+=====================================
+$users = User::whereHas('roles', function($q) use($request){ 
+            if($request->has('role')){
+                dd($q->toSql());
+            }
+        })-when($request->has('name)...)
+        })-when($request->has('email)...)
+        ....
+
+
+
+=======================================
+// Faz o filtro apenas pelo campo papel
+$users = User::whereHas('roles', function($q)  use($request) {$q->where('name', $request->role);})
+->when($request->has('name'), function($whenQuery) use($request){
+    $whenQuery->where('name', 'like', '%'. $request->name . '%');
+})
+->when($request->has('email'), function($whenQuery) use($request){
+    $whenQuery->where('email', 'like', '%'. $request->email . '%');
+})
+->orderByDesc('created_at')
+->paginate(10)
 
 
 
 
+=======================
+arquivo usuários e papeis da pasta document NO vaio
+
+$users = User::whereHas('roles', function($q) use($request)  {$q->where('roles.name', '=', $request->role);})
+        ->when($request->has('name'), function($whenQuery) use($request){
+            // pegue o que já possui executado de sql e execute mais uma condição (where) na coluna name possua o seguinte valor
+            $whenQuery->where('name', 'like', '%'. $request->name . '%');
+        })
+        ->when($request->has('email'), function($whenQuery) use($request){
+            $whenQuery->where('email', 'like', '%'. $request->email . '%');
+        })
+        
+
+        //->whereHas('roles', function($q) use($request)  {$q->where('name', '=', $request->role);})
 
 
 
+        //->whereHas('roles', function($q)  {$q->where('name', 'Aluno');})
+        //->whereHas('roles', function($q)  use($request) {$q->where('name', $request->role);})
 
+        ->orderByDesc('created_at')
+        ->paginate(10)
+        ->withQueryString();        // Através deste método é possível enviar a string(nome e email) que está sendo utilizada para pesquisar
+
+///
+$users = User::whereHas('roles', function($q) use($request){ $request->has('role') ? $q->where('name', $request->role ) : $q;})
 
 

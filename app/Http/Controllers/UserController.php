@@ -24,20 +24,35 @@ class UserController extends Controller
 
         // Recuperar os registros do banco dados com pesquisa. When, é utilizado para adicionar condições dinâmica na consulta. has(name), verifica se name possui algum valor, se possuir, executa a função($whenQuery)
         // use($request ) é utilizado porque $resquest é uma variável externa que deseja-se utilizar dentro da função($whenQuery).
-        $users = User::when($request->has('name'), function($whenQuery) use($request){
-            // pegue o que já possui executado de sql e execute mais uma condição (where) na coluna name possua o seguinte valor
-            $whenQuery->where('name', 'like', '%'. $request->name . '%');
+        // $users = User::whereHas('roles', function($q) use($request){ $request->has('role') ? $q->where('name', $request->role ) : $q;})
+        
+
+        // A única tabela que possui a coluna name é roles e por isso ele não considera nem o nome do usuário nem o email do mesmo,
+        // só é comparado o name do papel.
+        $users = User::whereHas('roles', function($q) use($request){ 
+            if($request->role != ''){
+                //dd("O papel foi digitado");
+                $q->where('name', $request->role);
+            }
+            if($request->name != ''){
+                //dd("O nome foi digitado");
+                $q->where('name', $request->name);
+            }
+            if($request->email != ''){
+                //dd("O email foi digitado");
+                $q->where('email', $request->email);
+            }
+
+            //dd($q->toSql());
         })
-        ->when($request->has('email'), function($whenQuery) use($request){
-            $whenQuery->where('email', 'like', '%'. $request->email . '%');
-        })
 
-        ->whereHas('roles', function($q) use($request)  {$q->where('name', '=', $request->role);})
-
-
-
-        //->whereHas('roles', function($q)  {$q->where('name', 'Aluno');})
-        //->whereHas('roles', function($q)  use($request) {$q->where('name', $request->role);})
+        // ->when($request->has('name'), function($whenQuery) use($request) {
+        //     // pegue o que já possui executado de sql e execute mais uma condição (where) na coluna name possua o seguinte valor
+        //     $whenQuery->where('name', 'like', '%'. $request->name . '%');
+        // })
+        // ->when($request->has('email'), function($whenQuery) use($request){
+        //     $whenQuery->where('email', 'like', '%'. $request->email . '%');
+        // })
 
         ->orderByDesc('created_at')
         ->paginate(10)
@@ -48,7 +63,7 @@ class UserController extends Controller
             'menu' => 'users',
             'users' => $users,
             'name' => $request->name,           // Enviando para a view o nome para pesquisa
-            'email' => $request->email,          // Enviando para a view o email para pesquisa
+            'email' => $request->email,         // Enviando para a view o email para pesquisa
             'role' => $request->role
         ]);
     }
