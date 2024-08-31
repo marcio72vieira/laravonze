@@ -20,7 +20,7 @@ class UserController extends Controller
         // Recuperar os registros do banco dados sem pesquisa
         // $users = User::orderByDesc('created_at')->paginate(10);
 
-        // Tabelas utilizadas: Users, Roles e Users_tem_Roles(model_has_roles)
+        // Tabelas utilizadas: users, roles e model_has_roles(tabela pivot). Obs: model_has_roles é o mesmo que "users_has_roles"
         $users = DB::table('users')
             ->join('model_has_roles', 'model_id', '=', 'users.id')
             ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
@@ -35,19 +35,27 @@ class UserController extends Controller
             ->when($request->has('role'), function($query) use($request) {
                 $query->where('roles.name', 'like', '%'. $request->role . '%');
             })
+            ->when($request->filled('data_cadastro_inicio'), function($query) use($request) {
+                $query->where('users.created_at', '>=', \Carbon\Carbon::parse($request->data_cadastro_inicio)->format('Y-m-d H:i:s'));
+            })
+            ->when($request->filled('data_cadastro_fim'), function($query) use($request) {
+                $query->where('users.created_at', '<=', \Carbon\Carbon::parse($request->data_cadastro_fim)->format('Y-m-d H:i:s'));
+            })
             ->orderByDesc('created_at')
             ->paginate(10);
+            
             //->withQueryString();        // Através deste método é possível enviar a string(nome e email) que está sendo utilizada para pesquisar. Este método não existe com QueryBuilder
 
         // Carregar a VIEW
         return view('users.index', [
             'menu' => 'users',
             'users' => $users,
-            'name' => $request->name,           // Enviando para a view o nome para pesquisa
-            'email' => $request->email,         // Enviando para a view o email para pesquisa
-            'role' => $request->role            // Enviando para a view o papel para pesquisa
+            'name' => $request->name,                                   // Enviando para a view o nome para pesquisa
+            'email' => $request->email,                                 // Enviando para a view o email para pesquisa
+            'role' => $request->role,                                   // Enviando para a view o papel para pesquisa
+            'data_cadastro_inicio' => $request->data_cadastro_inicio,   // Enviando para a view o cadastroinicio para pesquisa
+            'data_cadastro_fim' => $request->data_cadastro_fim          // Enviando para a view o cadastrofim para pesquisa
         ]);
-
     }
 
 

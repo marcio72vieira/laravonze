@@ -36,8 +36,20 @@
                             <label class="form-label" for="role">Papel</label>
                             <input type="text" name="role" id="role" class="form-control" value="{{ $role }}" placeholder="Papel do usuário">
                         </div>
-
-                        <div class="col-md-4 col-sm-12 mt-3 pt-3">
+                    </div>
+                    
+                    <div class="mb-3 row">
+                        <div class="col-md-4 col-sm-12">
+                            <label class="form-label" for="data_cadastro_inicio">Data cadastro início</label>
+                            <input type="datetime-local" name="data_cadastro_inicio" id="data_cadastro_inicio" class="form-control" value="{{ $data_cadastro_inicio }}">
+                        </div>
+                        
+                        <div class="col-md-4 col-sm-12">
+                            <label class="form-label" for="data_cadastro_fim">Data cadastro fim</label>
+                            <input type="datetime-local" name="data_cadastro_fim" id="data_cadastro_fim" class="form-control" value="{{ $data_cadastro_fim }}">
+                        </div>
+                        
+                        <div class="pt-3 mt-3 col-md-4 col-sm-12">
                             <button type="submit" class="btn btn-info btn-sm"><i class="fa-solid fa-magnifying-glass"></i> Pesquisar</button>
                             <a href="{{ route('user.index')}}" class="btn btn-warning btn-sm"><i class="fa-solid fa-trash"></i> Limpar</a>
                         </div>
@@ -50,13 +62,20 @@
         <div class="mb-4 shadow card border-light">
             <div class="gap-2 card-header hstack">
                 <span>Listar</span>
+
                 <span class="ms-auto">
                     @can('create-user')
                         <a href="{{ route('user.create') }}" class="btn btn-success btn-sm"><i
                                 class="fa-regular fa-square-plus"></i> Cadastrar
                         </a>
                     @endcan
+                    @can('create-user')
+                        <a href="" class="btn btn-warning btn-sm">
+                            <i class="fa-regular fa-file-pdf"></i> Gerar Pdf
+                        </a>
+                    @endcan
                 </span>
+
             </div>
             <div class="card-body">
 
@@ -69,6 +88,7 @@
                             <th>Nome</th>
                             <th class="d-none d-md-table-cell">E-mail</th>
                             <th class="d-none d-md-table-cell">Papel</th>
+                            <th class="d-none d-md-table-cell">Cadastrado</th>
                             <th class="text-center">Ações</th>
                         </tr>
                     </thead>
@@ -80,6 +100,7 @@
                                 <td>{{ $user->userName }}</td>
                                 <td class="d-none d-md-table-cell">{{ $user->email }}</td>
                                 <td class="d-none d-md-table-cell">{{ $user->roleName }}
+                                <td class="d-none d-md-table-cell">{{ \Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i') }}
                                     {{-- Outra forma de recuperar os papéis do usuário: $user->roles[0]->name --}}
                                     {{-- O forelse foi utilizado pois o usuári poderá ter mais de um papel --}}
                                     {{--
