@@ -27,7 +27,9 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::put('/user-password/{user}', [UserController::class, 'updatePassword']); // método: PUT      - http://127.0.0.1:8000/
 
     // Course
-    Route::get('/course', [CourseController::class, 'index'])->middleware('permission:index-course');
+    Route::get('/course', [CourseController::class, 'index']);
+    Route::get('/show-course/{course}', [CourseController::class, 'show'])->name('course.show');
+    Route::post('/store-course', [CourseController::class, 'store'])->name('course.store')->middleware('permission:create-course');
 
     // Logout
     Route::post('/logout', [LoginController::class, 'logout']);                     // método: POST     - http://localhost:8080/api/logout
