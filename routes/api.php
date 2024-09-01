@@ -15,7 +15,7 @@ Route::get('/user', function (Request $request) {
 Route::post('/login', [LoginController::class, 'login']);                         // método: POST     - http://localhost:8080/api/user
 
 
-// Rotas restrita
+// Rotas restrita. O usuário deve está autenticado.
 Route::group(['middleware' => ['auth:sanctum']], function (){
 
     // User
@@ -27,10 +27,13 @@ Route::group(['middleware' => ['auth:sanctum']], function (){
     Route::put('/user-password/{user}', [UserController::class, 'updatePassword']); // método: PUT      - http://127.0.0.1:8000/
 
     // Course
+    // A verificação de permissão a essas rotas, são testadas diretamente em cada método
     Route::get('/course', [CourseController::class, 'index']);
     Route::get('/show-course/{course}', [CourseController::class, 'show'])->name('course.show');
-    Route::post('/store-course', [CourseController::class, 'store'])->name('course.store')->middleware('permission:create-course');
-
+    Route::post('/store-course', [CourseController::class, 'store'])->name('course.store');
+    Route::put('/update-course/{course}', [CourseController::class, 'update']);
+    Route::delete('/destroy-course/{course}', [CourseController::class, 'destroy']);
+    
     // Logout
     Route::post('/logout', [LoginController::class, 'logout']);                     // método: POST     - http://localhost:8080/api/logout
 });

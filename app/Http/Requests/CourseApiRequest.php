@@ -43,8 +43,8 @@ class CourseApiRequest extends FormRequest
         $courseId = $this->route('course');
 
         return [
-            'name' => 'required|unique:course,name,' . ($courseId ? $courseId->id : null),
-            'price' => 'required|min:10'
+            'name' => 'required|unique:courses,name,' . ($courseId ? $courseId->id : null),
+            'price' => 'required|max:10'
         ];
     }
 
