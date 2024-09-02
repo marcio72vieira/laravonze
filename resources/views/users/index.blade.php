@@ -37,18 +37,18 @@
                             <input type="text" name="role" id="role" class="form-control" value="{{ $role }}" placeholder="Papel do usuário">
                         </div>
                     </div>
-                    
+
                     <div class="mb-3 row">
                         <div class="col-md-4 col-sm-12">
                             <label class="form-label" for="data_cadastro_inicio">Data cadastro início</label>
                             <input type="datetime-local" name="data_cadastro_inicio" id="data_cadastro_inicio" class="form-control" value="{{ $data_cadastro_inicio }}">
                         </div>
-                        
+
                         <div class="col-md-4 col-sm-12">
                             <label class="form-label" for="data_cadastro_fim">Data cadastro fim</label>
                             <input type="datetime-local" name="data_cadastro_fim" id="data_cadastro_fim" class="form-control" value="{{ $data_cadastro_fim }}">
                         </div>
-                        
+
                         <div class="pt-3 mt-3 col-md-4 col-sm-12">
                             <button type="submit" class="btn btn-info btn-sm"><i class="fa-solid fa-magnifying-glass"></i> Pesquisar</button>
                             <a href="{{ route('user.index')}}" class="btn btn-warning btn-sm"><i class="fa-solid fa-trash"></i> Limpar</a>
@@ -70,7 +70,7 @@
                         </a>
                     @endcan
                     @can('create-user')
-                        <a href="" class="btn btn-warning btn-sm">
+                        <a href="{{ route('user.generate-pdf')}}" class="btn btn-warning btn-sm">
                             <i class="fa-regular fa-file-pdf"></i> Gerar Pdf
                         </a>
                     @endcan

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserController extends Controller
 {
@@ -43,7 +44,7 @@ class UserController extends Controller
             })
             ->orderByDesc('created_at')
             ->paginate(10);
-            
+
             //->withQueryString();        // Através deste método é possível enviar a string(nome e email) que está sendo utilizada para pesquisar. Este método não existe com QueryBuilder
 
         // Carregar a VIEW
@@ -282,5 +283,20 @@ class UserController extends Controller
             // Redirecionar o usuário, enviar a mensagem de erro
             return redirect()->route('course.index')->with('error', 'Usuário não excluído!');
         }
+    }
+
+
+    // Gerar PDF
+    public function generatePdf(Request $request)
+    {
+        // Recuperar os registros do banco de dados
+        $users = User::orderByDesc('id')->get();
+
+        // Carrega a string com o HTML/conteúdo e determinar a orientação e o tamanho do arquivo
+        $pdf =  PDF::loadView('users.generate-pdf', ['users' => $users])->setPaper('a4', 'portrait');
+
+        // Fazer o download do arquivo
+        return $pdf->download('lista_usuarios.pdf');
+
     }
 }
