@@ -57,14 +57,14 @@
                                     @endcan
 
                                     @can('edit-permission')
-                                        <a href=""
+                                        <a href="{{ route('permission.edit', ['permission' => $permission->id]) }}"
                                             class="btn btn-warning btn-sm me-1 mb-1">
                                             <i class="fa-solid fa-pen-to-square"></i> Editar
                                         </a>
                                     @endcan
 
                                     @can('destroy-permission')
-                                        <form method="POST" action="">
+                                        <form method="POST" action="{{ route('permission.destroy', ['permission' => $permission->id]) }}">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="btn btn-danger btn-sm me-1 mb-1"
@@ -72,7 +72,6 @@
                                                     class="fa-regular fa-trash-can"></i> Apagar</button>
                                         </form>
                                     @endcan
-
                                 </td>
                             </tr>
                         @empty

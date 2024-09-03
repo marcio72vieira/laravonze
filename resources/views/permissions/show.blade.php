@@ -27,7 +27,7 @@
                     @endcan
 
                     @can('edit-permission')
-                        <a href="" class="btn btn-warning btn-sm me-1"><i
+                        <a href="{{ route('permission.edit', ['permission' => $permission->id]) }}" class="btn btn-warning btn-sm me-1"><i
                                 class="fa-solid fa-pen-to-square"></i> Editar
                         </a>
                     @endcan

@@ -94,6 +94,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/show-permission/{permission}', [PermissionController::class, 'show'])->name('permission.show')->middleware('permission:show-permission');
     Route::get('/create-permission', [PermissionController::class, 'create'])->name('permission.create')->middleware('permission:create-permission');
     Route::post('/store-permission', [PermissionController::class, 'store'])->name('permission.store')->middleware('permission:create-permission');
-
+    Route::get('/edit-permission/{permission}', [PermissionController::class, 'edit'])->name('permission.edit')->middleware('permission:edit-permission');
+    Route::put('/update-permission/{permission}', [PermissionController::class, 'update'])->name('permission.update')->middleware('permission:edit-permission');
+    Route::delete('/destroy-permission/{permission}', [PermissionController::class, 'destroy'])->name('permission.destroy')->middleware('permission:destroy-permission');
 });
 
