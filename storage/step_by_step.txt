@@ -695,6 +695,13 @@
                         return $pdf->download('invoice.pdf');
         e)  Criar view com as devidas Configurações
             ./vendor/bin/sail artisan make:view users/generate-pdf
+        f) Acrescente à nova rota o middleware necessário:
+           Route::get('/generate-pdf-user', [UserController::class, 'generatePdf'])->name('user.generate-pdf')->middleware('generate-pdf-user')
+        g) Acrescente à seeder PermissionSeeder no trecho referente a Usuários a nova permissão
+           ['title' => 'Gerar PDF dos Usuários', 'name' => 'generate-pdf-user'],
+        h) Execute a seeder PermissionSeeder com o comando abaixo:
+            Execute a seed modificada com artisan db:seed --class=PermissionSeeder
+        
 
 
 

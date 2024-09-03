@@ -69,8 +69,18 @@
                                 class="fa-regular fa-square-plus"></i> Cadastrar
                         </a>
                     @endcan
-                    @can('create-user')
+
+                    {{-- sem pesquisa
+                    @can('generate-pdf-user')
                         <a href="{{ route('user.generate-pdf')}}" class="btn btn-warning btn-sm">
+                            <i class="fa-regular fa-file-pdf"></i> Gerar Pdf
+                        </a>
+                    @endcan
+                    --}}
+
+                    {{-- com pesquisa --}}
+                    @can('generate-pdf-user')
+                        <a href="{{ url('generate-pdf-user?' . request()->getQueryString()) }}" class="btn btn-warning btn-sm">
                             <i class="fa-regular fa-file-pdf"></i> Gerar Pdf
                         </a>
                     @endcan
@@ -110,7 +120,6 @@
                                         {{ " - " }}
                                     @endforelse
                                     --}}
-
                                 </td>
                                 <td class="flex-row d-md-flex justify-content-center">
 

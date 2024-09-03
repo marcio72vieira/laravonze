@@ -21,15 +21,14 @@
                 @forelse ($users as $user)
                     <tr>
                         <td style="border: 1px solid #ccc;">{{ $user->id }}</td>
-                        <td style="border: 1px solid #ccc;">{{ $user->name }}</td>
+                        <td style="border: 1px solid #ccc;">{{ $user->userName }}</td>{{-- Para uso de relatório com pesquisa --}}
                         <td style="border: 1px solid #ccc;">{{ $user->email }}</td>
-                        <td style="border: 1px solid #ccc;">
-                            @forelse ($user->getRoleNames() as $role)
-                                {{ $role }}
-                            @empty
-                                {{ " - " }}
-                            @endforelse
-                        </td>
+                        <td style="border: 1px solid #ccc;">{{ $user->roleName }}</td>
+                        {{-- 
+                            Para uso de relatório PDF geral, sem pesquisa
+                            <td style="border: 1px solid #ccc;">{{ $user->name }}</td> 
+                            @forelse ($user->getRoleNames() as $role) {{ $role }} @empty {{ " - " }} @endforelse
+                        --}}
                         <td style="border: 1px solid #ccc; text-align: center">{{ \Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i') }}</td>
                     </tr>
                 @empty

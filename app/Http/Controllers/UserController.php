@@ -42,7 +42,7 @@ class UserController extends Controller
             ->when($request->filled('data_cadastro_fim'), function($query) use($request) {
                 $query->where('users.created_at', '<=', \Carbon\Carbon::parse($request->data_cadastro_fim)->format('Y-m-d H:i:s'));
             })
-            ->orderByDesc('created_at')
+            ->orderByDesc('id')
             ->paginate(10);
 
             //->withQueryString();        // Através deste método é possível enviar a string(nome e email) que está sendo utilizada para pesquisar. Este método não existe com QueryBuilder
@@ -289,8 +289,48 @@ class UserController extends Controller
     // Gerar PDF
     public function generatePdf(Request $request)
     {
-        // Recuperar os registros do banco de dados
-        $users = User::orderByDesc('id')->get();
+        // Recuperar os registros do banco de dados sem pesquisa
+        // $users = User::orderByDesc('id')->get();
+
+        // Recuperar os registros do banco de dados com pesquisa
+        $users = DB::table('users')
+            ->join('model_has_roles', 'model_id', '=', 'users.id')
+            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->select('users.id', 'users.name AS userName','users.email','users.created_at',
+                    'roles.name AS roleName')
+            ->when($request->has('name'), function($query) use($request) {
+                $query->where('users.name', 'like', '%'. $request->name . '%');
+            })
+            ->when($request->has('email'), function($query) use($request) {
+                $query->where('users.email', 'like', '%'. $request->email . '%');
+            })
+            ->when($request->has('role'), function($query) use($request) {
+                $query->where('roles.name', 'like', '%'. $request->role . '%');
+            })
+            ->when($request->filled('data_cadastro_inicio'), function($query) use($request) {
+                $query->where('users.created_at', '>=', \Carbon\Carbon::parse($request->data_cadastro_inicio)->format('Y-m-d H:i:s'));
+            })
+            ->when($request->filled('data_cadastro_fim'), function($query) use($request) {
+                $query->where('users.created_at', '<=', \Carbon\Carbon::parse($request->data_cadastro_fim)->format('Y-m-d H:i:s'));
+            })
+            ->orderByDesc('id')
+            ->get();
+
+            // Evita o "estouro" de memória pela quantidade de registros recuperados
+            // Soma total de registros
+            $totalRecords =  $users->count('id');
+
+            // Verifica se a quantidade de registros ultrapassa o limite para gerar PDF
+            if($totalRecords > 500){
+                // Redireciona o usuário e envia a mensagem de error
+                return redirect()->route('user.index', [
+                    'name' => $request->name,                           
+                    'email' => $request->email,                                 
+                    'role' => $request->role,                                   
+                    'data_cadastro_inicio' => $request->data_cadastro_inicio,   
+                    'data_cadastro_fim' => $request->data_cadastro_fim          
+                ])->with('error', 'Limite de registro ultrapassado para gerar PDF. Refine sua pesquisa!');
+            }
 
         // Carrega a string com o HTML/conteúdo e determinar a orientação e o tamanho do arquivo
         $pdf =  PDF::loadView('users.generate-pdf', ['users' => $users])->setPaper('a4', 'portrait');

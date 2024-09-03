@@ -52,7 +52,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/edit-user-password/{user}', [UserController::class, 'editPassword'])->name('user.edit-password');
     Route::put('/update-user-password/{user}', [UserController::class, 'updatePassword'])->name('user.update-password');
     Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('permission:destroy-user');
-    Route::get('/generate-pdf-user', [UserController::class, 'generatePdf'])->name('user.generate-pdf');
+    Route::get('/generate-pdf-user', [UserController::class, 'generatePdf'])->name('user.generate-pdf')->middleware('permission:generate-pdf-user');
 
 
     // Courses
