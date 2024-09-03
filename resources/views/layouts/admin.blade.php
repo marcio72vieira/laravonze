@@ -77,6 +77,13 @@
                             </a>
                         @endcan
 
+                        @can('index-permission')
+                            <a @class(['nav-link', 'active' => isset($menu) && $menu == 'permissions']) href="{{ route('permission.index') }}">
+                                <div class="sb-nav-link-icon"><i class="fa-regular fa-file"></i></div>
+                                Permissões
+                            </a>
+                        @endcan
+
                         <a class="nav-link" href="{{ route('login.destroy') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
                             Sair

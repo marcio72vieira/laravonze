@@ -1010,6 +1010,24 @@ OBS11 - Error response from daemon: driver failed programming external connectiv
 
 OBS12 - Hospedar a aplicação Laravel na DigitalOcean: https://celke.com.br/clms/aula-curso/view/6339
 
+OBS13 - Quando for utilizado o middleware, diretamente no constructor de um controller e surgir o error abaixo, altere a
+        classe App\Http\Controller, conforme abaixo:
+        Erro: 
+            Call to undefined method App\Http\Controllers\PermissionController::middleware() 
+
+        Solução:
+            segundo o site: https://github.com/laravel/framework/issues/50566, altere a classe Controller conforme abaixo:
+            <?php
+
+            namespace App\Http\Controllers;
+
+            use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
+            abstract class Controller extends \Illuminate\Routing\Controller
+            {
+                use AuthorizesRequests;
+            }
+
 
 ========================
 Pesquisa google

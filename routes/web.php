@@ -9,6 +9,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Route;
 
 /* Route::get('/', function () { return view('welcome'); }); */
@@ -88,7 +89,11 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/index-role-permission/{role}', [RolePermissionController::class, 'index'])->name('role-permission.index')->middleware('permission:index-role-permission');
     Route::get('/update-role-permission/{role}/{permission}', [RolePermissionController::class, 'update'])->name('role-permission.update')->middleware('permission:update-role-permission');
 
-
+    // Permissões
+    Route::get('/index-permission', [PermissionController::class, 'index'])->name('permission.index')->middleware('permission:index-permission');
+    Route::get('/show-permission/{permission}', [PermissionController::class, 'show'])->name('permission.show')->middleware('permission:show-permission');
+    Route::get('/create-permission', [PermissionController::class, 'create'])->name('permission.create')->middleware('permission:create-permission');
+    Route::post('/store-permission', [PermissionController::class, 'store'])->name('permission.store')->middleware('permission:create-permission');
 
 });
 
