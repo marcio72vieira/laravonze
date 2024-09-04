@@ -17,7 +17,7 @@ class PermissionController extends Controller
     {
 
         // Recuperar os registros do banco dados
-        $permissions = Permission::orderBy('title')->paginate(10);
+        $permissions = Permission::orderBy('group')->paginate(10);
 
         // Salvar log
         Log::info('Listar as páginas', ['action_user_id' => Auth::id()]);
@@ -65,6 +65,7 @@ class PermissionController extends Controller
 
             // Cadastrar no banco de dados
             $permission = Permission::create([
+                'group' => $request->group,
                 'title' => $request->title,
                 'name' => $request->name,
             ]);
@@ -119,6 +120,7 @@ class PermissionController extends Controller
 
             // Editar as informações do registro no banco de dados
             $permission->update([
+                'group' => $request->group,
                 'title' => $request->title,
                 'name' => $request->name,
             ]);
@@ -167,5 +169,5 @@ class PermissionController extends Controller
             return redirect()->route('permission.index')->with('error', 'Permissão não excluída!');
         }
     }
-    
+
 }

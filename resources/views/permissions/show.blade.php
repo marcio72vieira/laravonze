@@ -53,6 +53,9 @@
                     <dt class="col-sm-3">ID: </dt>
                     <dd class="col-sm-9">{{ $permission->id }}</dd>
 
+                    <dt class="col-sm-3">Grupo: </dt>
+                    <dd class="col-sm-9">{{ $permission->group }}</dd>
+
                     <dt class="col-sm-3">Título: </dt>
                     <dd class="col-sm-9">{{ $permission->title }}</dd>
 

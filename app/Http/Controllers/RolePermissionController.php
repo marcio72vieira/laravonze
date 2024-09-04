@@ -14,14 +14,14 @@ class RolePermissionController extends Controller
     public function index(Role $role)
     {
 
-        //*** INÍCIO - USUÁRIO COM PAPEL INFERIOR(order_roles maio) NÃO VISUALIZA PERMISSÕES DE USUÁRIO COM PAPEL SUPERIOR(order_roles menor) */
+        //*** INÍCIO - USUÁRIO COM PAPEL INFERIOR(order_roles maior) NÃO VISUALIZA PERMISSÕES DE USUÁRIO COM PAPEL SUPERIOR(order_roles menor) */
         // Recuperar os dados do usuário logado
         $authenticatedUser = auth()->user();
 
         // Verificar se o usuário autenticado tem uma ordem de papel maior ou igual ao do usuário a ser visualizado
         // O usuário autenticado, não pode editar(bloquear/liberar) suas próprias permissões
         if ($authenticatedUser->roles[0]->order_roles >= $role->order_roles) {
-            
+
             // Salvar log
             Log::info('Sem permissão de visualizar usuário com papel superior.', ['id' => $role->id, 'action_user_id' => Auth::id()]);
 
@@ -31,7 +31,7 @@ class RolePermissionController extends Controller
         }
         //*** FIM - USUÁRIO COM PAPEL INFERIOR NÃO VISUALIZA PERMISSÕES DE USUÁRIO COM PAPEL SUPERIOR */
 
-        
+
         // Verifica se o papel é "Super Admi", para não permitir viualizar as permissões, pois o mesmo possui acesso a tudo
         if($role->name ==  "Super Admin"){
 
@@ -41,12 +41,13 @@ class RolePermissionController extends Controller
             // Redirecionar o usuário
             return redirect()->route('role.index')->with('error', 'Permissão do Super Administrador não pode ser acessada!');
 
-        }            
+        }
         // Recuperar as permissões(somente o id da permissão) do papel na tabela 'role_has_permissions' onde o campo role_id seja igual ao id do papel informado ($role->id)
         $rolePermissions = DB::table('role_has_permissions')->where('role_id', $role->id)->pluck('permission_id')->all();
 
         // Recupera as permissões
-        $permissions = Permission::get();
+        // $permissions = Permission::get();
+        $permissions = Permission::orderBy('group')->get();
 
         // Salvar log
         Log::info('Listar permissões do papel.', ['role_id' => $role->id, 'acation_user_id' => Auth::id()]);

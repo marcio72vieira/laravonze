@@ -48,6 +48,7 @@
                     <thead>
                         <tr>
                             <th class="d-none d-sm-table-cell">ID</th>
+                            <th>Grupo</th>
                             <th>Título</th>
                             <th>
                                 {{-- Se o usuário autenticado for Super Administrador, exibe esta coluna --}}
@@ -64,6 +65,7 @@
                         @forelse ($permissions as $permission)
                             <tr>
                                 <td class="d-none d-sm-table-cell">{{ $permission->id }}</td>
+                                <td class="d-none d-sm-table-cell">{{ $permission->group }}</td>
                                 <td>{{ $permission->title }}</td>
                                 <td>
                                     {{-- Se o usuário autenticado for Super Administrador, exibe esta coluna --}}

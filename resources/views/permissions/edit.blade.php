@@ -48,14 +48,20 @@
                     @method('PUT')
 
                     <div class="col-12">
+                        <label for="group" class="form-label">Grupo: </label>
+                        <input type="text" name="group" id="group" class="form-control" placeholder="Grupo da permissão"
+                            value="{{ old('group', $permission->group) }}">
+                    </div>
+
+                    <div class="col-12">
                         <label for="title" class="form-label">Título: </label>
-                        <input type="text" name="title" id="title" class="form-control" placeholder="Título da página"
+                        <input type="text" name="title" id="title" class="form-control" placeholder="Título da permissão"
                             value="{{ old('title', $permission->title) }}">
                     </div>
 
                     <div class="col-12">
                         <label for="name" class="form-label">Nome: </label>
-                        <input type="text" name="name" id="name" class="form-control" placeholder="Nome da página"
+                        <input type="text" name="name" id="name" class="form-control" placeholder="Nome da permissão"
                             value="{{ old('name', $permission->name) }}">
                     </div>
 

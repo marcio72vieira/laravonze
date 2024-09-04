@@ -1,7 +1,10 @@
+// OS SCRIPTS DESCRITOS AQUI, SERÃO EXECUTADOS INDEPENDENTE DA PÁGINA QUE VOCÊ ESTEJ, POIS ESTES SCRIPTS SÃO DE USO GERAL
+
+
 // Recebe o seletor do campo preço
 let inputPrice = document.getElementById('price');
 
-// Verifique se existe o seletor no HTML
+// Verifique se existe o seletor no HTML. Obs: Dependendo da página que você esteja, é possível que este seletor não exista, por isso a necessidade de testar sua existência
 if(inputPrice){
 
     // Aguardar o usuário digitar o valo no campo
@@ -23,5 +26,35 @@ if(inputPrice){
         this.value = formattedPrice;
 
     });
-
 }
+
+// Receber o seletor apagar e percorrer a lista de registros
+document.querySelectorAll('.btnDelete').forEach( function(button){
+
+    // Aguardar o clique do usuário no botão apagar
+    button.addEventListener('click', function(event){
+        event.preventDefault();
+
+        // Receber o atributo que possui o id do registro que deve ser excluído
+        var deleteId = this.getAttribute('data-delete-id');
+
+
+        // SweetAlert
+        Swal.fire({
+            title: 'Tem certeza ?',
+            text: 'Você não poderá reverter esta ação!',
+            icon: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#0d6efd',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: "#dc3545",
+            confirmButtonText: "Sim, Excluir!"
+        }).then((result) => {
+            // Carregar a página responsável em excluir se o usuário confirmar a exclusão
+            if (result.isConfirmed) {
+
+                document.getElementById(`formDelete${deleteId}`).submit();
+            }
+        });
+    });
+})

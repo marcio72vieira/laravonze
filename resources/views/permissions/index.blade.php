@@ -35,6 +35,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Grupo</th>
                             <th class="d-none d-md-table-cell">Título</th>
                             <th>Nome</th>
                             <th class="text-center">Ações</th>
@@ -44,7 +45,8 @@
 
                         @forelse ($permissions as $permission)
                             <tr>
-                                <th>{{ $permission->id }}</th>
+                                <td>{{ $permission->id }}</td>
+                                <td>{{ $permission->group }}</td>
                                 <td class="d-none d-md-table-cell">{{ $permission->title }}</td>
                                 <td>{{ $permission->name }}</td>
                                 <td class="d-md-flex justify-content-center">
@@ -64,12 +66,22 @@
                                     @endcan
 
                                     @can('destroy-permission')
+                                        {{-- Apagar com caixa de alert nativa do navegador
                                         <form method="POST" action="{{ route('permission.destroy', ['permission' => $permission->id]) }}">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="btn btn-danger btn-sm me-1 mb-1"
                                                 onclick="return confirm('Tem certeza que deseja apagar este registro?')"><i
                                                     class="fa-regular fa-trash-can"></i> Apagar</button>
+                                        </form>
+                                        --}}
+
+                                        <form id="formDelete{{ $permission->id }}" method="POST" action="{{ route('permission.destroy', ['permission' => $permission->id]) }}">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 btnDelete" data-delete-id="{{ $permission->id }}">
+                                                <i class="fa-regular fa-trash-can"></i> Apagar
+                                            </button>
                                         </form>
                                     @endcan
                                 </td>

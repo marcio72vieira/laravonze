@@ -15,38 +15,38 @@ class PermissionSeeder extends Seeder
     {
         $permissions = [
             // Permissões referente a Cursos
-            ['title' => 'Listar cursos', 'name' => 'index-course'],
-            ['title' => 'Visualizar curso', 'name' => 'show-course'],
-            ['title' => 'Criar curso', 'name' => 'create-course'],
-            ['title' => 'Editar curso', 'name' => 'edit-course'],
-            ['title' => 'Apagar curso', 'name' => 'destroy-course'],
+            ['group' => 'CURSO', 'title' => 'Listar cursos', 'name' => 'index-course'],
+            ['group' => 'CURSO', 'title' => 'Visualizar curso', 'name' => 'show-course'],
+            ['group' => 'CURSO', 'title' => 'Criar curso', 'name' => 'create-course'],
+            ['group' => 'CURSO', 'title' => 'Editar curso', 'name' => 'edit-course'],
+            ['group' => 'CURSO', 'title' => 'Apagar curso', 'name' => 'destroy-course'],
 
             // Permissões referente a Aulas
-            ['title' => 'Listar aulas', 'name' => 'index-classe'],
-            ['title' => 'Visualizar aula', 'name' => 'show-classe'],
-            ['title' => 'Criar aula', 'name' => 'create-classe'],
-            ['title' => 'Editar aula', 'name' => 'edit-classe'],
-            ['title' => 'Apagar aula', 'name' => 'destroy-classe'],
+            ['group' => 'AULA', 'title' => 'Listar aulas', 'name' => 'index-classe'],
+            ['group' => 'AULA', 'title' => 'Visualizar aula', 'name' => 'show-classe'],
+            ['group' => 'AULA', 'title' => 'Criar aula', 'name' => 'create-classe'],
+            ['group' => 'AULA', 'title' => 'Editar aula', 'name' => 'edit-classe'],
+            ['group' => 'AULA', 'title' => 'Apagar aula', 'name' => 'destroy-classe'],
 
             // Permissões referente a Usuários
-            ['title' => 'Listar usuários', 'name' => 'index-user'],
-            ['title' => 'Visualizar usuário', 'name' => 'show-user'],
-            ['title' => 'Criar usuário', 'name' => 'create-user'],
-            ['title' => 'Editar usuário', 'name' => 'edit-user'],
-            ['title' => 'Editar senha do usuário', 'name' => 'edit-user-password'],
-            ['title' => 'Apagar usuário', 'name' => 'destroy-user'],
-            ['title' => 'Gerar PDF dos Usuários', 'name' => 'generate-pdf-user'],
+            ['group' => 'USUÁRIO', 'title' => 'Listar usuários', 'name' => 'index-user'],
+            ['group' => 'USUÁRIO', 'title' => 'Visualizar usuário', 'name' => 'show-user'],
+            ['group' => 'USUÁRIO', 'title' => 'Criar usuário', 'name' => 'create-user'],
+            ['group' => 'USUÁRIO', 'title' => 'Editar usuário', 'name' => 'edit-user'],
+            ['group' => 'USUÁRIO', 'title' => 'Editar senha do usuário', 'name' => 'edit-user-password'],
+            ['group' => 'USUÁRIO', 'title' => 'Apagar usuário', 'name' => 'destroy-user'],
+            ['group' => 'USUÁRIO', 'title' => 'Gerar PDF dos Usuários', 'name' => 'generate-pdf-user'],
 
             // Permissões referente a Papéis
-            ['title' => 'Listar papéis', 'name' => 'index-role'],
-            ['title' => 'Visualizar papel', 'name' => 'show-role'],
-            ['title' => 'Criar papel', 'name' => 'create-role'],
-            ['title' => 'Editar papel', 'name' => 'edit-role'],
-            ['title' => 'Apagar papel', 'name' => 'destroy-role'],
+            ['group' => 'PAPEL', 'title' => 'Listar papéis', 'name' => 'index-role'],
+            ['group' => 'PAPEL', 'title' => 'Visualizar papel', 'name' => 'show-role'],
+            ['group' => 'PAPEL', 'title' => 'Criar papel', 'name' => 'create-role'],
+            ['group' => 'PAPEL', 'title' => 'Editar papel', 'name' => 'edit-role'],
+            ['group' => 'PAPEL', 'title' => 'Apagar papel', 'name' => 'destroy-role'],
 
             // Permissões referente a Permissões
-            ['title' => 'Listar permissões do papel', 'name' => 'index-role-permission'],
-            ['title' => 'Editar permissão do papel', 'name' => 'update-role-permission'],
+            ['group' => 'PAPEL', 'title' => 'Listar permissões do papel', 'name' => 'index-role-permission'],
+            ['group' => 'PAPEL', 'title' => 'Editar permissão do papel', 'name' => 'update-role-permission'],
         ];
 
         // Percorre o array de permissões criado acima e verifica se no Model Permission já existe a permissão cadastrada
@@ -56,6 +56,7 @@ class PermissionSeeder extends Seeder
             // Se a permissão não existir, cadastra a permissão na tabela(permissions), fornecendo o nome e o tipo da aplicação (web ou api)
             if(!$existingPermission){
                 Permission::create([
+                    'group' => $permission['group'],
                     'title' => $permission['title'],
                     'name' => $permission['name'],
                     'guard_name' => 'web',

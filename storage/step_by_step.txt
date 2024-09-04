@@ -701,7 +701,37 @@
            ['title' => 'Gerar PDF dos Usuários', 'name' => 'generate-pdf-user'],
         h) Execute a seeder PermissionSeeder com o comando abaixo:
             Execute a seed modificada com artisan db:seed --class=PermissionSeeder
-        
+
+
+025 -   Incluindo sweetAlert2 com vite
+        1)  Pesquisr por SweetAlet2 no google: https://sweetalert2.github.io/
+        2)  No menu Instalar, instalar a dependência:
+                marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail npm install sweetalert2
+                Caso dê problema de vulnerabilidade, executar:
+                    marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail npm audit fix
+        3)  Acrescente/Altere o arquivo /home/marcio/projetosdocker/laravonze/resources/js/bootstrap.js conforme abaixo:
+            ...
+            import Swal from 'sweetalert2';
+            window.Swal = Swal;
+            ...
+        4)  Adicionar o trecho de código abaixo, para cada situação (sucesso, error, aviso, etc..) no arquivo: /home/marcio/projetosdocker/laravonze/resources/views/components/alert.blade.php
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        Swal.fire({
+                            title: "Ok!",
+                            html: '{{ session('success') }}',
+                            icon: 'success'
+                        });
+                    })
+                </script>
+
+        5)  Execute novamente o comando ./vendor/bin/sail npm run dev
+
+
+
+
+
+
 
 
 
@@ -1012,8 +1042,8 @@ OBS12 - Hospedar a aplicação Laravel na DigitalOcean: https://celke.com.br/clm
 
 OBS13 - Quando for utilizado o middleware, diretamente no constructor de um controller e surgir o error abaixo, altere a
         classe App\Http\Controller, conforme abaixo:
-        Erro: 
-            Call to undefined method App\Http\Controllers\PermissionController::middleware() 
+        Erro:
+            Call to undefined method App\Http\Controllers\PermissionController::middleware()
 
         Solução:
             segundo o site: https://github.com/laravel/framework/issues/50566, altere a classe Controller conforme abaixo:

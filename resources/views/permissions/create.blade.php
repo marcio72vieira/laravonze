@@ -39,6 +39,13 @@
                     @method('POST')
 
                     <div class="col-12">
+                        <label for="group" class="form-label">Grupo: </label>
+                        <input type="text" name="group" id="group" class="form-control" placeholder="Título da permissão"
+                            value="{{ old('group') }}">
+                    </div>
+
+
+                    <div class="col-12">
                         <label for="title" class="form-label">Título: </label>
                         <input type="text" name="title" id="title" class="form-control" placeholder="Título da permissão"
                             value="{{ old('title') }}">

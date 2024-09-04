@@ -24,6 +24,7 @@ class PermissionRequest extends FormRequest
         $permission = $this->route('permission');
 
         return [
+            'group' => 'required',
             'title' => 'required',
             'name' => 'required|unique:permissions,name,' . ($permission ? $permission->id : null),
         ];
@@ -32,6 +33,7 @@ class PermissionRequest extends FormRequest
     public function messages(): array
     {
         return[
+            'group.required' => 'Campo grupo é obrigatório!',
             'title.required' => 'Campo título é obrigatório!',
             'name.required' => 'Campo nome é obrigatório!',
             'name.unique' => 'O nome utilizado já está cadastrado!',
