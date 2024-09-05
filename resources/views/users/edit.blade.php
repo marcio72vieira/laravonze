@@ -62,7 +62,7 @@
 
                     <div class="col-12">
                         <label for="roles" class="form-label">Papel: </label>
-                        <select name="roles" id="roles" class="form-select">
+                        <select name="roles" id="roles" class="form-select  select2">
                             <option value="">Selecione</option>
                             @foreach ($roles as $role)
                                 {{-- Se for Super Admin, "exibe" o papel "Super Admin"[Papeis: [Super Admin, Admin, Professor, Tutor, Aluno] --}}

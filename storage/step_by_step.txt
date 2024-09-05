@@ -727,6 +727,144 @@
 
         5)  Execute novamente o comando ./vendor/bin/sail npm run dev
 
+026 -   Incluindo Select2 no campo Select2 com uma CDN (Obs: As vezes, com o VITE, segundo o próprio CELKE ocorre erros)
+        1) Pesquis pela dependência no google: https://select2.org/
+
+        2) Copie o trecho de cóigo abaixo adquirido do menu Instalar, seção: "Using Select2 from a CDN" e cole no cabeçalho da página: resources/views/layouts/admin.blade.php
+
+            <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        3) Baixar o Jquery via CDN a partir da
+                Página:
+                    https://jquery.com/download/
+                Seção:
+                    jQuery CDN
+                Link:
+                    Google CDN
+                Snippet 3.x
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        4) Acrescentar "ANTES" do JavaScrip do select2, na página: resources/views/layouts/admin.blade.php, ficando:
+            <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        5) Utilizar o tema do Select2, de acordo com a versão do Bootstrap que se está utilizando, sendo assim, pesquise: select2 bootstrap 5 theme, conforme:
+                página:
+                    https://apalfrey.github.io/select2-bootstrap-5-theme/
+                Seção:
+                    Select2 v4.0.x
+                Link: (Só esta linha, pois o bootstrape e select2 já estão incluidos)
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
+        6) Acrescente o link imediatamente acima no arquivo: resources/views/layouts/admin.blade.php, ficando:
+                <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        7) Com base no exemplo do uso básico descrito na página, utilizar no arquivo: /home/marcio/projetosdocker/laravonze/resources/js/scriptsmrc_admin.js
+            Exemplo da págian do Select2
+                <select class="js-example-basic-single" name="state">
+                    <option value="AL">Alabama</option>
+                        ...
+                    <option value="WY">Wyoming</option>
+                </select>
+
+                // In your Javascript (external .js resource or <script> tag)
+                $(document).ready(function() {
+                    $('.js-example-basic-single').select2();
+                });
+            Uso na página, adaptado:  /home/marcio/projetosdocker/laravonze/resources/js/scriptsmrc_admin.js
+                // Uso do Select2
+                // Quando carregar a página execute o Select2
+                // Acrescentar a classe ".select2" em todos os selects que houver a necessidade de utilizar o select2
+                $(function() {
+                    $('.select2').select2({
+                        theme: 'bootstrap-5',
+                    });
+                });
+
+        8) Acrescentar a classe ".select2" do script anterior na tag <selec> do formulário nos arquivos: resources/views/users/create.blade.php E resources/views/users/edit.blade.php
+            ...
+            <select name="roles" id="roles" class="form-select select2">
+            ...
+
+027 -   Incluindo o Select2 via VITE
+        1) Instalar o Jquery:
+            ./vendor/bin/sail npm install jquery
+
+        2) Instalar o Select2
+            ./vendor/bin/sil npm install select2
+
+        3) Instalar o thema do Bootstrap 5 para o select2
+            ./vendor/bin/sail npm install select2-bootstrap-5-theme
+
+        4) No arquivo ../resources/css/app.css importqr o Css do Select2 e também o Css do Thema, como descrito abaixo:
+            ...
+            /* Importar o CSS do Select2 */
+            @import 'select2/dist/css/select2.min.css';
+
+            /* Importar o layout do Bootstrap para Select2 */
+            @import 'select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme.min.css';
+
+        5) no arquivo ../resources/js/bootstrap.js incluir o Js conforme abaixo:
+            import 'bootstrap';
+
+            // Importar Jquery
+            import jQuery from 'jquery';
+            window.$ = jQuery;
+
+            // Importar Select2
+            import select2 from 'select2';
+            select2();
+            ...
+
+        6) Acrescentar no arquivo:  ../resources/js/scriptsmrc_admin.js
+            Uso na página, adaptado:
+                // Uso do Select2
+                // Quando carregar a página execute o Select2
+                // Acrescentar a classe ".select2" em todos os selects que houver a necessidade de utilizar o select2
+                $(function() {
+                    $('.select2').select2({
+                        theme: 'bootstrap-5',
+                    });
+                });
+
+        07) Acrescentar a classe ".select2" do script anterior na tag <selec> do formulário nos arquivos: resources/views/users/create.blade.php E resources/views/users/edit.blade.php
+            ...
+            <select name="roles" id="roles" class="form-select select2">
+            ...
+
+        08) Caso tenha utilizado o Select2, jQuery e o selct2-bootstrap-5-theme via CDN, comentar suas invocações no arquivo: resources/views/layouts/admin.blade.php, ficando:
+                {{--
+                    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+                --}}
+
+        09) Caso necessário execute novamente: ./vendor/bin/sail npm run dev
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

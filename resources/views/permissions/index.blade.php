@@ -79,7 +79,7 @@
                                         <form id="formDelete{{ $permission->id }}" method="POST" action="{{ route('permission.destroy', ['permission' => $permission->id]) }}">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 btnDelete" data-delete-id="{{ $permission->id }}">
+                                            <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 btnDelete" data-delete-id="{{ $permission->id }}"   data-value-record="{{ $permission->title }}">
                                                 <i class="fa-regular fa-trash-can"></i> Apagar
                                             </button>
                                         </form>

@@ -138,12 +138,21 @@
                                     @endcan
 
                                     @can('destroy-user')
+                                        {{--
                                         <form method="POST" action="{{ route('user.destroy', ['user' => $user->id]) }}">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="mb-1 btn btn-danger btn-sm me-1"
                                                 onclick="return confirm('Tem certeza que deseja apagar este registro?')"><i
                                                     class="fa-regular fa-trash-can"></i> Apagar</button>
+                                        </form>
+                                        --}}
+                                        <form id="formDelete{{ $user->id }}" method="POST" action="{{ route('user.destroy', ['user' => $user->id]) }}">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger btn-sm me-1 mb-1 btnDelete" data-delete-id="{{ $user->id }}"  data-value-record="{{ $user->userName }}">
+                                                <i class="fa-regular fa-trash-can"></i> Apagar
+                                            </button>
                                         </form>
                                     @endcan
 

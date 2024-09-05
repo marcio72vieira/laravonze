@@ -42,7 +42,7 @@
                         <input type="email" name="email" id="email" class="form-control"
                             placeholder="Melhor e-mail do usuário" value="{{ old('email') }}">
                     </div>
-            
+
                     <div class="col-12">
                         <label for="password" class="form-label">Senha: </label>
                         <input type="password" name="password" id="password" class="form-control"
@@ -51,7 +51,7 @@
 
                     <div class="col-12">
                         <label for="roles" class="form-label">Papel: </label>
-                        <select name="roles" id="roles" class="form-select">
+                        <select name="roles" id="roles" class="form-select select2">
                             <option value="">Selecione</option>
                             @foreach ($roles as $role)
                                 {{-- Se for Super Admin, "exibe" o papel "Super Admin"[Papeis: [Super Admin, Admin, Professor, Tutor, Aluno] --}}
@@ -63,8 +63,8 @@
                                         <option value="{{ $role }}"  {{ old('roles') == $role ? 'selected' : '' }}>{{ $role }}</option>
                                     @endif
                                 @endif
-                            @endforeach    
-                        </select>    
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="col-12">

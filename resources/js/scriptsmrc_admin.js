@@ -28,6 +28,7 @@ if(inputPrice){
     });
 }
 
+// Uso do SweetAlert2
 // Receber o seletor apagar e percorrer a lista de registros
 document.querySelectorAll('.btnDelete').forEach( function(button){
 
@@ -37,11 +38,12 @@ document.querySelectorAll('.btnDelete').forEach( function(button){
 
         // Receber o atributo que possui o id do registro que deve ser excluído
         var deleteId = this.getAttribute('data-delete-id');
+        var valueRecord = this.getAttribute('data-value-record');
 
 
         // SweetAlert
         Swal.fire({
-            title: 'Tem certeza ?',
+            title: 'Deletar\n' + valueRecord + ' ?',
             text: 'Você não poderá reverter esta ação!',
             icon: 'warning',
             showCancelButton: true,
@@ -58,3 +60,12 @@ document.querySelectorAll('.btnDelete').forEach( function(button){
         });
     });
 })
+
+// Uso do Select2
+// Quando carregar a página execute o Select2
+// Acrescentar a classe ".select2" em todos os selects que houver a necessidade de utilizar o select2
+$(function() {
+    $('.select2').select2({
+        theme: 'bootstrap-5',
+    });
+});
