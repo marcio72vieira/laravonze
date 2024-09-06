@@ -725,6 +725,8 @@
                     })
                 </script>
 
+        4) Atualizar a nova dependência com o comando:  ./vendor/bin/sail npm update
+
         5)  Execute novamente o comando ./vendor/bin/sail npm run dev
 
 026 -   Incluindo Select2 no campo Select2 com uma CDN (Obs: As vezes, com o VITE, segundo o próprio CELKE ocorre erros)
@@ -845,7 +847,11 @@
                     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
                 --}}
 
-        09) Caso necessário execute novamente: ./vendor/bin/sail npm run dev
+        9) Atualizar a nova dependência com o comando:  ./vendor/bin/sail npm update
+
+        10) Caso necessário execute novamente: ./vendor/bin/sail npm run dev
+
+
 
 
 
