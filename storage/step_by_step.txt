@@ -10,12 +10,14 @@
                 1) APP_TIMEZONE=America/Sao_Paulo
                 2) APP_LOCALE=pt-BR
                 3) APP_PORT=8080
-                4) FORWARD_DB_PORT=3307
-                5) DB_DATABASE=laravonze
-        c) Atualizar o projeto com as dependências necessárias
-            marcio@marcio72:~/projetosdocker/laravonze$ composer update
-        d) Levantar os containeres
-            ./vendor/bin/sail up -d
+                4) FORWARD_DB_PORT=3307 (OU OUTRA PORTA 3308, 3309 etc...)
+                5) DB_DATABASE=laravonze (OU OUTRO NOME PARA O BANCO)
+        c) Levantar os containeres
+            marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail up -d
+        d) Atualizar o projeto com as dependências necessárias
+            marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail composer install 
+            Logo em seguida:
+            marcio@marcio72:~/projetosdocker/laravonze$ ./vendor/bin/sail composer update
         e) Gerar a chave da aplicação
             marcio@vaio:~/projetosdocker/laravonze$  ./vendor/bin/sail artisan key:generate
         f) Depois de ter criado e modificado o arquivo .env aplicar o comando abaixo:
