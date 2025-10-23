@@ -1002,6 +1002,34 @@ API API API API API
 
 
 
+03 -  Execução do projeto via Docker
+    a) Verificar os containers que estão levantados ou não via comando:
+        docker container ps -a
+
+    b) Parar todos os serviços ou containers
+        docker stop $(docker ps -a -q)
+
+    c) Eliminar os containers parados
+        docker container prune
+
+    d) Parar o container que esteja eventualmente executando o mysql na mesma porta da aplicação
+        dockeer stop container_id
+
+    e) Levantar a aplicação (na pasta do projeto)
+        ./vendor/bin/sail up -d
+        ./vendor/bin/sail npm run dev
+
+    f) Acessar http://localhost:8080
+
+    g) Login
+        usuario: marcio@celke.com.br
+        senha: 123456a
+
+    h) Parar a aplicação
+        CTRL + C (No terminal onde foi executado o ./vendor/bin/sail up -d)
+        CTRL + C (No terminal onde foi executado o ./vendor/bin/sail npm run dev)
+
+        docker stop $(docker ps -a -q)
 
 
 
