@@ -1032,6 +1032,22 @@ API API API API API
         docker stop $(docker ps -a -q)
 
 
+04 - Instalação a partir do GIT em uma versão 8.4 do PHP 
+    a) Clone o projeto do repossitório  (git clone https://github.com/marcio72vieira/laravonze.git)
+    b) Crie o arquivo .env a partir do arquivo .env.example
+    c) substitua as credenciais de Banco de Dados conforme necessário
+    d) No arquivo .env substitua a linha DB_HOST=localhost POR DB_HOST=127.0.0.1 em caso de erro de conexão
+    e) Verifique se o serviço do MySQL está ativo sudo service mysql status
+    f) Crie o banco de dados laravelonze no SGBD WorkBranch
+    g) Execute as migrations (php artisan migrate)
+    h) Execute as seed (php artisan db:seed)
+    i) Quando necessário instale o Vite (npm install vite) na pasta do seu projeto (/projetoslaravel/laravonze$)
+    j) Execute "npm run dev" com a versão do node adequada (nvm ls; nvm current; nvm deactivate; nvm use 23.11; nvm current)
+    k) Execute php artisan serve
+    l) usuario marcio@celke.com.br Senha: 123456a
+
+
+
 
 
 
